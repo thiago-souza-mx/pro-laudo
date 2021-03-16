@@ -1,5 +1,11 @@
-function Home (){
-  return <div>Home</div>
+import Template  from "../controllers/Template"; 
+
+const App =()=>{
+  return( 
+    <Template menu="home" view="home">
+      meu template
+    </Template>
+  );
 }
 
-export default Home;
+export default App;
