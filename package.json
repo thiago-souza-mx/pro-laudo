@@ -1,6 +1,6 @@
 {
   "name": "pro-laudo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Aplicação de gerenciamento e criação de lausos médicos",
   "main": "app.js",
   "scripts": {
