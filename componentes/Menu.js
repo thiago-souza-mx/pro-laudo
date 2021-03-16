@@ -6,6 +6,7 @@ export default class Menu extends Component{
   render() {
     return(
       <menu id={this.menu_id}>
+Meu menu
         {this.props.children}
       </menu>
     );
