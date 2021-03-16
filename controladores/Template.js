@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Menu from "../components/Menu"; 
+import Menu from "../componentes/Menu"; 
 import View  from "../views/View"; 
 
 export default class Template extends Component{
