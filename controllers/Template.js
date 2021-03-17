@@ -1,6 +1,6 @@
 import React from 'react';
-import Menu from "../components/Menu.tsx"; 
-import View  from "../views/View.tsx"; 
+import Menu from "../components/Menu"; 
+import View  from "../views/View"; 
 
 const Template = props=>{
   let view = "../views/"+props.menu;
