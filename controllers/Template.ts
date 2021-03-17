@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Menu from "../componentes/Menu"; 
-import View  from "../views/View"; 
+import Menu from "../components/Menu.ts"; 
+import View  from "../views/View.ts"; 
 
 export default class Template extends Component{
   view = "../views/"+this.props.menu; 

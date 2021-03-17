@@ -1,4 +1,4 @@
-import Template  from "../controllers/Template"; 
+import Template  from "../controllers/Template.ts"; 
 
 const App =()=>{
   return( 

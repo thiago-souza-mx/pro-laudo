@@ -7,7 +7,7 @@ export default class View extends Component{
  
   render() {
     return(
-      <div id={this.view_id} class={this.props.page}>
+      <div id={this.view_id} className={this.props.page}>
         <section id="content">
           {this.view}
           {this.props.children}
