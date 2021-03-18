@@ -6,11 +6,18 @@ const View = props =>{
   let view_id = "view-"+props.page;
  
   return(
-    <div id={view_id} className={props.page}>
+    <div id={view_id} className={props.page + " view"}>
+      <header> 
+        <span className="label-view">Header</span>
+      </header>
       <section id="content">
-        {view}
+        <span className="label-view">{view}</span>
+        <br/>
         {props.children}
       </section>
+      <footer> 
+        <span className="label-view">Footer</span>
+      </footer>
     </div>
   );
 

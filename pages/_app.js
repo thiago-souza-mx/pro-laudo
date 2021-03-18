@@ -5,7 +5,7 @@ import Template  from "../controllers/Template";
 const App =()=>{
   return( 
     <Template menu="home" view="home">
-      meu template
+      Aquivai todo o meu conteúdo
     </Template>
   );
 }
