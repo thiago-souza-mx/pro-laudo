@@ -1,3 +1,6 @@
+$menuSize: 250px;
+$recolheMenuSize: 60px;
+
 html {
   box-sizing: border-box;
 }
@@ -28,16 +31,19 @@ html,body{
   menu {
     margin: 0; 
     width: 30%;
-    max-width: 250px;
+    max-width: $menuSize;
     padding: 10px 2px;
     position: relative;
     border:rgb(53, 214, 201) solid 5px;
+    transition: 0.3s all;
 
     .recolhe-menu{
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 0px;
+      right: 0px;
       font-size: 20px;
+      padding: 10px;
+      cursor: pointer;
     }
 
     ul.menu-sidebar{
@@ -91,7 +97,55 @@ html,body{
   #template{
     menu{
       width: 10%;
-      max-width: 70px;
+      max-width: $recolheMenuSize;
+
+      .recolhe-menu{
+        transform: rotate(180deg);
+      }
+
+      ul.menu-sidebar{
+  
+        li.menu-item{
+  
+          a.menu-link{
+            position: relative;
+            text-align: center;            
+
+            svg{
+              font-size: 20px;
+            }
+            span.menu-item-name{
+              position: absolute;
+              left: $recolheMenuSize - 10;
+              top:5px;
+              background: #000;
+              color: #FFF;
+              width: max-content;
+              padding: 5px 10px;
+              display: none;
+            }
+
+            span.menu-item-name::before{
+              content: "";
+              position: absolute;
+              left: -13px;
+              top: 50%;
+              transform: translateY(-50%);
+              border: transparent 5px solid;
+              border-right: #000 8px solid;
+
+            }
+          }
+
+          
+          a.menu-link:hover{
+            span.menu-item-name{
+              display: initial;
+            }
+          }
+
+        }
+      }
     }
   }
 }
