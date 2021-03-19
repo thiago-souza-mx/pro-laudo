@@ -13,6 +13,51 @@ const menuModel = [
     name:'Laudos',
     link:'Reports',
     icon:'faFileMedical'
+  },
+  {
+    name:'Home',
+    link:'',
+    icon:'faHome'
+  },
+  {
+    name:'Configurações',
+    link:'Settings',
+    icon:'faCog'
+  },
+  {
+    name:'Laudos',
+    link:'Reports',
+    icon:'faFileMedical'
+  },
+  {
+    name:'Home',
+    link:'',
+    icon:'faHome'
+  },
+  {
+    name:'Configurações',
+    link:'Settings',
+    icon:'faCog'
+  },
+  {
+    name:'Laudos',
+    link:'Reports',
+    icon:'faFileMedical'
+  },
+  {
+    name:'Home',
+    link:'',
+    icon:'faHome'
+  },
+  {
+    name:'Configurações',
+    link:'Settings',
+    icon:'faCog'
+  },
+  {
+    name:'Laudos',
+    link:'Reports',
+    icon:'faFileMedical'
   }
 ];
 
