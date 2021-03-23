@@ -39,7 +39,7 @@ const menuModel = [
     link:'Settings',
     icon:'faCog'
   },
-  {
+  /*{
     name:'Laudos',
     link:'Reports',
     icon:'faFileMedical'
@@ -58,7 +58,7 @@ const menuModel = [
     name:'Laudos',
     link:'Reports',
     icon:'faFileMedical'
-  }
+  }*/
 ];
 
 export default menuModel;

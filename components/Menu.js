@@ -13,9 +13,11 @@ const RecolheMenu = ()=>{
 
 const handleClick = (e)=> {
   e.preventDefault();
-  let href = e.target.closest('a').getAttribute('href');
-  window.history.pushState("non-navigate", href, `/${href}`);
-  Navigate(href)
+  let href = e.target.closest('a').getAttribute('href'); 
+  Navigate({
+    href: href,
+    elem: e
+  });
 }
 
 const Menu = props =>{

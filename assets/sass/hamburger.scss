@@ -1,0 +1,46 @@
+/* STYLE HAMBURGER MOBILE */
+#hamburger_menu_mobile {
+  display: none;
+  background: white;
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  left: 20px;
+  flex-direction: column;
+  padding: 7px;
+  justify-content: space-around;
+  border-radius: 5px;
+  transition: 0.4s all;
+  z-index: 9999;
+}
+
+  #hamburger_menu_mobile span {
+      background: var(--skin-primary-color);
+      width: 100%;
+      height: 5px;
+      border-radius: 5px;
+      transition: 0.4s all;
+  }
+
+html.open-menu #hamburger_menu_mobile {
+  left: calc( var(--width-menu) + 20px);
+}
+
+html.scrolled #hamburger_menu_mobile {
+  box-shadow: 0 0 5px rgb(0 0 0 / 36%);
+}
+
+html.open-menu #hamburger_menu_mobile span:nth-child(1) {
+  transform: rotate(-315deg);
+  margin-bottom: -100%;
+}
+
+html.open-menu #hamburger_menu_mobile span:nth-child(2) {
+  opacity: 0;
+  margin-left: -100%;
+}
+
+html.open-menu #hamburger_menu_mobile span:nth-child(3) {
+  transform: rotate(135deg);
+  margin-top: -100%;
+}

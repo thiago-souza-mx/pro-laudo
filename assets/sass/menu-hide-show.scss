@@ -1,0 +1,59 @@
+/* STYLE MENU EFECT HIDE SHOW */
+
+.show-menu{
+  #template{
+    menu{
+      width: 100%;
+      max-width: $recolheMenuSize;
+
+      .recolhe-menu{
+        transform: rotate(180deg);
+      }
+
+      ul.menu-sidebar{
+  
+        li.menu-item{
+  
+          a.menu-link{
+            position: relative;
+            text-align: center;            
+
+            svg{
+              font-size: 20px;
+            }
+            span.menu-item-name{
+              position: absolute;
+              left: $recolheMenuSize - 10;
+              top:5px;
+              background: #000;
+              color: #FFF;
+              width: max-content;
+              padding: 5px 10px;
+              display: none;
+              z-index: 10;
+            }
+
+            span.menu-item-name::before{
+              content: "";
+              position: absolute;
+              left: -13px;
+              top: 50%;
+              transform: translateY(-50%);
+              border: transparent 5px solid;
+              border-right: #000 8px solid;
+
+            }
+          }
+
+          
+          a.menu-link:hover{
+            span.menu-item-name{
+              display: initial;
+            }
+          }
+
+        }
+      }
+    }
+  }
+}

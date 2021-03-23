@@ -4,7 +4,7 @@
   "description": "Aplicação de gerenciamento e criação de lausos médicos",
   "main": "_app.js",
   "scripts": {
-    "dev": "next dev"
+    "start": "next dev"
   },
   "repository": {
     "type": "git",
