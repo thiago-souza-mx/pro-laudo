@@ -21,7 +21,7 @@ const RecolheMenu = ()=>{
 
 const handleClick = (e)=> {
   e.preventDefault();
-  let href = e.target.closest('a').getAttribute('href'); 
+  let href = e.target.closest('a').getAttribute('data-href'); 
   Navigate({
     href: href,
     elem: e
@@ -37,7 +37,7 @@ const Menu = props =>{
   schema.forEach((item, index) => {
     rows.push(
       <li id={item.link} className="menu-item" key={index}>
-        <a className={"menu-link "+item.class} href={item.link} onClick={handleClick}>
+        <a className={"menu-link "+item.class} data-href={item.link} onClick={handleClick}>
           <FontAwesomeIcon icon={Icons[item.icon]} />
           <span className="menu-item-name">{item.name}</span>
         </a>
