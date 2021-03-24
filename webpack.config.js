@@ -16,6 +16,18 @@ module.exports = {
           // [sass-loader](/loaders/sass-loader)
           { loader: 'sass-loader' }
         ]
+      },
+
+      {
+        test: /\.(png|jp(e*)g|svg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'components/[hash]-[name].[ext]',
+            },
+          },
+        ],
       }
     ]
   }

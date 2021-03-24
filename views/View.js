@@ -1,3 +1,5 @@
+import React from 'react';
+
 const View = props =>{
   let view = "../views/"+props.page; 
 
@@ -16,6 +18,7 @@ const View = props =>{
       <footer> 
         <span className="label-view">Footer</span>
         Footer
+        <div id="loadPages"></div>
       </footer>
     </div>
   );

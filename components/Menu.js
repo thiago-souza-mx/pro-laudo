@@ -26,9 +26,9 @@ const Menu = props =>{
   let schema = props.schema;
 
   let rows = []
-  schema.forEach(item => {
+  schema.forEach((item, index) => {
     rows.push(
-      <li className="menu-item">
+      <li className="menu-item" key={index}>
         <a className="menu-link" href={item.link} onClick={handleClick}>
           <FontAwesomeIcon icon={Icons[item.icon]} />
           <span className="menu-item-name">{item.name}</span>

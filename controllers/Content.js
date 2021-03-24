@@ -1,5 +1,7 @@
 import React from "react";
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom';
+import Load from '../components/Load'
+
 
 import {ContentView}  from "../views/View";
 
@@ -7,21 +9,29 @@ const Content = props =>{
   console.log(props)
   let box = props.href;
   let content = document.getElementById('content');
-
+  let load = document.getElementById('loadPages');
+  ReactDOM.render(<Load/>, load )
   content.classList.add('called');
+  
   setTimeout(()=>{
-    
-    render(
+    ReactDOM.render(
       <ContentView page={box}>
         <h1>Carregou:</h1>
         <br/>{box}
       </ContentView>
-      , document.getElementById('content')
+      , content
     );
 
-    content.classList.remove('called')
+    content.classList.remove('called');
+    ReactDOM.unmountComponentAtNode(load);
   }, 1000)
 
+}
+
+export const LoadContent = ()=>{
+  //const location = useLocation()
+
+  console.log( "location");
 }
 
 export const Navigate = props =>{
