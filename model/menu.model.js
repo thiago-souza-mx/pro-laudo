@@ -2,63 +2,21 @@ const menuModel = [
   {
     name:'Home',
     link:'',
-    icon:'faHome'
+    icon:'faHome',
+    class: 'active'
   },
   {
     name:'Configurações',
     link:'Settings',
-    icon:'faCog'
+    icon:'faCog',
+    class: ''
   },
   {
     name:'Laudos',
     link:'Reports',
-    icon:'faFileMedical'
-  },
-  {
-    name:'Home',
-    link:'',
-    icon:'faHome'
-  },
-  {
-    name:'Configurações',
-    link:'Settings',
-    icon:'faCog'
-  },
-  {
-    name:'Laudos',
-    link:'Reports',
-    icon:'faFileMedical'
-  },
-  {
-    name:'Home',
-    link:'',
-    icon:'faHome'
-  },
-  {
-    name:'Configurações',
-    link:'Settings',
-    icon:'faCog'
-  },
-  /*{
-    name:'Laudos',
-    link:'Reports',
-    icon:'faFileMedical'
-  },
-  {
-    name:'Home',
-    link:'',
-    icon:'faHome'
-  },
-  {
-    name:'Configurações',
-    link:'Settings',
-    icon:'faCog'
-  },
-  {
-    name:'Laudos',
-    link:'Reports',
-    icon:'faFileMedical'
-  }*/
+    icon:'faFileMedical',
+    class: ''
+  }
 ];
 
 export default menuModel;

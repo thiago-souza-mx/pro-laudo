@@ -1,8 +1,5 @@
-import './../assets/sass/global.scss';
-
-
-
-import Template  from "../controllers/Template"; 
+import './../assets/sass/global.scss'
+import Template  from "../controllers/Template";
 
 const App =()=>{
   return( 

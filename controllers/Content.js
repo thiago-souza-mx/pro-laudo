@@ -6,7 +6,6 @@ import Load from '../components/Load'
 import {ContentView}  from "../views/View";
 
 const Content = props =>{
-  console.log(props)
   let box = props.href;
   let content = document.getElementById('content');
   let load = document.getElementById('loadPages');
@@ -28,10 +27,18 @@ const Content = props =>{
 
 }
 
-export const LoadContent = ()=>{
-  //const location = useLocation()
+export const LoadContent = props=>{
 
-  console.log( "location");
+  let active = document.querySelector('.menu-sidebar .active');
+  if(active){
+    active.classList.remove('active');
+  }
+  let href = props.href;
+  href = href.replace('/','');
+  document.getElementById(href).querySelector('.menu-link').classList.add('active');
+
+  Content(props);
+
 }
 
 export const Navigate = props =>{
