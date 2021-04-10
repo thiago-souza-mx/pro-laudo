@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import AppConfigModel from '../model/appConfig.model'
 import {LoadContent}  from "./Content";
 
+
 const Template = props=>{
   useEffect(() => { 
     
@@ -16,15 +17,17 @@ const Template = props=>{
         document.querySelector('html').classList.add('comprime-menu');
       }
     }
-    
+
     if(window.location.pathname != "/")
       LoadContent({href:window.location.pathname});
 
-    document.getElementById('template').classList.remove('hide');
+    setTimeout(()=>{ document.getElementById('template').classList.remove('hide');},400);
   });
-
+  
   return(
-    <div id="template" className="hide">
+
+    <div id="template" className="hide">     
+
       <Menu id={props.menu} schema={menuSchema}>       
       </Menu>
 
@@ -32,7 +35,9 @@ const Template = props=>{
         {props.children}
       </View>
     </div>
-  );
-  
+
+  );  
+ 
 }
 export default Template;
+

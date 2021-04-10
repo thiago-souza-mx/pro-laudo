@@ -1,0 +1,14 @@
+#__app_login{
+  overflow-y: hidden;
+  .panel-login{
+    background: #FFF;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 1px 4px 7px -2px rgb(0 0 0 / 20%);
+    margin-top:0;
+    transition: 0.3s all;
+    &.slide-down{
+      margin-top: 1000px;
+    }
+  }
+}

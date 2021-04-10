@@ -2,19 +2,19 @@ const menuModel = [
   {
     name:'Home',
     link:'',
-    icon:'faHome',
+    icon:'home',
     class: 'active'
   },
   {
     name:'Configurações',
     link:'Settings',
-    icon:'faCog',
+    icon:'cog',
     class: ''
   },
   {
     name:'Laudos',
     link:'Reports',
-    icon:'faFileMedical',
+    icon:'file-medical',
     class: ''
   }
 ];

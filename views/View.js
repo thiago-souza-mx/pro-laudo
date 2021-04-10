@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../components/Header';
 
 const View = props =>{
   let view = "../views/"+props.page; 
@@ -7,10 +8,7 @@ const View = props =>{
  
   return(
     <div id={view_id} className={props.page + " view"}>
-      <header> 
-        <span className="label-view">Header</span>
-        Header
-      </header>
+      <Header/>
       <section id="content">
         <span className="label-view">{view}</span>
         {props.children}

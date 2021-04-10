@@ -1,9 +1,5 @@
 import {Navigate, Content} from '../controllers/Content'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/'
-const Icons = require('@fortawesome/free-solid-svg-icons/');
-
-
 const RecolheMenu = ()=>{
   let AppConfig = JSON.parse(localStorage.getItem("App-config"));
   let html =  document.querySelector('html');
@@ -38,7 +34,7 @@ const Menu = props =>{
     rows.push(
       <li id={item.link} className="menu-item" key={index}>
         <a className={"menu-link "+item.class} data-href={item.link} onClick={handleClick}>
-          <FontAwesomeIcon icon={Icons[item.icon]} />
+        <i className={"menu-icon fas fa-"+item.icon}></i>
           <span className="menu-item-name">{item.name}</span>
         </a>
       </li>
@@ -48,7 +44,8 @@ const Menu = props =>{
   return(
     <menu id={menu_id}>
       <span className="label-view">Menu</span>
-      <div className="recolhe-menu" onClick={RecolheMenu}> <FontAwesomeIcon icon={Icons.faArrowAltCircleLeft} /></div>
+      <div id="applogo"></div>
+      <div className="recolhe-menu" onClick={RecolheMenu}> <i className="far fa-arrow-circle-left"></i></div>
       <ul className="menu-sidebar">
         {rows}
       </ul>
