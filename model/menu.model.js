@@ -2,7 +2,7 @@ const menuModel = [
   {
     name:'Home',
     link:'',
-    icon:'home',
+    icon:'clipboard',
     class: 'active'
   },
   {

@@ -27,6 +27,11 @@ html,body{
   display: none;
 }
 
+.scrolling{
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 #__app{
 
   display: flex;
@@ -68,10 +73,23 @@ html,body{
       flex-direction: column;
 
       header{
-        padding: 10px 20px;
+        padding: 5px 20px;
         background: #FFF;
         height: 100%;
-        max-height: 55px;
+        max-height: 50px;
+        #header_search{
+          .mic{
+            background: #ff5722;
+            width: 40px;
+            height: 40px;
+            border: none;
+            margin: -1px;
+          }
+          & > div,span{
+            text-overflow: ellipsis;
+            white-space: nowrap; 
+          }
+        }
       }
 
       #content{

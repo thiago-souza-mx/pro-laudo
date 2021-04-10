@@ -18,7 +18,7 @@ const Template = props=>{
       }
     }
 
-    if(window.location.pathname != "/")
+    //if(window.location.pathname != "/")
       LoadContent({href:window.location.pathname});
 
     setTimeout(()=>{ document.getElementById('template').classList.remove('hide');},400);

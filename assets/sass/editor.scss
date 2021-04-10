@@ -1,0 +1,67 @@
+#editor{
+  position: fixed;
+  width: calc(100% - 280px);
+  max-height: calc(100% - 130px);
+
+  .comprime-menu &{
+    width: calc(100% - 90px);
+  }
+
+  #toolbar{
+    background-image: url('/assets/img/toolbar.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 35px;
+  }
+
+  textarea{
+    background: #dde2e8;
+    padding: 10px 50px;
+    border: none;
+    outline: none;
+    color:black;
+    font-size: 16px;
+    flex: 1;
+  }
+
+  #__list_actions{
+    
+    ul{
+      list-style: none;
+      padding: 0 10px;
+      max-height: 100%;
+      li{
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s all;
+
+        &:hover{
+          background: rgb(207, 236, 255);
+        }
+
+        i{
+          font-size: 24px;
+          text-align: left;
+          min-width: 40px;
+          color: #ff5722;
+        }
+
+        .text{
+          display: flex;
+          flex-direction: column;
+
+          small{
+            font-weight: normal;
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+}

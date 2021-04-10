@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Header from '../components/Header';
 
 const View = props =>{
-  let view = "../views/"+props.page; 
 
   let view_id = "view-"+props.page;
  
@@ -10,8 +9,9 @@ const View = props =>{
     <div id={view_id} className={props.page + " view"}>
       <Header/>
       <section id="content">
-        <span className="label-view">{view}</span>
-        {props.children}
+        <ContentView page={props.page}>
+          {props.children}
+        </ContentView>
       </section>
       <footer> 
         <span className="label-view">Footer</span>

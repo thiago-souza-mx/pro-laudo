@@ -32,7 +32,7 @@ const Menu = props =>{
   let rows = []
   schema.forEach((item, index) => {
     rows.push(
-      <li id={item.link} className="menu-item" key={index}>
+      <li id={item.link || item.name} className="menu-item" key={index}>
         <a className={"menu-link "+item.class} data-href={item.link} onClick={handleClick}>
         <i className={"menu-icon fas fa-"+item.icon}></i>
           <span className="menu-item-name">{item.name}</span>
