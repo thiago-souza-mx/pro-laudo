@@ -40,24 +40,24 @@ const loadLogin = ()=>{
   const main = document.getElementById("__app");
   ReactDOM.render(
     <div id="__app_login" className="d-flex flex-row col-12 justify-content-center align-items-center">
-      <div  className="panel-login slide-down d-flex">
+      <div  className="panel-login slide-down d-flex g-primary">
        
         <div className="d-flex flex-column">
-          <h3 className="text-center text-primary font-logo font-48"><b className="font-border">P<b className="font-40">ro</b></b> <b className="font-40 text-dark">Laudo</b></h3>
-           
+          <h3 className="text-center text-primary font-logo font-48">Login</h3>
+           {/*<img src="/assets/img/logo-pro-laudo-linear-escuro.png" style={{maxWidth:"250px"}} className="mx-3"></img>*/}
           <div  className="alert alert-danger msg" style={{display:"none"}} role="alert">
           </div>
-          <div className="form-group">
-            <label >User Name</label>
-            <input type="text" className="form-control px-3" id="proUser" placeholder="User Name"/>
+          <div className="form-group py-3">
+
+            <input type="text" className="form-control px-3 radius font-20 p-2" id="proUser" placeholder="User Name"/>
             
           </div>
           <div className="form-group">
-            <label >Password</label>
-            <input type="password" className="form-control px-3" id="proPass" placeholder="Password"/>
+
+            <input type="password" className="form-control px-3 radius font-20 p-2" id="proPass" placeholder="Password"/>
           </div>
-          <div className="d-grid gap-2 py-2">
-            <button type="submit"  onClick={startApp} className="btn btn-block btn-primary radius text-white">Entrar</button>
+          <div className="d-grid gap-2 pt-3 mx-3">
+            <button type="submit"  onClick={startApp} className="btn btn-block btn-primary radius btn-lg">Entrar</button>
           </div>
         </div>
       </div>
