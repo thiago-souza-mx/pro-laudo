@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from 'react-dom';
+const packageJson = require('../package.json');
+const aplication  = packageJson.aplication;
 
 const state = {
   template:''
@@ -24,16 +26,29 @@ const LoadConfig =() =>{
       loadLogin();
 
     // HEADER
-    document.head.insertAdjacentHTML('beforeend',`
-      <title>Pro Laudo</title>
-      <link rel="shortcut icon" href="/assets/img/logo-pro-laudo-small.png" />
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    document.head.insertAdjacentHTML('beforeend',`<title>${aplication.name}</title>`);
+    document.head.insertAdjacentHTML('beforeend',loadStyles(aplication.header.link));
 
-    `);
   })
 
   return'' ;
+}
+
+const loadStyles = arr =>{
+  let styles ="";
+
+  arr.forEach(item => {    
+    Object.keys(item).forEach(attr => {
+      let atributes = "";
+      Object.keys(item[attr]).forEach(val => {
+        atributes += `${val}="${item[attr][val]}"`;
+      })
+      styles+= `<link id="${attr}" ${atributes} />`;
+    });
+    
+  });
+
+  return styles;
 }
 
 const loadLogin = ()=>{
