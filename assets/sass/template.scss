@@ -9,6 +9,46 @@ html {
   box-sizing: inherit;
 }
 
+html{
+  
+  &.theme-dark{
+    --ThemeColor: var(--bg-dark);
+    --PanelColor: var(--dark);
+    --FontColor: #ccc;
+  }
+
+  &.theme-light{
+    --ThemeColor: var(--bg-light);
+    --PanelColor: var(--light);
+    --FontColor:var(--dark);
+  }
+
+  &.destaq-blue{
+    --DestaqColor: var(--blue);
+  }
+
+  &.destaq-light-blue{
+    --DestaqColor: var(--lightBlue);
+  }
+
+  &.destaq-dark-blue{
+    --DestaqColor: var(--darkBlue);
+  }
+
+  &.destaq-purple{
+    --DestaqColor: var(--purple);
+  }
+
+  &.destaq-light-purple{
+    --DestaqColor: var(--lightPurple);
+  }
+
+  &.destaq-dark-purple{
+    --DestaqColor: var(--darkPurple);
+  }
+}
+
+
 html,body{
   margin:0;
   padding: 0;
@@ -44,6 +84,10 @@ html,body{
   transition: 0.6s all;
   background: #eee;
 
+  .theme-dark & {
+    background: var(--ThemeColor);;
+  }
+
   #template{
     flex: 1;
     position: fixed;
@@ -57,7 +101,7 @@ html,body{
     flex:1;
     transform: scale(1);
     transition: 0.6s transform, 0.2s opacity;
-    background: $globalBg;
+    background: var(--ThemeColor);
     box-shadow: 0 5px 35px rgba(black,0.6);
     opacity: 1;
 
@@ -74,12 +118,19 @@ html,body{
 
       header{
         padding: 5px 20px;
-        background: #FFF;
+        background: var(--PanelColor);;
         height: 100%;
         max-height: 50px;
         #header_search{
+          flex:1;
+          color: var(--FontColor);
+
+          .border{
+            //border-color: var(--FontColor)!important;
+            background: var(--ThemeColor);
+          }
           .mic{
-            background: #ff5722;
+            background: var(--DestaqColor);;
             width: 40px;
             height: 40px;
             border: none;
@@ -98,11 +149,11 @@ html,body{
         flex:1;
         overflow-y: auto;
         overflow-x: hidden;
-        background: #FFF;
+        background: var(--PanelColor);
         margin: 5px;
-        border: #FFF 5px solid;
+        border: var(--PanelColor) 5px solid;
         border-radius: 5px;
-        color: #666;
+        color: var(--FontColor);
         font-size: 14px;
         transition: 0.2s all;
         right: 0;
@@ -115,7 +166,8 @@ html,body{
 
       footer{
         padding: 10px;
-        background:#FFF;
+        background:var(--PanelColor);
+        color:var(--FontColor);
         height: 100%;
         max-height: 40px;
         margin: 0 5px;
@@ -132,7 +184,7 @@ html,body{
               fill: none;
               stroke-dasharray: 200;
               stroke-width: 13px;
-              stroke: $menuBg;
+              stroke: var(--DestaqColor);
             }
           }
         }

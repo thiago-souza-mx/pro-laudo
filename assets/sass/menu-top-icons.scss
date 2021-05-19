@@ -1,0 +1,83 @@
+.action{
+  i{
+    color:var(--FontColor);
+  }
+}
+
+.desktop{
+  i{
+    .expand & {
+   
+      color: var(--DestaqColor);
+    }
+  }
+}
+
+.palette{
+  position: relative;
+  z-index: 99;
+}
+.palette-themes{
+  position: absolute;
+  left: -45px;
+  top:50px;
+  @include close();
+
+  .open &{
+    @include open();
+  }
+
+  ul{
+    list-style: none;
+    width: 150px;
+    background: var(--PanelColor);
+    padding: 10px;
+    box-shadow: 0 0 12px rgba(black,0.2);
+    border-radius: 10px;
+
+    .theme-dark & {
+      box-shadow: 0 0 12px rgba(black,0.8);
+    }
+    hr{
+      margin: 0;
+    }
+    & > p{
+      font-size: 12px;
+      color:var(--FontColor);
+    }
+    li{
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      padding: 10px;
+      margin: 5px 10px;
+      border:1px solid #000;
+
+      &[data-theme="theme-light"]{
+        background: var(--light);
+      }
+      &[data-theme="destaq-light-blue"]{
+        background: var(--lightBlue);
+        
+      }
+      &[data-theme="destaq-blue"]{
+        background: var(--blue);
+      }
+      &[data-theme="destaq-dark-blue"]{
+        background: var(--darkBlue);
+      }
+      &[data-theme="destaq-light-purple"]{
+        background: var(--lightPurple);
+      }
+      &[data-theme="destaq-purple"]{
+        background: var(--purple);
+      }
+      &[data-theme="destaq-dark-purple"]{
+        background: var(--darkPurple);
+      }
+      &[data-theme="theme-dark"]{
+        background: var(--dark);
+      }
+    }
+  }
+}

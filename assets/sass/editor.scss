@@ -1,10 +1,11 @@
 #editor{
   position: fixed;
-  width: calc(100% - 280px);
+  width: calc(100% - #{$menuSize} + 50px );
   max-height: calc(100% - 130px);
+  transition: 0.3s all;
 
   .comprime-menu &{
-    width: calc(100% - 90px);
+    width: calc(100% - #{$recolheMenuSize} - 30px );
   }
 
   #toolbar{
@@ -22,6 +23,10 @@
     color:black;
     font-size: 16px;
     flex: 1;
+    .theme-dark &{
+      background: var(--ThemeColor);
+      color: var(--FontColor);
+    }
   }
 
   #__list_actions{
@@ -41,6 +46,14 @@
         cursor: pointer;
         transition: 0.3s all;
 
+        .theme-dark & {
+          background: var(--ThemeColor);
+          border-color: rgb(117, 117, 117);
+          &:hover{
+            background: rgb(53, 53, 53);
+          }
+        }
+
         &:hover{
           background: rgb(207, 236, 255);
         }
@@ -49,7 +62,7 @@
           font-size: 24px;
           text-align: left;
           min-width: 40px;
-          color: #ff5722;
+          color: var(--DestaqColor);
         }
 
         .text{

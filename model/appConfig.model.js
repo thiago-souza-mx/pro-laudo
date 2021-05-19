@@ -4,6 +4,10 @@ const AppConfigModel =
       state:{
         open:true
       }
+    },
+    theme:{
+      name:"theme-light",
+      destaq:"destaq-blue"
     }
   }
 

@@ -16,11 +16,20 @@ const Template = props=>{
       if(AppConfig.menu.state.open){
         document.querySelector('html').classList.add('comprime-menu');
       }
+
+      document.querySelector('html').classList.add(AppConfig.theme.name);
+      
     }
 
     //if(window.location.pathname != "/")
-      LoadContent({href:window.location.pathname});
+    LoadContent({href:window.location.pathname});
 
+    document.addEventListener("click",function(){
+      document.querySelectorAll('.open').forEach(item=>{
+        item.classList.remove('open');
+      })
+    })
+    
     setTimeout(()=>{ document.getElementById('template').classList.remove('hide');},400);
   });
   

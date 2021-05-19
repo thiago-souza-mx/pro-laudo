@@ -1,10 +1,12 @@
-$menuSize: 250px;
+$menuSize: 280px;
 $recolheMenuSize: 60px;
-$menuBg: #0d6efd;
-$menuCollor: #FFF;
+$menuBg: #FFF;
+$menuCollor: rgb(0, 0, 0);
 $globalBg: rgb(220, 224, 224);
-$full-logo: "/assets/img/logo-pro-laudo-linear-claro.png";
-$small-logo: "/assets/img/logo-pro-laudo-small.png";
+//$full-logo: "/assets/img/logo-pro-laudo-linear-claro.png";
+$full-logo: "";
+//$small-logo: "/assets/img/logo-pro-laudo-small.png";
+$small-logo: "";
 $small: 817px;
 $medium: 1024px;
 $large: 1440px;
@@ -16,6 +18,22 @@ $font-logo: "Bauhaus 93";
 
 :root{
   --limitPage: 1220px;
+  --bg-light : rgb(220, 224, 224);
+  --light : #FFF;
+  --lightBlue : #00bedd;
+  --blue : #0078b6;
+  --darkBlue : #1e50b0;
+  --lightPurple : #7f3d94;
+  --purple : #4b3885;
+  --darkPurple : #050a5f;
+  --bg-dark : rgb(31, 31, 31);
+  --dark : rgb(61, 61, 61);
+
+  // CORES DO TEMA
+  --ThemeColor: var(--bg-light);
+  --PanelColor: var(--light);
+  --DestaqColor: var(--blue);
+  --FontColor:var(--dark);
  }
 ::-webkit-scrollbar {
   width: 6px;
@@ -157,11 +175,24 @@ $font-logo: "Bauhaus 93";
   src: url("/assets/fonts/BAUHS93.TTF");
 }
 
+@mixin close {
+  transform: scale(0.7);
+  transform-origin: top ;
+  opacity: 0;
+  transition: 0.2s all;
+}
+
+@mixin open {
+  transform: scale(1);
+  opacity: 1;
+}
+
 @import "template";
 @import "menu-hide-show";
 @import "hamburger";
 @import "login";
 @import "view";
 @import "editor";
+@import "menu-top-icons";
 //@import "dev";
 

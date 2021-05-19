@@ -6,9 +6,10 @@
     border-radius: 10px;
     box-shadow: 1px 4px 7px -2px rgb(0 0 0 / 20%);
     margin-top:0;
-    transition: 0.3s all;
+    transition: 0.3s margin-top 0.5s;
     &.slide-down{
-      margin-top: 1000px;
+      transition: 0.3s margin-top;
+      margin-top: 120%;
     }
   }
 }
