@@ -1,6 +1,9 @@
-export function toggleFullScreen(id) {
+const state = {
+  change: 0
+}
+export function toggleFullScreen() {
 
-  var div = document.querySelector(id);
+  var div = document.querySelector('html');
 
   if ((document.fullScreenElement && document.fullScreenElement !== null) ||
     (!document.mozFullScreen && !document.webkitIsFullScreen)) {
@@ -22,7 +25,13 @@ export function toggleFullScreen(id) {
   }
 }
 
-export function startEvents(){
+const StartEvents = ()=>{
+
+  if(state.change)
+    return "";
+  else
+    state.change = 1;
+
   function  changeFullscreen(){
     if(document.querySelector("body.expand")){
       document.body.classList.remove('expand');
@@ -32,16 +41,19 @@ export function startEvents(){
   }
 
   document.addEventListener("fullscreenchange", function() {
-  changeFullscreen();
+    changeFullscreen();
   });
   document.addEventListener("mozfullscreenchange", function() {
-  changeFullscreen();
+    changeFullscreen();
   });
   document.addEventListener("webkitfullscreenchange", function() {
-  changeFullscreen();
+    changeFullscreen();
   });
   document.addEventListener("msfullscreenchange", function() {
-  changeFullscreen();
+    changeFullscreen();
   });
+
+  return "";
 }
 
+export default StartEvents;

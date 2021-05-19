@@ -29,7 +29,6 @@ const Template = props=>{
         item.classList.remove('open');
       })
     })
-    
     setTimeout(()=>{ document.getElementById('template').classList.remove('hide');},400);
   });
   

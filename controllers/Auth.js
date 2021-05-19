@@ -102,6 +102,9 @@ const loadContent = ()=>{
  }
 
  export const Logout = ()=>{
+    if(document.body.classList.contains('expand')){
+      require('../helpers/ToggleScreen').toggleFullScreen();
+    }
     let appAccount = sessionStorage.getItem('App-account');
     if(appAccount)
       sessionStorage.removeItem('App-account');
