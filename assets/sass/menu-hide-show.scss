@@ -52,7 +52,10 @@
       padding: 10px 0;
       position: relative;
       transition: 0.3s all;
-      background: var(--PanelColor);
+      background: #FFF;
+      .theme-dark &{
+        background: var(--ThemeColor);
+      }
       color: var(--FontColor);
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       display: flex;
