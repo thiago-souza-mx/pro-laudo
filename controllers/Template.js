@@ -8,19 +8,23 @@ import {LoadContent}  from "./Content";
 
 const Template = props=>{
   useEffect(() => { 
-    
-    if(!localStorage.getItem("App-config")) 
+    let AppConfig;
+    if(!localStorage.getItem("App-config")){ 
       localStorage.setItem("App-config",JSON.stringify(AppConfigModel));
-    else{
-      let AppConfig = JSON.parse(localStorage.getItem('App-config'));
-      if(AppConfig.menu.state.open){
-        document.querySelector('html').classList.add('comprime-menu');
-      }
-
-      document.querySelector('html').classList.add(AppConfig.theme.name);
-      
+      AppConfig = AppConfigModel;
+    }else{
+      AppConfig = JSON.parse(localStorage.getItem('App-config'));
+      if(!AppConfig.version || AppConfig.version != AppConfigModel.version){
+        localStorage.setItem("App-config",JSON.stringify(AppConfigModel));
+        AppConfig = AppConfigModel;    
+      } 
     }
 
+    if(AppConfig.menu.state.open){
+      document.querySelector('html').classList.add('comprime-menu');
+    }
+    document.querySelector('html').classList.add(AppConfig.theme.name);
+    
     //if(window.location.pathname != "/")
     LoadContent({href:window.location.pathname});
 

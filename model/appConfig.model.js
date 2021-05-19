@@ -1,5 +1,6 @@
 const AppConfigModel = 
   {
+    version:"0.0.1",
     menu:{
       state:{
         open:true
