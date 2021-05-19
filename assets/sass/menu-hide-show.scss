@@ -4,12 +4,13 @@
   #template{
     #applogo{
       width: 100%;
-      height: 3px;
-      padding: 0 20px;
+      height: 0px;
+      padding: 0 40px;
       max-width: 200px;
       
       .comprime-menu &{
-          width: 200px;
+        padding: 0;
+        width: 200px;
       }
       svg {
         .cls-2{fill:#00bedd;}
@@ -29,8 +30,8 @@
         }
         .comprime-menu &{
           transition: 0.3s all;
-          width: 138px;
-          margin-left: -74px;
+          width: 100px;
+          margin-left: -30px;
 
           path{            
             transform: scale(0);
@@ -74,7 +75,7 @@
       ul.menu-sidebar{
         padding: 0;
         list-style: none;
-        margin-top: 50px;
+        margin-top: 45px;
         /*overflow-y: auto;
         overflow-x: hidden;*/
         max-height: calc( 100% - 25px );
@@ -107,6 +108,9 @@
 
           a.active{
             background: rgba(0, 0, 0, 0.1);
+            .theme-dark &{
+              background: rgba(white, 0.1);
+            }
             border-left:4px solid;
             padding-left: 6px;
 
