@@ -1,5 +1,5 @@
 import LogoSVG from "./LogoSVG"
-import Language from "./Language"
+import {PT,Language, EN} from "./Language"
 
 export const Login = callback =>{
 
@@ -44,6 +44,17 @@ export const Login = callback =>{
         <div className="d-flex flex-column login-banner">
         </div>
 
+      </div>
+
+      <div id="languages" className="d-flex justify-content-center align-items-center">
+        <Language en="Languages" pt="Idiomas"/>
+        <div class="lang-btn">
+          <PT/>
+        </div>
+
+        <div class="lang-btn">
+          <EN/>
+        </div>
       </div>
     </div>
   );

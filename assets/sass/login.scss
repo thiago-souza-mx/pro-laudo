@@ -1,6 +1,18 @@
 #__app_login{
   overflow-y: hidden;
 
+  #languages{
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    z-index: 999;
+
+    .lang-btn{
+      width: 50px;
+      padding:0 10px;
+    }
+  }
+
   .panel-login{
     z-index: 2;
     overflow: hidden;
