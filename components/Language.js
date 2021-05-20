@@ -4,7 +4,12 @@ import React from 'react';
 export const Language = props=>{
   let AppConfig;
   let lang;
-  AppConfig = JSON.parse(localStorage.getItem('App-config'));
+  
+  if(localStorage.getItem('App-config'))
+    AppConfig = JSON.parse(localStorage.getItem('App-config'));    
+  else
+    AppConfig = AppConfigModel;
+
   lang = AppConfig.language;
 
   return props[lang];
