@@ -1,8 +1,8 @@
 import AppConfigModel from "../model/appConfig.model";
 
 export const Language = props=>{
-  let AppConfig = JSON.parse(localStorage.getItem('App-config'));
-  let lang = AppConfig.language;
+  //let AppConfig = JSON.parse(localStorage.getItem('App-config'));
+  let lang = "pt";
   return props[lang];
 }
 
