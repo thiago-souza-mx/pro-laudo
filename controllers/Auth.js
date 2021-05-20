@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import ReactDOM from 'react-dom';
+import AppConfigModel from '../model/appConfig.model';
 const panelLogin = require('../components/Login');
 const packageJson = require('../package.json');
 const aplication  = packageJson.aplication;
@@ -26,6 +27,16 @@ const Login = props=>{
 
 const LoadConfig =() =>{
   useEffect(() => {
+    let AppConfig;
+    if(!localStorage.getItem("App-config")){ 
+      localStorage.setItem("App-config",JSON.stringify(AppConfigModel));
+    }else{
+      AppConfig = JSON.parse(localStorage.getItem('App-config'));
+      if(!AppConfig.version || AppConfig.version != AppConfigModel.version){
+        localStorage.setItem("App-config",JSON.stringify(AppConfigModel));
+      } 
+    }
+
     // HEADER
     document.head.insertAdjacentHTML('beforeend',`<title>${aplication.name}</title>`);
     document.head.insertAdjacentHTML('beforeend',loadStyles(aplication.header.link));
