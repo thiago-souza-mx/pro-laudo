@@ -1,15 +1,43 @@
 #__app_login{
   overflow-y: hidden;
+
   .panel-login{
+    z-index: 2;
+    overflow: hidden;
     background: #FFF;
-    padding: 20px 20px;
+    padding: 20px 0px;
     border-radius: 10px;
-    box-shadow: 1px 4px 7px -2px rgb(0 0 0 / 20%);
+    box-shadow: 1px 18px 15px -10px rgba(black,0.3);
     margin-top:0;
     transition: 0.3s margin-top 0.5s;
     &.slide-down{
       transition: 0.3s margin-top;
       margin-top: 120%;
     }
+    .logo-login{
+      margin: 0 auto;
+      .logo-svg{
+        max-width: 150px;
+        width: 100%;
+        padding: 10px;
+      }
+    }
+
+    .login-banner{
+      width: 350px;
+      margin: -20px 0;
+      background-image: url('https://image.freepik.com/fotos-gratis/o-doutor-examina-a-pelicula-de-raio-x-sobre-o-fundo-branco_1150-6251.jpg');
+      background-position: center;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background-color: #0078b6;
+      border-color: #0078b6;
+      &:hover{
+        background-color: darken(#0078b6,10%);
+      }
+    }
   }
 }
+

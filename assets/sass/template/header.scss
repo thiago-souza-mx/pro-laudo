@@ -1,0 +1,26 @@
+header{
+  padding: 5px 20px;
+  background: var(--PanelColor);;
+  height: 100%;
+  max-height: 50px;
+  #header_search{
+    flex:1;
+    color: var(--FontColor);
+
+    .border{
+      //border-color: var(--FontColor)!important;
+      background: var(--ThemeColor);
+    }
+    .mic{
+      background: var(--DestaqColor);;
+      width: 40px;
+      height: 40px;
+      border: none;
+      margin: -1px;
+    }
+    & > div,span{
+      text-overflow: ellipsis;
+      white-space: nowrap; 
+    }
+  }
+}  

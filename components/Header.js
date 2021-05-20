@@ -1,8 +1,9 @@
 const Action = {
-  Logout: require('../controllers/Auth')['Logout'],
-  TogglePalette: require('../helpers/Theme')['TogglePalette'],
-  SelectTheme: require('../helpers/Theme')['SelectTheme'],
-  Expand: require('../helpers/ToggleScreen')['toggleFullScreen']
+  Logout            : require('../controllers/Auth')['Logout'],
+  TogglePalette     : require('../helpers/Theme')['TogglePalette'],
+  SelectTheme       : require('../helpers/Theme')['SelectTheme'],
+  Expand            : require('../helpers/ToggleScreen')['toggleFullScreen'],
+  ToggleMicrophone  : require('../helpers/Microphone')['ToggleMicrophone']
 }
 const Button = { 
   Logout : ()=>{
@@ -57,6 +58,17 @@ const Button = {
         </div>
       </a>
     );
+  },
+
+  Microphone: ()=>{
+    return(
+      <div data-microphone="button" className="radius border border-1 border-dark">
+        <button className="btn btn-primary rounded-circle mic" onClick={Action.ToggleMicrophone}>
+          <i class="fas fa-microphone-alt"></i>
+        </button>
+        <span className="mx-4" data-microphone="message">Clique no microfone ao lado para começar a ditar!</span>
+      </div>
+    );
   }
 
 }
@@ -67,12 +79,9 @@ const Header = ()=>{
     <header className="d-flex"> 
       <span className="label-view">Header</span>
       <div id="header_search">
-        <div className="radius border border-1 border-dark">
-          <button className="btn btn-primary rounded-circle mic">
-            <i class="fas fa-microphone-alt"></i>
-          </button>
-          <span className="mx-4">Clique no microfone ao lado para começar a ditar!</span>
-        </div>
+
+        <Button.Microphone/>
+
       </div>
       <div id="header_actions" className="d-flex justify-content-end">
         <Button.PaletteTheme/>

@@ -1,0 +1,11 @@
+@mixin close {
+  transform: scale(0.7);
+  transform-origin: top ;
+  opacity: 0;
+  transition: 0.2s all;
+}
+
+@mixin open {
+  transform: scale(1);
+  opacity: 1;
+} 

@@ -1,0 +1,20 @@
+#content{
+  padding: 10px;
+  position: relative;
+  flex:1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--PanelColor);
+  margin: 5px;
+  border: var(--PanelColor) 5px solid;
+  border-radius: 5px;
+  color: var(--FontColor);
+  font-size: 14px;
+  transition: 0.2s all;
+  right: 0;
+
+  &.called{
+    right: -100%;
+    transition: 0.1s all;
+  }
+}

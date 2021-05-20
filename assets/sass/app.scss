@@ -1,0 +1,32 @@
+#__app{
+
+  display: flex;
+  flex-direction: row;
+  min-width: 100%;
+  min-height: 100%;
+  overflow-y: auto ;
+  overflow-x: hidden;
+  flex:1;
+  transition: 0.6s all;
+  background: #eee;
+
+  &:before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://thumbs.dreamstime.com/b/abstract-background-cubes-lines-geometric-pattern-random-isometric-vector-illustration-213015004.jpg');
+    background-size: cover;
+    background-position: center; 
+    opacity: 0.3;
+    z-index: 1;
+  }
+
+  .theme-dark & {
+    background: var(--ThemeColor);
+
+    &:before{
+      content: none;
+    }
+  }
+}

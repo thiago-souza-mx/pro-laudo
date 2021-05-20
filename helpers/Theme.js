@@ -15,6 +15,8 @@ export const TogglePalette = (e)=>{
 
 export const SelectTheme = e=>{
   e.stopPropagation();
+  if(e.target.nodeName != "LI")
+    return ;
   let data = e.target.getAttribute('data-theme');
   let themeName = false;
   let destaqName = false;
@@ -34,18 +36,18 @@ export const SelectTheme = e=>{
 
   let currentTheme = document.querySelector('html').classList;
   currentTheme.forEach(item=>{
-    if( themeName){
-      document.querySelector('html').classList.add(themeName);
-
+    if( themeName ){
       if(item.indexOf('theme-') > -1 )
-        document.querySelector('html').classList.remove(item);           
+        document.querySelector('html').classList.remove(item);   
+        
+      document.querySelector('html').classList.add(themeName);
     }
 
-    if( destaqName){
-      document.querySelector('html').classList.add(destaqName);
-
+    if( destaqName ){
       if(item.indexOf('destaq-') > -1 )
-        document.querySelector('html').classList.remove(item);            
+        document.querySelector('html').classList.remove(item);  
+      
+      document.querySelector('html').classList.add(destaqName);
     }
   })     
   
