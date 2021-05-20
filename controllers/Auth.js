@@ -26,15 +26,15 @@ const Login = props=>{
 
 const LoadConfig =() =>{
   useEffect(() => {
+    // HEADER
+    document.head.insertAdjacentHTML('beforeend',`<title>${aplication.name}</title>`);
+    document.head.insertAdjacentHTML('beforeend',loadStyles(aplication.header.link));
+
     // APP ACCOUNT
     if(sessionStorage.getItem('App-account'))
       loadContent();
     else
       loadLogin();
-
-    // HEADER
-    document.head.insertAdjacentHTML('beforeend',`<title>${aplication.name}</title>`);
-    document.head.insertAdjacentHTML('beforeend',loadStyles(aplication.header.link));
   })
 
   return'' ;
