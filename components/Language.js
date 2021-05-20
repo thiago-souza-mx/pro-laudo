@@ -16,7 +16,7 @@ const setLanguage = lang =>{
 
   AppConfig.language = lang;
   localStorage.setItem('App-config', JSON.stringify(AppConfig))
-  location.reload();
+  location.reload(); 
 }
 
 export const PT = ()=>{
