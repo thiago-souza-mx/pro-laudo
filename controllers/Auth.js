@@ -27,6 +27,11 @@ const Login = props=>{
 
 const LoadConfig =() =>{
   useEffect(() => {
+
+    // HEADER
+    document.head.insertAdjacentHTML('beforeend',`<title>${aplication.name}</title>`);
+    document.head.insertAdjacentHTML('beforeend',loadStyles(aplication.header.link));
+    
     let AppConfig;
     if(!localStorage.getItem("App-config")){ 
       localStorage.setItem("App-config",JSON.stringify(AppConfigModel));
@@ -36,10 +41,6 @@ const LoadConfig =() =>{
         localStorage.setItem("App-config",JSON.stringify(AppConfigModel));
       } 
     }
-
-    // HEADER
-    document.head.insertAdjacentHTML('beforeend',`<title>${aplication.name}</title>`);
-    document.head.insertAdjacentHTML('beforeend',loadStyles(aplication.header.link));
 
     // APP ACCOUNT
     if(sessionStorage.getItem('App-account'))
