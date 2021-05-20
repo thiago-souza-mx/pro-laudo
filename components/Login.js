@@ -48,13 +48,7 @@ export const Login = callback =>{
 
       <div id="languages" className="d-flex justify-content-center align-items-center">
         <Language en="Languages" pt="Idiomas"/>
-        <div class="lang-btn">
-          <PT/>
-        </div>
 
-        <div class="lang-btn">
-          <EN/>
-        </div>
       </div>
     </div>
   );
