@@ -8,6 +8,6 @@ export const ToggleMicrophone = (e)=>{
     message.innerText = 'Clique no microfone ao lado para começar a ditar!';
   }else{
     $this.classList.add('microphone-active');
-    message.innerText = 'Começe a falar, estou te escutando!';
+    message.innerText = 'Comece a falar, estou te escutando!';
   }
 }

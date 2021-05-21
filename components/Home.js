@@ -1,11 +1,11 @@
+import Editor from "./Editor";
+
 const Home =()=>{
   return (
     <div id="__home">
       <div id="editor" className="d-flex flex-row h-100">
-        <div className="col-9 d-flex flex-column">
-          <div id="toolbar">
-          </div>
-          <textarea className="w-100" placeholder="Começe a escrever o seu laudo"></textarea>
+        <div className="col-9 d-flex flex-column h-100">
+          <Editor/>
         </div>
 
         <div id="__list_actions" className="col-3">

@@ -74,7 +74,29 @@
             font-style: italic;
           }
         }
+
       }
+    }
+  }
+}
+
+
+.ck{
+  &.ck-editor ,&.ck-editor__main{
+    display: contents; 
+  }
+  &.ck-editor__editable{
+    height: calc( 100% - 40px ); 
+    background: #dde2e8!important;
+    padding: 10px 50px;
+    border: none!important;
+    outline: none;
+    color:black;
+    font-size: 16px;
+    flex: 1;
+    .theme-dark &{
+      background: var(--ThemeColor)!important;
+      color: var(--FontColor);
     }
   }
 }
