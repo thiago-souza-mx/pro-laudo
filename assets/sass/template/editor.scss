@@ -85,6 +85,23 @@
   &.ck-editor ,&.ck-editor__main{
     display: contents; 
   }
+
+  &.ck-toolbar {
+    background: #FFF!important;
+    border: none!important;
+    .theme-dark &{
+      background: #222428!important;
+    }
+  }
+
+  &.ck-reset_all, &.ck-reset_all * {
+    border-collapse: collapse;
+    font: normal normal normal var(--ck-font-size-base)/var(--ck-line-height-base) var(--ck-font-face);
+    .theme-dark &{
+      color: var(--FontColor);
+    }
+  }
+
   &.ck-editor__editable{
     height: calc( 100% - 40px ); 
     background: #dde2e8!important;
@@ -94,9 +111,11 @@
     color:black;
     font-size: 16px;
     flex: 1;
+
     .theme-dark &{
       background: var(--ThemeColor)!important;
       color: var(--FontColor);
+      
     }
   }
 }
