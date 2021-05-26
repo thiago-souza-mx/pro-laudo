@@ -115,6 +115,9 @@ html,body{
     background: $primaryCollor;
   }
 }
+.flex-1{
+  flex:1;
+}
 
 @import "mixins"; 
 @import "font";
@@ -131,6 +134,7 @@ html,body{
 @import "menu/menu-top-icons";
 @import "menu/menu-hide-show";
 @import "menu/hamburger";
+@import "componentes/qrcode";
 
 
 //@import "dev";

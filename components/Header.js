@@ -3,7 +3,8 @@ const Action = {
   TogglePalette     : require('../helpers/Theme')['TogglePalette'],
   SelectTheme       : require('../helpers/Theme')['SelectTheme'],
   Expand            : require('../helpers/ToggleScreen')['toggleFullScreen'],
-  ToggleMicrophone  : require('../helpers/Microphone')['ToggleMicrophone']
+  ToggleMicrophone  : require('../helpers/Microphone')['ToggleMicrophone'],
+  GetQRcode         : require('../helpers/QRcode')['GetQRcode']
 }
 const Button = { 
   Logout : ()=>{
@@ -69,6 +70,18 @@ const Button = {
         <span className="mx-4" data-microphone="message">Clique no microfone ao lado para começar a ditar!</span>
       </div>
     );
+  },
+  QRcode: ()=>{
+    return(
+      <div data-microphone="button" className="radius border border-1 border-dark">
+        <button className="btn btn-primary rounded-circle mic" onClick={Action.GetQRcode}>
+          <i class="fas fa-qrcode"></i>
+        </button>
+        <div id="qrcode">
+          <div className="code"></div>
+        </div>
+      </div>
+    );
   }
 
 }
@@ -88,6 +101,7 @@ const Header = ()=>{
         <Button.ModeDesktop/>
         <Button.Notify/>
         <Button.Account/>
+        <Button.QRcode/>
         <Button.Logout/>
       </div>
     </header>
