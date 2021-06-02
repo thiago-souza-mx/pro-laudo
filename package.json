@@ -1,10 +1,10 @@
 {
-  "name": "pro-laudo",
+  "name": "health.nemmo.io",
   "version": "1.0.1",
-  "description": "Aplicação de gerenciamento e criação de lausos médicos",
+  "description": "Aplicação de gerenciamento e criação de laudos médicos",
   "main": "_app.js",
   "scripts": {
-    "start": "next dev"
+    "start": "next dev" 
   },
   "aplication": {
     "name": "Nemmo Health",
@@ -54,5 +54,7 @@
     "sass": "^1.32.8",
     "styled-components": "^5.2.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "dotenv": "^10.0.0"
+  }
 }

@@ -2,6 +2,7 @@ import './../assets/sass/global.scss'
 import Template  from "../controllers/Template";
 import Auth  from "../controllers/Auth";
 import StartEvents  from "../helpers/ToggleScreen";
+import Global from "../controllers/Config";
 
 const App =()=>{
   return( 

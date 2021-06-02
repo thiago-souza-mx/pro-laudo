@@ -5,6 +5,7 @@ const Home =()=>{
     <div id="__home">
       <div id="editor" className="d-flex flex-row h-100">
         <div className="col-9 d-flex flex-column h-100">
+          <h1>{Base.api}</h1>
           <Editor/>
         </div>
 

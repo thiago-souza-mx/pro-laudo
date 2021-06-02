@@ -77,8 +77,9 @@ const addSocket = (code)=>{
     if(msg == code){
       destroy();
     }else{
-      state += " "+ msg;
-      document.querySelector('.ck-editor__editable').ckeditorInstance.setData(state);
+      state = document.querySelector('.ck-editor__editable').innerText;
+      state = state.replace('Comece a escrever seu laudo','');
+      document.querySelector('.ck-editor__editable').ckeditorInstance.setData(state+" "+ msg);
     }
   });   
 }
