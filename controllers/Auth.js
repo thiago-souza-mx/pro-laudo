@@ -5,6 +5,7 @@ import PanelLogin from '../components/Login';
 import _404 from "../components/404";
 import Register from "../components/Register";
 import Recover from "../components/Recover";
+import menuModel from "../model/menu.model";
 
 
 const packageJson = require('../package.json');
@@ -84,8 +85,7 @@ const loadLogin = ()=>{
 
   const main = document.getElementById("__app");
   let Render = <_404/>;
-
-  // Valida URL
+   // Valida URL
 
   if(location.pathname == "/register"){
     Render = <Register/>;
@@ -93,6 +93,11 @@ const loadLogin = ()=>{
     Render = <Recover/>;
   }else if(location.pathname == "/"){
     Render = <PanelLogin/>
+  }else{
+    menuModel.forEach(rota=>{
+      if(location.pathname == "/" + rota.link)
+        Render = <PanelLogin/>
+    })
   }
 
   // Renderiza
