@@ -3,13 +3,16 @@ import {PT,Language, EN} from "./Language"
 import React from "react"
 import { fetchApi } from "../controllers/Auth";
 
-export default class PanelLogin extends React.Component{
+export default class Register extends React.Component{
 
   constructor(props) {
     super(props);
     this.state = {
+      first_name:'',
+      last_name:'',
       email:'',
       pass:'',
+      pass_security:'',
       event:'',
       alert:{
         msg:'',
@@ -34,11 +37,15 @@ export default class PanelLogin extends React.Component{
     let data = {...this.state}
     delete data.alert;
     delete data.event;
-    fetchApi("/login",data)
+    fetchApi("/register",data)
     .then(res =>{
       this.setState({event:''});
       if(res.error)
-        this.handleMessage(res.error,"danger")
+        this.handleMessage(res.error,"danger");
+      if(res.success){
+        this.handleMessage(res.success,"success");
+        location.href = "/";
+      }
     });    
   }
 
@@ -47,7 +54,6 @@ export default class PanelLogin extends React.Component{
     state.alert.msg = message;
     state.alert.role = role;
     state.alert.display = 'block';
-
     this.setState(state);
   }
 
@@ -57,49 +63,52 @@ export default class PanelLogin extends React.Component{
     },200);
   }
 
-  render(){
- 
+  render(){ 
     return(
       <div id="__app_login" className="d-flex flex-column col-12 justify-content-center align-items-center">
+        <div className="logo-login" style={{width:180,padding:10, paddingBottom:20, paddingTop:0}}>  
+          <LogoSVG/>
+        </div>
 
         <div  className={`alert alert-${this.state.alert.role} msg py-1`} style={{display:this.state.alert.display}} role="alert">
           {this.state.alert.msg}
         </div>
 
-        <div  className="panel-login slide-down d-flex g-primary">        
-          <div className="d-flex flex-column px-5">
+        <div  className="panel-login slide-down d-flex g-primary px-5">        
+          <div className="d-flex flex-column">
 
-            <div className="logo-login">  
-              <LogoSVG/>
+            <div className="form-group d-flex flex-row py-3">
+              <input type="text" data-id="first_name" value={this.state.first_name}  onChange={this.handleChange} className="form-control px-3 radius font-20 p-2" placeholder={Language({en:"First Name", pt:"Nome"})}/>
+              <div className="px-2"></div>
+              <input type="text" data-id="last_name" value={this.state.last_name}  onChange={this.handleChange} className="form-control px-3 radius font-20 p-2" placeholder={Language({en:"Last Name", pt:"Sobrenome"})}/>
             </div>
-            <div className="form-group py-3">
+            
+            <div className="form-group">
               <input type="email" data-id="email" value={this.state.email}  onChange={this.handleChange} className="form-control px-3 radius font-20 p-2" placeholder={Language({en:"Email", pt:"Email"})}/>
             </div>
 
-            <div className="form-group">
+            <div className="form-group d-flex flex-row py-3">
               <input type="password" data-id="pass" value={this.state.pass} onChange={this.handleChange} className="form-control px-3 radius font-20 p-2" placeholder={Language({en:"Password", pt:"Senha"})}/>
+              <div className="px-2"></div>
+              <input type="password" data-id="pass_security" value={this.state.pass_security} onChange={this.handleChange} className="form-control px-3 radius font-20 p-2" placeholder={Language({en:"Repeat password", pt:"Repetir senha"})}/>
             </div>
 
-            <div className="d-grid gap-2 pt-3">
-              <button type="submit"  onClick={this.handleSubmit} data-event={this.state.event} className="btn btn-block btn-primary radius btn-lg">{Language({en:"Signin", pt:"Entrar"})}</button>
-            </div>
+            <div className="form-group d-flex flex-row py-3 col-12 justify-content-center align-items-center">
+              <div className="col-8">
+                <Language en="Already have registration " pt="Já possui cadastro "/>
+                <a href="/" className="text-center px-4 btn btn-primary btn-sm radius">
+                  <Language en="Login" pt="Login"/>
+                </a>
+              </div>
 
-            <a href="/recover" className="text-center py-3 link-primary">
-              <Language en="Recover Password" pt="Recuperar Senha"/>
-            </a>
-
-            <div className="text-center py-3">
-              <Language en="No registration " pt="Não possui cadastro "/>
-              <a href="/register" className="text-center px-3 btn btn-primary btn-sm radius">
-                <Language en="Register" pt="Cadastrar"/>
-              </a>
+              <div className="col-4 d-flex justify-content-end">
+                <button type="submit"  onClick={this.handleSubmit} data-event={this.state.event} className="btn btn-block btn-primary radius btn-lg px-5">
+                  {Language({en:"Register", pt:"Cadastrar"})}
+                </button>
+              </div>
             </div>
 
           </div>
-
-          <div className="d-flex flex-column login-banner">
-          </div>
-
         </div>
 
         <div id="languages" className="d-flex justify-content-center align-items-center">

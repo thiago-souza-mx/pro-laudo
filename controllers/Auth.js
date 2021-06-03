@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import ReactDOM from 'react-dom';
 import AppConfigModel from '../model/appConfig.model';
-const panelLogin = require('../components/Login');
+import PanelLogin from '../components/Login';
+import _404 from "../components/404";
+import Register from "../components/Register";
+import Recover from "../components/Recover";
+
+
 const packageJson = require('../package.json');
 const aplication  = packageJson.aplication;
 
@@ -76,12 +81,23 @@ const loadStyles = arr =>{
 // LOADLOGIN /////////////////////////////////////////////////
 
 const loadLogin = ()=>{
+
   const main = document.getElementById("__app");
-  ReactDOM.render( panelLogin.Login(startApp) , main ); 
+  let Render = <_404/>;
+
+  // Valida URL
+
+  if(location.pathname == "/register"){
+    Render = <Register/>;
+  }else if(location.pathname == "/recover"){
+    Render = <Recover/>;
+  }else if(location.pathname == "/"){
+    Render = <PanelLogin/>
+  }
+
+  // Renderiza
   
-  setTimeout(()=>{
-    document.querySelector('.panel-login').classList.remove('slide-down');
-  },200)
+  ReactDOM.render( Render , main );   
 }
 
 
@@ -98,13 +114,36 @@ const loadContent = ()=>{
 
  // STARTAPP //////////////////////////////////////////////////
 
- const startApp = ()=>{
-  sessionStorage.setItem('App-account','logado')
-  document.querySelector('.panel-login').classList.add('slide-down');
+const startApp = $user =>{
+  if(typeof $user === "object"){
+    sessionStorage.setItem('User-account', JSON.stringify($user));
+    sessionStorage.setItem('App-account','logado')
+    document.querySelector('.panel-login').classList.add('slide-down');
 
-  setTimeout(()=> loadContent(), 400 );
+    setTimeout(()=> loadContent(), 400 );
+  }
  }
 
+ // FETCH API //////////////////////////////////////////////////
+
+ export const fetchApi = async (rota, data) =>{
+  data.lang = JSON.parse(localStorage.getItem('App-config')).language;
+  return fetch(Base.api + rota,{
+    method: "POST",
+    body:JSON.stringify(data)
+  })
+  .then(res => res.json()
+    .then(res=>{
+      console.log(res)
+      if(res.success){
+        if(rota.indexOf('login') > -1)
+          startApp(res.success);
+      }
+      return res
+    })
+  )
+  
+ }
 
  // LOGOUT ////////////////////////////////////////////////////
 
@@ -118,6 +157,7 @@ const loadContent = ()=>{
     let appAccount = sessionStorage.getItem('App-account');
     if(appAccount)
       sessionStorage.removeItem('App-account');
+      sessionStorage.removeItem('User-account');
       document.getElementById('template').classList.add('hide');
       setTimeout(()=> loadLogin(), 500 );
  }

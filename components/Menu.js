@@ -1,4 +1,4 @@
-import {Navigate, Content} from '../controllers/Content'
+import {Navigate} from '../controllers/Content'
 import LogoSVG from './LogoSVG'
 
 const RecolheMenu = ()=>{

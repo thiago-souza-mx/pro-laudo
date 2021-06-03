@@ -1,0 +1,13 @@
+button{
+  &[data-event='load']{
+    position: relative;
+    &::before{
+      content: "\f3f4";
+      font-family: "Font Awesome 5 Pro";
+      animation: spin linear infinite 1s;
+      position: absolute;
+      left: 20px;
+    }
+  }
+}
+

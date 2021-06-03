@@ -49,8 +49,6 @@ export default function Editor () {
         ]
       }}
       language= 'en'
-       onInit={editor => {
-      }}
       onChange={(event, editor) => {
         const data = editor.getData()
         console.log({ event, editor, data }) 

@@ -135,7 +135,15 @@ html,body{
 @import "menu/menu-hide-show";
 @import "menu/hamburger";
 @import "componentes/qrcode";
+@import "componentes/button";
 
 
 //@import "dev";
+
+@keyframes spin { 
+  100% { 
+    -webkit-transform: rotate(360deg);
+    transform:rotate(360deg); 
+  } 
+}
 

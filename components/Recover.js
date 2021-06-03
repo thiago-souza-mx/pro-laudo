@@ -1,0 +1,7 @@
+export default function Recover(){
+  return(
+    <div>
+      <h1>404</h1>
+    </div>
+  )
+}
