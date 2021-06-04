@@ -4,7 +4,8 @@ const Action = {
   SelectTheme       : require('../helpers/Theme')['SelectTheme'],
   Expand            : require('../helpers/ToggleScreen')['toggleFullScreen'],
   ToggleMicrophone  : require('../helpers/Microphone')['ToggleMicrophone'],
-  GetQRcode         : require('../helpers/QRcode')['GetQRcode']
+  GetQRcode         : require('../helpers/QRcode')['GetQRcode'],
+  Modal             : require('../helpers/Modal')['Open']
 }
 const Button = { 
   Logout : ()=>{
@@ -17,7 +18,7 @@ const Button = {
 
   Account: ()=>{
     return(
-      <a className="action btn btn-sm ln-2 font-24 px-3" >
+      <a className="action btn btn-sm ln-2 font-24 px-3" onClick={()=> Action.Modal('Perfil')}>
         <i className="fal fa-user"></i>    
       </a>
     );

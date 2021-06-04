@@ -1,0 +1,26 @@
+.Perfil{
+  .avatar{
+    background: var(--ThemeColor) ;
+  }
+  .perfil-data{
+    ul{
+      list-style: none;
+      li{
+        padding: 10px 0;
+        font-size: 22px;
+        font-weight: 100;
+
+        label{
+          font-size: 16px;
+          background: var(--FontColor);
+          color: var(--PanelColor);
+          font-weight: bold;
+          padding: 10px;
+          margin-right: 20px; 
+          min-width: 70px;
+          border-radius: 4px 0 0 4px;
+        }
+      }
+    }
+  }
+}

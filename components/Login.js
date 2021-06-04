@@ -69,7 +69,7 @@ export default class PanelLogin extends React.Component{
         <div  className="panel-login slide-down d-flex g-primary">        
           <div className="d-flex flex-column px-5">
 
-            <div className="logo-login">  
+            <div className="logo-login logo-white">  
               <LogoSVG/>
             </div>
             <div className="form-group py-3">
@@ -81,28 +81,28 @@ export default class PanelLogin extends React.Component{
             </div>
 
             <div className="d-grid gap-2 pt-3">
-              <button type="submit"  onClick={this.handleSubmit} data-event={this.state.event} className="btn btn-block btn-primary radius btn-lg">{Language({en:"Signin", pt:"Entrar"})}</button>
+              <button type="submit"  onClick={this.handleSubmit} data-event={this.state.event} className="btn btn-block btn-primary radius btn-lg">{Language({en:"Sign In", pt:"Entrar"})}</button>
             </div>
 
             <a href="/recover" className="text-center py-3 link-primary">
-              <Language en="Recover Password" pt="Recuperar Senha"/>
+              <Language en="Forgot your password?" pt="Esqueceu sua senha?"/>
             </a>
 
             <div className="text-center py-3">
-              <Language en="No registration " pt="Não possui cadastro "/>
-              <a href="/register" className="text-center px-3 btn btn-primary btn-sm radius">
-                <Language en="Register" pt="Cadastrar"/>
+              <Language en="Don’t have an account? " pt="Não tem uma conta? "/>
+              <a href="/register" className="text-center px-3 btn btn-outline-primary btn-sm radius">
+                <Language en="Sign Up" pt="Criar Conta"/>
               </a>
             </div>
 
           </div>
 
-          <div className="d-flex flex-column login-banner">
-          </div>
+          {/*<div className="d-flex flex-column login-banner">
+          </div>*/}
 
         </div>
 
-        <div id="languages" className="d-flex justify-content-center align-items-center">
+        <div id="languages" className="d-flex justify-content-center align-items-center text-white">
           <Language en="Languages" pt="Idiomas"/>
           <div className="lang-btn">
             <PT/>

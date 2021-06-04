@@ -95,7 +95,7 @@ const loadLogin = ()=>{
     Render = <PanelLogin/>
   }else{
     menuModel.forEach(rota=>{
-      if(location.pathname == "/" + rota.link)
+      if(location.pathname == "/Home" || location.pathname == "/" + rota.link)
         Render = <PanelLogin/>
     })
   }

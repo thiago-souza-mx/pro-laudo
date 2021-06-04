@@ -17,12 +17,13 @@
   .panel-login{
     z-index: 2;
     overflow: hidden;
-    background: #FFF;
+    background: rgba(0, 0, 0, 0.8);
     padding: 20px 0px;
     border-radius: 10px;
     box-shadow: 1px 18px 15px -10px rgba(black,0.3);
     margin-top:0;
     transition: 0.4s margin-top;
+    color: #fff;
     &.slide-down{
       transition: 0.3s margin-top;
       margin-top: 200%;
@@ -34,6 +35,11 @@
         width: 100%;
         padding: 10px;
       }
+    }
+
+    .form-control {
+      background-color: #00000050;
+      color:#FFF;
     }
 
     .login-banner{
@@ -51,6 +57,17 @@
         background-color: darken(#0078b6,10%);
       }
     }
+
+    .btn-outline-primary {
+        color: #0078b6;
+        border-color: #0078b6;
+        border-width: 1.5px ;
+        &:hover{
+          background-color: #0078b6;
+          color: #fff;
+        }
+    }
+
   }
 }
 

@@ -66,15 +66,16 @@ export default class Register extends React.Component{
   render(){ 
     return(
       <div id="__app_login" className="d-flex flex-column col-12 justify-content-center align-items-center">
-        <div className="logo-login" style={{width:180,padding:10, paddingBottom:20, paddingTop:0}}>  
-          <LogoSVG/>
-        </div>
 
-        <div  className={`alert alert-${this.state.alert.role} msg py-1`} style={{display:this.state.alert.display}} role="alert">
+        <div  className={`alert alert-${this.state.alert.role} msg py-1`} style={{display:this.state.alert.display, zIndex:100}} role="alert">
           {this.state.alert.msg}
         </div>
 
-        <div  className="panel-login slide-down d-flex g-primary px-5">        
+        <div className="logo-login logo-white" style={{width:180,padding:10, paddingBottom:0, paddingTop:0, zIndex:10, marginBottom:-60, marginTop:20}}>  
+          <LogoSVG/>
+        </div>
+
+        <div  className="panel-login slide-down d-flex g-primary px-5" style={{paddingTop:70}}>        
           <div className="d-flex flex-column">
 
             <div className="form-group d-flex flex-row py-3">
@@ -94,16 +95,16 @@ export default class Register extends React.Component{
             </div>
 
             <div className="form-group d-flex flex-row py-3 col-12 justify-content-center align-items-center">
-              <div className="col-8">
-                <Language en="Already have registration " pt="Já possui cadastro "/>
-                <a href="/" className="text-center px-4 btn btn-primary btn-sm radius">
-                  <Language en="Login" pt="Login"/>
+              <div className="col-7">
+                <Language en="Already have registration? " pt="Já possui cadastro? "/>
+                <a href="/" className="text-center px-4 btn btn-outline-primary btn-sm radius">
+                  <Language en="Sign In" pt="Entrar"/>
                 </a>
               </div>
 
-              <div className="col-4 d-flex justify-content-end">
+              <div className="col-5 d-flex justify-content-end">
                 <button type="submit"  onClick={this.handleSubmit} data-event={this.state.event} className="btn btn-block btn-primary radius btn-lg px-5">
-                  {Language({en:"Register", pt:"Cadastrar"})}
+                  {Language({en:"Sign up", pt:"Criar Conta"})}
                 </button>
               </div>
             </div>
@@ -111,7 +112,7 @@ export default class Register extends React.Component{
           </div>
         </div>
 
-        <div id="languages" className="d-flex justify-content-center align-items-center">
+        <div id="languages" className="d-flex justify-content-center align-items-center text-white">
           <Language en="Languages" pt="Idiomas"/>
           <div className="lang-btn">
             <PT/>

@@ -4,7 +4,7 @@
   .cls-4{fill:#1e50b0;}
   .cls-5{fill:#7f3d94;}
   .cls-6{fill:#4b3885;}
-  .cls-7{fill:#050a5f;}
+  .cls-7{fill:#050da3;}
 }
 
 #applogo{
@@ -35,11 +35,11 @@
         transform: scale(0);
       }
     }
+  }
+}
 
-    &.logo-white{
-      path{
-        //fill: #FFF!important;
-      }
-    }
+.logo-white{
+  path{
+    fill: #FFF!important;
   }
 }
