@@ -10,6 +10,8 @@
       position: relative;
       transition: 0.3s all;
       background: #FFF;
+      z-index: 9999;
+      
       .theme-dark &{
         background: var(--ThemeColor);
       }
