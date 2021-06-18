@@ -24,7 +24,12 @@
 
 .palette{
   position: relative;
-  z-index: 99;
+  z-index: 1;
+  transition: z-index 0s 0.3s!important;
+  &.open{
+    transition: z-index 0s!important;
+    z-index: 9999;
+  }
 }
 .palette-themes{
   position: absolute;

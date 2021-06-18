@@ -1,6 +1,51 @@
 .Perfil{
+  &#modals{
+    perspective: 1000px;
+    .app_modal{
+
+        &.unflip{
+          transition: 0.8s transform;
+        }
+        &.flip{
+          transition: 0.8s transform;
+          transform: rotateY(180deg) scale(1);        
+          transform-style: preserve-3d;
+        }
+      &.close{
+        transform: rotateY(180deg) scale(0.7);
+      }
+    }
+  }
   .avatar{
     background: var(--ThemeColor) ;
+  }
+  .edit{
+    .perfil-data{
+      ul{
+        li{
+          label{
+            font-size: 9px;
+            background: var(--PanelColor);
+            color: var(--FontColor);
+            font-weight: normal;
+            font-style: italic;
+            padding: 0 10px;
+            position: absolute;
+            z-index: 10;
+            margin:-8px 0 0 15px;
+            min-width: initial;
+          }
+          input{
+            background-color: var(--PanelColor);
+            color: var(--FontColor);
+            border: 1px solid;
+            border-radius: 50px;
+            padding: 8px 10px 8px 20px;
+            position: relative
+          }
+        }
+      }
+    }
   }
   .perfil-data{
     ul{
@@ -19,6 +64,12 @@
           margin-right: 20px; 
           min-width: 70px;
           border-radius: 4px 0 0 4px;
+        }
+
+        input[disabled]{
+          background-color: var(--PanelColor);
+          color: var(--FontColor);
+          border: none;
         }
       }
     }
