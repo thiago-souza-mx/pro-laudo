@@ -52,6 +52,14 @@ export const LoadContent = props=>{
 
   if(props.href == '')
   props.href = 'Home'; 
+
+  document.getElementById("view").classList.forEach(cls =>{
+    if(cls.indexOf("view-")> -1){
+      document.getElementById("view").classList.remove(cls)
+    }
+  })
+  document.getElementById("view").classList.add("view-"+props.href.toLowerCase())
+ 
   document.getElementById(props.href).querySelector('.menu-link').classList.add('active');
 
   Content(props);
@@ -66,8 +74,15 @@ export const Navigate = props =>{
   }
   
   if(props.href == '')
-  props.href = 'Home';
+    props.href = 'Home';
 
+  document.getElementById("view").classList.forEach(cls =>{
+    if(cls.indexOf("view-")> -1){
+      document.getElementById("view").classList.remove(cls)
+    }
+  })
+
+  document.getElementById("view").classList.add("view-"+props.href.toLowerCase())
   el.target.closest('a').classList.add('active');
   window.history.pushState("non-navigate", props.href, `/${props.href}`);
 

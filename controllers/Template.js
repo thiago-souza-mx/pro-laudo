@@ -4,7 +4,6 @@ import menuSchema  from "../model/menu.model";
 import React, { useEffect } from 'react';
 import {LoadContent}  from "./Content";
 
-
 const Template = props=>{
   useEffect(() => { 
 

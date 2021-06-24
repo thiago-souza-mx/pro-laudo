@@ -1,5 +1,6 @@
 import QRCode from 'qrcode'
 import ReactDOM from 'react-dom';
+import { Insert } from '../components/Editor';
 const crypto = require("crypto");
 const opts = {
   errorCorrectionLevel: 'H',
@@ -62,9 +63,6 @@ const setPusher = async ()=>{
 }
 
 const addSocket = (code)=>{  
-  let state = "";
-
-  
   Pusher.logToConsole = true;
   pusher = new Pusher('9bddcbfe0d2b4ce610cd', {
     cluster: 'us2'
@@ -77,9 +75,7 @@ const addSocket = (code)=>{
     if(msg == code){
       destroy();
     }else{
-      state = document.querySelector('.ck-editor__editable').innerText;
-      state = state.replace('Comece a escrever seu laudo','');
-      document.querySelector('.ck-editor__editable').ckeditorInstance.setData(state+" "+ msg);
+      Insert( msg );
     }
   });   
 }

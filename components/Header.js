@@ -1,3 +1,6 @@
+import 'regenerator-runtime/runtime';
+import { Speech , state } from "../controllers/Speech";
+
 const Action = {
   Logout            : require('../controllers/Auth')['Logout'],
   TogglePalette     : require('../helpers/Theme')['TogglePalette'],
@@ -63,9 +66,13 @@ const Button = {
   },
 
   Microphone: ()=>{
+    
+    Speech();
     return(
       <div data-microphone="button" className="radius border border-1 border-dark">
-        <button className="btn btn-primary rounded-circle mic" onClick={Action.ToggleMicrophone}>
+        <button className="btn btn-primary rounded-circle mic" onClick={(e)=>{
+          Action.ToggleMicrophone(e, state );
+        }}>
           <i class="fas fa-microphone-alt"></i>
         </button>
         <span className="mx-4" data-microphone="message">Clique no microfone ao lado para começar a ditar!</span>
@@ -74,7 +81,7 @@ const Button = {
   },
   QRcode: ()=>{
     return(
-      <div data-microphone="button" className="radius border border-1 border-dark">
+      <div data-microphone="button" className="radius">
         <button className="btn btn-primary rounded-circle mic" onClick={Action.GetQRcode}>
           <i class="fas fa-qrcode"></i>
         </button>

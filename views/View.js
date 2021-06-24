@@ -3,10 +3,10 @@ import Header from '../components/Header';
 
 const View = props =>{
 
-  let view_id = "view-"+props.page;
+  let view_id = "view";
  
   return(
-    <div id={view_id} className={props.page + " view"}>
+    <div id={view_id} className={"view-"+props.page + " view"}>
       <Header/>
       <section id="content">
         <ContentView page={props.page}>
