@@ -69,13 +69,13 @@ export default class Perfil extends React.Component{
         <div className="front d-flex col-12 flex-1">
 
           <div onClick={this.handleDestruct} className="close">
-            <i class="far fa-times-circle font-22"></i>
+            <i className="far fa-times-circle font-22"></i>
           </div>
           <div className="d-flex col-12 flex-1 panel-flip">
 
-            <div className="col-3 col-md-2 text-center avatar p-3 d-flex flex-column">
+            <div className="col-3 col-md-2 text-center avatar aside-modal p-3 d-flex flex-column">
               <div className="flex-1">
-                <i class="fad fa-user-circle font-100"></i>
+                <i className="fad fa-user-circle font-100"></i>
                 <div className="first-name">
                   {this.state.first_name}
                 </div>
@@ -113,13 +113,13 @@ export default class Perfil extends React.Component{
         <div className="back d-flex col-12 flex-1 edit">
       
           <div onClick={()=> this.handleDestruct('close')} className="close">
-            <i class="far fa-times-circle font-22"></i>
+            <i className="far fa-times-circle font-22"></i>
           </div>
           <div className="d-flex col-12 flex-1 panel-flip">
 
-            <div className="col-3 col-md-2 text-center avatar p-3 d-flex flex-column">
+            <div className="col-3 col-md-2 text-center avatar aside-modal p-3 d-flex flex-column">
               <div className="flex-1">
-                <i class="fad fa-edit font-100"></i>
+                <i className="fad fa-edit font-100"></i>
               </div>
 
               <button className={`btn btn-outline-${this.state.theme != 'dark' ? 'info' : 'primary' }`} onClick={this.handleSubmit}>

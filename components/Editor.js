@@ -63,28 +63,38 @@ export default function Editor_ () {
 export function Insert( msg , setData ){
 
   let state = document.querySelector('.ck-editor__editable').innerText;
-  let editor = document.querySelector('.ck-editor__editable').ckeditorInstance;
+  global._CKEditor = document.querySelector('.ck-editor__editable').ckeditorInstance;
   
   if( msg === false ){
-   return  editor.setData(setData);
+   return  _CKEditor.setData(setData);
   }
   if( state.trim() == 'Comece a escrever seu laudo' ){
-    editor.setData("");
+    _CKEditor.setData("");
   }
 
-  let data = editor.getData()
+  let data = _CKEditor.getData()
   console.log(data)
+
+  if(data.indexOf('ƒ(') > -1){
+    let str1 = data.split('ƒ(');
+    let str2 = str1[1].split(')');
+    let str = str2[0];
+
+    msg = data.replace(`ƒ(${str})`,`ƒ(${msg})`);
+    return _CKEditor.setData(msg);
+  }
+
   if(data.indexOf('|') > -1){
     let str1 = data.split('|');
     let str2 = str1[1].split('|');
     let str = str2[0];
 
     msg = data.replace(`|${str}|`,msg);
-    return editor.setData(msg);
+    return _CKEditor.setData(msg);
   }
 
-  editor.model.change( writer => {
-    writer.insertText( msg, editor.model.document.selection.getLastPosition(), 'in');
+  _CKEditor.model.change( writer => {
+    writer.insertText( msg, _CKEditor.model.document.selection.getLastPosition(), 'in');
   });
 
 }

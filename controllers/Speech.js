@@ -3,6 +3,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import { Insert } from '../components/Editor';
 
 export const state = {
+  active : true,
   noteContent : '',
   start: false,
   stop: false,
@@ -20,28 +21,31 @@ const action = {
 
 
 const estado = {
+
   set newtext(valor) {
-  if(action.neww !== false)
-    action[neww](valor);
-    console.log('ativar')
-      this._newtext = valor;
-  },
-  get newtext() {
-      return this._newtext;
+    if(action.neww !== false)
+      action[neww](valor);
+
+    this._newtext = valor;
   },
 
-set oldtext(valor) {
-  if(action.old !== false)
-    action.old(valor);
-  
-      this._oldtext = valor;
+  get newtext() {
+    return this._newtext;
   },
+
+  set oldtext(valor) {
+    if(action.old !== false)
+      action.old(valor);
+  
+    this._oldtext = valor;
+  },
+
   get oldtext() {
       return this._oldtext;
-  },
-  
+  },  
+
   _newtext: '',
-_oldtext: '',
+  _oldtext: '',
 
 };
 
@@ -57,8 +61,6 @@ const closetab = ()=> { state.tab.close(); return ;}
 const exit = ()=> {window.close(); return ;}
 
 const _alert = ()=>{ alert(); return ;}
-
-
 
 function download(filename, text) {
     var pom = document.createElement('a');
@@ -77,42 +79,54 @@ function download(filename, text) {
 }
 
 const calculo = valor =>{
-	console.log(valor)
-	try{
-		let result = eval(valor.replaceAll("x","*"))
-		result = result % 1 ? result.toFixed(2) : result;
-		action.func = false
-		valor = document.querySelector('#textarea dd').innerHTML;
-		result = document.querySelector('#textarea').innerHTML.replace("<dd>"+valor+"</dd>"," "+result)
-
-		return result
-	}catch(e){
-		return false
-	}
+  console.log(valor);
+  if(valor.trim() != 'ƒ()'){
+    try{
+      let result = eval(tratament(valor))
+      result = result % 1 ? result.toFixed(2) : result;
+      action.func = false
+      valor = _CKEditor.getData().replace(`ƒ(|${valor}|)`,'')
+      _CKEditor.setData(`${valor}`);
+      return `${result}`;
+      
+      
+    }catch(e){
+      return false
+    }
+  }
+  return valor
 }
 
 const limpar = (n) =>{
-	n = n ? n : 1;
-	
-	let text = document.querySelector('#textarea')
-	if(text != ''){		//
+  if( n ){
+    n = n ? n : 1;
+    
+    let text = _CKEditor.getData();
+    if(text != ''){	
 
-			let words = text.innerHTML.trim().split(/\s/);
-			console.log(words);
-			words = (words.splice( 0, (words.length - n))).join(' ') 
-			text.innerHTML = words
-		//}
+        let words = text.trim().split(/\s/);
+        console.log(words);
+        words = (words.splice( 0, (words.length - n))).join(' ') 
+        _CKEditor.setData(`${words} ||`);
 
-	}else{
-		text.innerHTML = ''
-	}
+    }else{
+      _CKEditor.setData("");
+    }
+  }else{
+    let text = _CKEditor.getData();
+    if(text != ''){	
+
+        text = text.replace(action.old,'')
+        _CKEditor.setData(`${text}`);
+    }
+  }
 }
 
-const limparTudo = () => document.querySelector('#textarea').innerHTML = ""
+const limparTudo = () => _CKEditor.setData("");
 
 
 const tipoCalculo = ()=>{
-	return "<dd></dd>";
+	return "ƒ()";
 }
 const Commands={
 	"título": ()=>{},
@@ -130,13 +144,16 @@ const Commands={
 	"quebrar linha" : ()=> "</br>",
 	"parágrafo" : ()=> "</br>",
 	"parágrafo parágrafo" : ()=> "</br></br>", "dois parágrafos" : ()=> "</br></br>", 	"2 parágrafos" : ()=> "</br></br>",
-	"salvar" : ()=> setTimeout(()=> download("laudo",  document.querySelector('.ck-editor__editable').ckeditorInstance.getData()),600),
+	"salvar" : ()=> setTimeout(()=> download("laudo",  _CKEditor.getData()),600),
 	"cálculo" : ()=> {action.func = calculo; return tipoCalculo(); },
-	"limpar um" :()=>limpar(2), "limpar 1" :()=>limpar(2),
-	"limpar 2" : ()=>limpar(3),	"limpar dois" : ()=>limpar(3),
+	"calculo" : ()=> {action.func = calculo; return tipoCalculo(); },
+	"calcule" : ()=> {action.func = calculo; return tipoCalculo(); },
+	"calcular" : ()=> {action.func = calculo; return tipoCalculo(); },
+	"limpar um" :()=>limpar(3), "limpar 1" :()=>limpar(3),
+	"limpar 2" : ()=>limpar(4),	"limpar dois" : ()=>limpar(4),
 	"limpar 3" : ()=>limpar(5),	"limpar três" : ()=>limpar(5),
-	"limpar 4" : ()=>limpar(5),	"limpar quatro" : ()=>limpar(5),
-	"limpar tudo" : limparTudo,
+	"limpar 4" : ()=>limpar(6),	"limpar quatro" : ()=>limpar(6),
+	"limpar tudo" : limparTudo, "limpar" : limpar,
 	"traço" : ()=> "-",
 }
 
@@ -149,21 +166,28 @@ function Agent(text){
 	}
 }
 
+export const InsertApp = msg =>{
+  callbackTranscript({app : msg});
+}
+
 const callbackTranscript = text =>{
-  if(text.transcript != ''){
-    state.noteContent =  text.transcript;
+  if( text.transcript != '' || text.app ){
+
+    if(!document.getElementById('view').classList.contains('view-home')){
+      text.resetTranscript();
+      return 
+    }
+
+    state.noteContent =  text.transcript || text.app;
     console.log(text); 
-    
+
     if(state.start){      
       Insert(`|${state.noteContent}|`);
-      if(text.finalTranscript != ''){
-        text.resetTranscript();
+      if( text.finalTranscript != '' || text.app ){
+        if(!text.app) text.resetTranscript();
         estado.newtext = state.noteContent;
-        if(action.func){
-          action.func( state.noteContent );
-        }
 
-        let agent = Agent( state.noteContent );
+         let agent = Agent( state.noteContent );
 		
           if(agent !== false){
             if(typeof agent == "string")
@@ -172,13 +196,21 @@ const callbackTranscript = text =>{
               state.noteContent = "";
           }
 
+          if(action.func){
+            let res = action.func( state.noteContent );
+            if(typeof res == "string")
+              state.noteContent = res;
+            else
+              state.noteContent = "";
+          }
+
         setTimeout( ()=>{
           if(action.command){
             let command = action.command;
-            action.command = false;
+            action.old = action.command = false;
             return Insert(`${command} ||`);
           }
-          console.log(action.command);
+          action.old = state.noteContent;
           Insert(`${state.noteContent} ||`);
         },300);
       }
@@ -186,12 +218,52 @@ const callbackTranscript = text =>{
   }
 }
 
+const tratament = exp =>{
+  let res;
+
+  if(exp.indexOf('raiz')>-1){
+    
+    var numbers = exp.replace(/[^0-9]/g,'');
+    return Math.sqrt(parseInt(numbers));
+  }
+  res = exp.replace(/x|vezes/g,"*").replaceAll("dividido por","/")
+  return res
+}
+
 export function  Speech(){
   const [message, setMessage] = useState('')
   const commands = [
     {
+      command: 'cálculo *',
+      callback: (exp) =>{ action.command = eval(tratament(exp));  }
+    },
+    {
+      command: 'calcule *',
+      callback: (exp) =>{ action.command = eval(tratament(exp));  }
+    },
+    {
+      command: 'calcular *',
+      callback: (exp) =>{ action.command = eval(tratament(exp));  }
+    },
+    {
       command: 'título *',
       callback: (title) =>{ action.command = `<h1>${title}</h1>` }
+    },
+    {
+      command: '(*) parágrafo (*)',
+      callback: (text1, text2) =>{ action.command = `${text1 ? text1 : ''}<br> ${text2 ? text2 : ''}` }
+    },
+    {
+      command: '(*) vírgula (*)',
+      callback: (text1, text2) =>{ action.command = `${text1 ? text1 : ''}, ${text2 ? text2 : ''}` }
+    },
+    {
+      command: '(*) ponto final (*)',
+      callback: (text1, text2) =>{ action.command = `${text1 ? text1 : ''}. ${text2 ? text2 : ''}` }
+    },
+    {
+      command: '(*) reticências (*)',
+      callback: (text1, text2) =>{ action.command = `${text1 ? text1 : ''}... ${text2 ? text2 : ''}` }
     },
     {
       command: 'The weather is :condition today',
@@ -229,14 +301,8 @@ export function  Speech(){
     return null
   }
 
-  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    return null
-  }
-
   state.start = ()=> SpeechRecognition.startListening({ continuous: true });
   state.stop = SpeechRecognition.stopListening;
-  console.log("INICIOU O SPEECH");
-  console.log(state);
 
 }
 

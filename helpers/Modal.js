@@ -1,6 +1,18 @@
 import { createElement } from 'react';
 import ReactDOM from 'react-dom';
-import Perfil from "../modals/Perfil";
+
+
+
+const Modals = {
+  Save : require("../modals/Save")['default'],
+  Perfil : require("../modals/Perfil")['default'],
+}
+
+function Modal(props) {
+// Correto! O tipo JSX pode ser uma variável começando com letra maiúscula.
+const StoryModals = Modals[props.render];
+return <StoryModals />;
+}
 
 export const Open = name =>{
   const main = document.getElementById("__app");
@@ -17,7 +29,7 @@ export const Open = name =>{
   modals.addEventListener("click", (e)=> e.stopPropagation())
 
   ReactDOM.render(
-    <Perfil/>
+    <Modal render={name}/>
     , modals
   );
 }

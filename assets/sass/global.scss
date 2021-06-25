@@ -107,7 +107,7 @@ html,body{
 }
 
 .radius{
-  border-radius: 30px !important;
+  border-radius: 50px !important;
 }
 
 .btn{
@@ -117,6 +117,16 @@ html,body{
 }
 .flex-1{
   flex:1!important;
+}
+
+.outer-input{
+  position: relative;
+  .inner-input{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .preload{

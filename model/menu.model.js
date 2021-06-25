@@ -12,7 +12,7 @@ const menuModel = [
     class: ''
   },
   {
-    name:'Laudos',
+    name:'Laudos Salvos',
     link:'Reports',
     icon:'file-medical',
     class: ''

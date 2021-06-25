@@ -4,6 +4,64 @@
   max-height: calc(100% - 130px);
   transition: 0.3s all;
 
+  & .editor{
+    position: relative;
+    .editor-actions{
+      position: absolute;
+      bottom:30px;
+      right: 30px;
+
+      .action{
+        
+        &.open{
+          ul{
+            
+            @include open();
+          }
+
+        }
+
+        ul{
+          transform-origin: right!important;
+          background: var(--PanelColor);
+          position: absolute;
+          bottom:0;
+          right: 20px;
+          padding: 20px;
+          min-width: 170px;
+          list-style: none;
+          border-radius: 10px;
+          box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+          @include close();
+
+
+          li{
+            padding: 10px;
+            font-size: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+
+            background: rgba(0, 0, 0, 0.1);
+            .theme-dark &{
+              background: rgba(white, 0.1);
+            }
+
+            &:last-child{
+              margin-bottom: 0;
+            }
+            i{
+              padding-right: 10px;
+            }
+          }
+        }
+        &.save{
+          
+        }
+      }
+    }
+  }
   .comprime-menu &{
     width: calc(100% - #{$recolheMenuSize} - 30px );
   }

@@ -1,6 +1,8 @@
 import QRCode from 'qrcode'
 import ReactDOM from 'react-dom';
-import { Insert } from '../components/Editor';
+//import { Insert } from '../components/Editor';
+import { InsertApp } from '../controllers/Speech';
+
 const crypto = require("crypto");
 const opts = {
   errorCorrectionLevel: 'H',
@@ -75,7 +77,7 @@ const addSocket = (code)=>{
     if(msg == code){
       destroy();
     }else{
-      Insert( msg );
+      InsertApp( msg )
     }
   });   
 }

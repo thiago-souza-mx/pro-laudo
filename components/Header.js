@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 import { Speech , state } from "../controllers/Speech";
 
 const Action = {
@@ -46,7 +45,7 @@ const Button = {
   PaletteTheme: ()=>{
     return(
       <a className="action palette btn btn-sm ln-2 font-24 px-3"  onClick={Action.TogglePalette}> 
-        <i class="fal fa-palette"></i>
+        <i className="fal fa-palette"></i>
         <div className="palette-themes">
           <ul onClick={Action.SelectTheme}>
             <li data-theme="destaq-light-blue"></li>
@@ -73,7 +72,7 @@ const Button = {
         <button className="btn btn-primary rounded-circle mic" onClick={(e)=>{
           Action.ToggleMicrophone(e, state );
         }}>
-          <i class="fas fa-microphone-alt"></i>
+          <i className="fas fa-microphone-alt"></i>
         </button>
         <span className="mx-4" data-microphone="message">Clique no microfone ao lado para começar a ditar!</span>
       </div>
@@ -83,7 +82,7 @@ const Button = {
     return(
       <div data-microphone="button" className="radius">
         <button className="btn btn-primary rounded-circle mic" onClick={Action.GetQRcode}>
-          <i class="fas fa-qrcode"></i>
+          <i className="fas fa-qrcode"></i>
         </button>
         <div id="qrcode">
           <div className="code"></div>

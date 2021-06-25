@@ -1,12 +1,64 @@
 import Editor_ from "./Editor";
+const Modal  = require('../helpers/Modal');
 
 const Home =()=>{
+
+  function ToggleSave(e){
+    e.stopPropagation();
+    let save = e.target.closest('.action');
+
+    if(save.classList.contains('open'))
+      save.classList.remove('open');
+    else
+      save.classList.add('open');
+  }
+
+  function SaveCloud(){
+    Modal.Open('Save')
+  }
+
+  const DownloadTxtFile = () => {
+    const element = document.createElement("a");
+    const file = new Blob([document.querySelector('.ck-editor__editable').ckeditorInstance.getData()], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "myFile.txt";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }
+
+  const CopyTxt = ()=>{
+    navigator.clipboard.writeText(document.querySelector('.ck-editor__editable').ckeditorInstance.getData());
+  }
+
   return (
     <div id="__home">
 
       <div id="editor" className="d-flex flex-row h-100">
-        <div className="col-9 d-flex flex-column h-100">
+        <div className="col-9 d-flex flex-column h-100 editor">
           <Editor_/>
+          <div className="editor-actions">
+            <div className="action save">
+              <button className="btn btn-primary radius" onClick={(e)=>ToggleSave(e)}>
+                <i className="fas fa-save"></i>
+              </button>
+              <ul>
+                <li onClick={SaveCloud}>
+                  <i className="fas fa-cloud"></i>
+                  Salvar
+                </li>
+                <li onClick={DownloadTxtFile}>
+                  <i className="fas fa-save"></i>
+                  Salvar no PC
+                </li>
+
+                <li onClick={CopyTxt}>
+                  <i className="fas fa-copy"></i>                  
+                  Copiar
+                </li>
+              </ul>
+            </div>
+
+          </div>
         </div>
 
         <div id="__list_actions" className="col-3">
