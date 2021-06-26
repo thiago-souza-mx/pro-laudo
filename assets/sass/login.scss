@@ -1,6 +1,11 @@
 #__app_login{
   overflow-y: hidden;
+  #tsparticles{
 
+    canvas{     
+      animation: filterin 80s linear infinite;
+    }    
+  }
   #languages{
     position: absolute;
     bottom: 20px;

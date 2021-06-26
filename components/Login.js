@@ -2,6 +2,7 @@ import LogoSVG from "./LogoSVG"
 import {PT,Language, EN} from "./Language"
 import React from "react"
 import { fetchApi } from "../controllers/Auth";
+import Particles from 'react-particles-js';
 
 export default class PanelLogin extends React.Component{
 
@@ -18,6 +19,7 @@ export default class PanelLogin extends React.Component{
       }
     };
 
+    this.particlesModel = require("../model/particles.model");
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
@@ -61,7 +63,19 @@ export default class PanelLogin extends React.Component{
  
     return(
       <div id="__app_login" className="d-flex flex-column col-12 justify-content-center align-items-center">
+        
+        <Particles 
+          style={{    
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            top: 0,
+            left: 0,
+          }}
 
+          params={this.particlesModel.json}
+        />
+        
         <div  className={`alert alert-${this.state.alert.role} msg py-1`} style={{display:this.state.alert.display}} role="alert">
           {this.state.alert.msg}
         </div>

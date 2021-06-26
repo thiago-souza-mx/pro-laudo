@@ -216,6 +216,38 @@ html,body{
     }
 }
 
+@keyframes filterin{
+    0%{
+      filter: hue-rotate(0deg) blur(5px);
+    }
+    25%{
+      filter: hue-rotate(45deg) blur(5px);
+    }
+    50%{
+      filter: hue-rotate(90deg) blur(8px);
+    }
+
+    55%{
+      filter: hue-rotate(90deg) blur(8px);
+    }
+
+    60%{
+      filter: hue-rotate(90deg) blur(12px);
+    }
+    65%{
+      filter: hue-rotate(90deg) blur(5px);
+    }
+    70%{
+      filter: hue-rotate(90deg) blur(6px);
+    }
+    75%{
+      filter: hue-rotate(180deg) blur(5px);
+    }
+    100%{
+      filter: hue-rotate(360deg) blur(5px);
+    }
+}
+
 @keyframes preload {
 	0% {
 		background-position: 0% 50%;
