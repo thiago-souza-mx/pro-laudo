@@ -1,5 +1,6 @@
 import React from 'react';
-import Header from '../components/Header';
+import Header from '../template/Header';
+import Footer from '../template/Footer';
 
 const View = props =>{
 
@@ -13,11 +14,7 @@ const View = props =>{
           {props.children}
         </ContentView>
       </section>
-      <footer> 
-        <span className="label-view">Footer</span>
-        Footer
-        <div id="loadPages"></div>
-      </footer>
+      <Footer/>
     </div>
   );
 

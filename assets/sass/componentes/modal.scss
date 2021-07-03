@@ -130,36 +130,3 @@
   transform: rotateY(-180deg);
 
 }
-
-.multi-select{
-  .react-select__control , .react-select__control{
-
-    background-color: var(--PanelColor);
-    color: var(--FontColor);
-    border: 1px solid;
-    border-radius: 50px;
-    padding: 8px 10px 8px 20px;
-    position: relative;
-
-  }
-
-  .react-select__menu{    
-    background-color: var(--ThemeColor);
-    color: var(--FontColor);
-    z-index: 1000;
-  }
-
-  .react-select__single-value{
-    color: var(--FontColor);
-  }
-  
-  .react-select__menu-list{ 
-    .react-select__option{
-      background-color: var(--ThemeColor);
-
-      &:hover{
-        background-color: var(--PanelColor);
-      }
-    }
-  }
-}

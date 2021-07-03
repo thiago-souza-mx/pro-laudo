@@ -1,5 +1,5 @@
-import LogoSVG from "./LogoSVG"
-import {PT,Language, EN} from "./Language"
+import LogoSVG from "../components/LogoSVG"
+import {PT,Language, EN} from "../components/Language"
 import React from "react"
 import { fetchApi } from "../controllers/Auth";
 import Particles from 'react-particles-js';
@@ -18,7 +18,7 @@ export default class PanelLogin extends React.Component{
         display:'none'
       }
     };
-
+    
     this.particlesModel = require("../model/particles.model");
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

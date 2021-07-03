@@ -1,0 +1,26 @@
+## FUNÇÕES ##
+	No pausar pegar a sentença e remover apenas a palavra pausar e jogar a sentença na tela e netão pausar
+
+  Ao copiar o texto acionar um evento alert do tipo flash. ( Posibilidade de vincular uma figura do neemo ao evento )
+
+## INTERFACE ##
+  Na tela de configurações pessoais, exibir os preset de idiomas separadamente para opção da interface 
+  e opção do reconhecimento de voz.
+  ex:
+
+  * Idomoma da interface => EN ou PT
+  * Idomoma da Reconhecimento de Voz => EN ou PT
+
+
+  Exibir status de eventos na área de texto do microfone.
+  Criar eventos de voz em resposta a determinado comandos.
+
+  Animar botão do microfone quando estiver ativo.
+
+
+## BUSINES ##
+  salvamento automático em tempo real no storage e salvar a cada minuto no servidor.
+
+
+
+  

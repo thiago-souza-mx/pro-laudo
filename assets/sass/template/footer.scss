@@ -1,10 +1,14 @@
 footer{
-  padding: 10px;
+  padding: 5px;
+  padding-right: 50px;
   background:var(--PanelColor);
   color:var(--FontColor);
   height: 100%;
   max-height: 40px;
   margin: 0 5px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   position: relative;
 
   #loadPages{

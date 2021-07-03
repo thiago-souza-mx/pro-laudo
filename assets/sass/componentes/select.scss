@@ -1,0 +1,55 @@
+.select{
+
+  .language &{
+    width: 200px;
+  }
+  .react-select{
+    &__control{
+      background-color: var(--PanelColor);
+      color: var(--FontColor);
+      border: 1px solid;
+      border-radius: 50px;
+      padding: 8px 10px 8px 20px;
+      position: relative;
+
+      .language &{
+        padding: 0px 5px 0px 5px;
+        min-height: 28px;
+        height: 28px;
+      }
+    }
+
+    &__placeholder{
+      .language &{
+        top:45%;
+      }
+    }
+
+    &__value-container, &__indicators{
+      .language &{
+        min-height: 28px;
+        height: 28px;
+      }
+    }
+
+    &__menu{    
+      background-color: var(--ThemeColor);
+      color: var(--FontColor);
+      z-index: 1000;
+    }
+
+    &__single-value{
+      color: var(--FontColor);
+    }
+    
+    &__menu-list{ 
+      .react-select__option , .react-select-lang__option{
+        background-color: var(--ThemeColor);
+        &:hover{
+          background-color: var(--PanelColor);
+        }
+      }
+    }
+  }
+
+}

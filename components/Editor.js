@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { Language } from './Language'
 
 export default function Editor_ () {
   const editorRef = useRef()
@@ -19,7 +20,7 @@ export default function Editor_ () {
   return editorLoaded ? (
     <CKEditor
       editor={ClassicEditor}
-      data='<p>Comece a escrever seu laudo</p>'
+      data={Language({pt:'Comece a escrever seu laudo', en:'Start writing your report' })} 
       config={{
         toolbar:[
           'heading',
@@ -68,7 +69,7 @@ export function Insert( msg , setData ){
   if( msg === false ){
    return  _CKEditor.setData(setData);
   }
-  if( state.trim() == 'Comece a escrever seu laudo' ){
+  if( state.trim() == Language({pt:'Comece a escrever seu laudo', en:'Start writing your report' }) ){
     _CKEditor.setData("");
   }
 

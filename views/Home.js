@@ -1,4 +1,4 @@
-import Editor_ from "./Editor";
+import Editor_ from "../components/Editor";
 const Modal  = require('../helpers/Modal');
 
 const Home =()=>{

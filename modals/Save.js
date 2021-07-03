@@ -1,7 +1,6 @@
-import React, {Component} from "react"
+import React from "react"
 import Select from 'react-select'
 import { Language } from "../components/Language";
-import { fetchApi } from "../controllers/Auth";
 import { Close } from "../helpers/Modal";
 
 export default class Save extends React.Component{
@@ -105,7 +104,7 @@ export default class Save extends React.Component{
                 <li className="d-flex">
                   <div className="flex-1 py-3">
                     <label><Language en="Group By" pt="Agrupar" /></label>
-                    <Select placeholder={Language({en:"Select", pt:"Selecione"})} options={this.state.options} className="multi-select w-75" classNamePrefix="react-select" />
+                    <Select placeholder={Language({en:"Select", pt:"Selecione"})} options={this.state.options} className="select w-75" classNamePrefix="react-select" />
                   </div>              
                 </li>
 

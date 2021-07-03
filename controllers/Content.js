@@ -1,14 +1,12 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import Load from '../components/Load'
-
-import View  from "../views/View"; 
 import {ContentView}  from "../views/View";
 
 const components = {
-    Home : require("../components/Home")['default'],
-    Reports : require("../components/Reports")['default'],
-    Settings: require("../components/Settings")['default']
+    Home : require("../views/Home")['default'],
+    Reports : require("../views/Reports")['default'],
+    Settings: require("../views/Settings")['default']
 }
 
 function Story(props) {

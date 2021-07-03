@@ -1,18 +1,28 @@
 const menuModel = [ 
   {
-    name:'Home',
+    name:{
+      pt:'Inicio',
+      en:'Home'
+    },
     link:'',
     icon:'clipboard',
     class: 'active'
   },
   {
-    name:'Configurações',
+    name:
+    {
+      pt:'Configurações',
+      en:'Settings'
+    },
     link:'Settings',
     icon:'cog',
     class: ''
   },
   {
-    name:'Laudos Salvos',
+    name:{
+      pt:'Laudos Salvos',
+      en:'Saved Reports'
+    },
     link:'Reports',
     icon:'file-medical',
     class: ''

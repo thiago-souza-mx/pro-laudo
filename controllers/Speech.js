@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import { Insert } from '../components/Editor';
+import { Language } from '../components/Language';
+import { Voice } from '../helpers/ToggleMicrophone';
 
 export const state = {
   active : true,
   noteContent : '',
   start: false,
   stop: false,
-  tab: false
+  tab: false,
+  lang: false
 }
  
 
@@ -145,6 +148,7 @@ const Commands={
 	"parágrafo" : ()=> "</br>",
 	"parágrafo parágrafo" : ()=> "</br></br>", "dois parágrafos" : ()=> "</br></br>", 	"2 parágrafos" : ()=> "</br></br>",
 	"salvar" : ()=> setTimeout(()=> download("laudo",  _CKEditor.getData()),600),
+	"copiar" : ()=> setTimeout(()=>{ navigator.clipboard.writeText( _CKEditor.getData().replace('||','') ); Voice("Texto copiado para a área de transferência") },600),
 	"cálculo" : ()=> {action.func = calculo; return tipoCalculo(); },
 	"calculo" : ()=> {action.func = calculo; return tipoCalculo(); },
 	"calcule" : ()=> {action.func = calculo; return tipoCalculo(); },
@@ -181,8 +185,11 @@ const callbackTranscript = text =>{
     state.noteContent =  text.transcript || text.app;
     console.log(text); 
 
-    if(state.start){      
-      Insert(`|${state.noteContent}|`);
+    if(state.start){   
+      
+      if(state.active)
+        Insert(`|${state.noteContent}|`);
+
       if( text.finalTranscript != '' || text.app ){
         if(!text.app) text.resetTranscript();
         estado.newtext = state.noteContent;
@@ -207,12 +214,33 @@ const callbackTranscript = text =>{
         setTimeout( ()=>{
           if(action.command){
             let command = action.command;
+
+            if(command == 'pausar laudo'){
+              Voice('Pausei a edição do laudo')
+              action.command = false;
+              Insert(`${state.noteContent.replace(command,'')} |⏸️|`)
+              return;
+            }
+
+            if(command == 'retomar laudo'){  
+              Voice('Edição do laudo retomada')            
+              text.resetTranscript();              
+              action.command = false;
+              Insert(`${state.noteContent.replace(command,'')} ||`)
+              return;
+            }
+
             action.old = action.command = false;
-            return Insert(`${command} ||`);
+
+            if(state.active)
+              return Insert(`${command} ||`);
           }
           action.old = state.noteContent;
-          Insert(`${state.noteContent} ||`);
-        },300);
+
+          if(state.active)
+            Insert(`${state.noteContent} ||`);
+
+        },50);
       }
     }
   }
@@ -233,6 +261,14 @@ const tratament = exp =>{
 export function  Speech(){
   const [message, setMessage] = useState('')
   const commands = [
+    {
+      command: '(*) pausar laudo',
+      callback: (exp) =>{ action.command = 'pausar laudo'; state.active = false;}
+    },
+    {
+      command: 'retomar laudo (*)',
+      callback: (exp) => { action.command = 'retomar laudo'; state.active = true; }
+    },
     {
       command: 'cálculo *',
       callback: (exp) =>{ action.command = eval(tratament(exp));  }
@@ -301,7 +337,8 @@ export function  Speech(){
     return null
   }
 
-  state.start = ()=> SpeechRecognition.startListening({ continuous: true });
+  
+  state.start = ()=>{ SpeechRecognition.startListening({ continuous: true , language: Language({en:'en-US', pt:'pt-br'})}) };
   state.stop = SpeechRecognition.stopListening;
 
 }

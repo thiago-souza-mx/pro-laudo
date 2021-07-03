@@ -1,7 +1,5 @@
-import React, {Component} from "react"
-import Select from 'react-select'
+import React from "react"
 import { Language } from "../components/Language";
-import { fetchApi } from "../controllers/Auth";
 import { Close } from "../helpers/Modal";
 
 export default class Reports extends React.Component{

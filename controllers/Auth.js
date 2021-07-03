@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import ReactDOM from 'react-dom';
 import AppConfigModel from '../model/appConfig.model';
-import PanelLogin from '../components/Login';
-import _404 from "../components/404";
-import Register from "../components/Register";
-import Recover from "../components/Recover";
+import PanelLogin from '../views/Login';
+import _404 from "../views/404";
+import Register from "../views/Register";
+import Recover from "../views/Recover";
 import menuModel from "../model/menu.model";
 
 

@@ -1,11 +1,12 @@
 import { Speech , state } from "../controllers/Speech";
+import { Language } from "../components/Language";
 
 const Action = {
   Logout            : require('../controllers/Auth')['Logout'],
   TogglePalette     : require('../helpers/Theme')['TogglePalette'],
   SelectTheme       : require('../helpers/Theme')['SelectTheme'],
   Expand            : require('../helpers/ToggleScreen')['toggleFullScreen'],
-  ToggleMicrophone  : require('../helpers/Microphone')['ToggleMicrophone'],
+  ToggleMicrophone  : require('../helpers/ToggleMicrophone')['ToggleMicrophone'],
   GetQRcode         : require('../helpers/QRcode')['GetQRcode'],
   Modal             : require('../helpers/Modal')['Open']
 }
@@ -55,7 +56,9 @@ const Button = {
             <li data-theme="destaq-purple"></li>
             <li data-theme="destaq-dark-purple"></li>
             <hr></hr>
-            <p>Temas</p>
+            <p>
+              <Language en="Themes" pt="Temas"/>
+            </p>
             <li data-theme="theme-light"></li>
             <li data-theme="theme-dark"></li>
           </ul>
@@ -74,7 +77,9 @@ const Button = {
         }}>
           <i className="fas fa-microphone-alt"></i>
         </button>
-        <span className="mx-4" data-microphone="message">Clique no microfone ao lado para começar a ditar!</span>
+        <span className="mx-4" data-microphone="message">          
+          <Language en="Click on the microphone on the side to start dictating!" pt="Clique no microfone ao lado para começar a ditar!"/>
+        </span>
       </div>
     );
   },
