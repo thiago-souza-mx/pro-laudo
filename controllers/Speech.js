@@ -148,7 +148,7 @@ const Commands={
 	"parágrafo" : ()=> "</br>",
 	"parágrafo parágrafo" : ()=> "</br></br>", "dois parágrafos" : ()=> "</br></br>", 	"2 parágrafos" : ()=> "</br></br>",
 	"salvar" : ()=> setTimeout(()=> download("laudo",  _CKEditor.getData()),600),
-	"copiar" : ()=> setTimeout(()=>{ navigator.clipboard.writeText( _CKEditor.getData().replace('||','') ); Voice("Texto copiado para a área de transferência") },600),
+	"copiar" : ()=> setTimeout(()=>{ navigator.clipboard.writeText( _CKEditor.getData().replace('||','') ); Voice("feito") },600),
 	"cálculo" : ()=> {action.func = calculo; return tipoCalculo(); },
 	"calculo" : ()=> {action.func = calculo; return tipoCalculo(); },
 	"calcule" : ()=> {action.func = calculo; return tipoCalculo(); },
