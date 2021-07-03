@@ -19,6 +19,6 @@ export const setMessageAction = message =>{
 }
 
 export const Voice = audio=>{
-  new Audio(`/voices/${encodeURI(audio)}.mp3`).play();
+  new Audio(`/voices/${encodeURI(audio).toLowerCase()}.mp3`).play();
   setMessageAction(audio);
 }
