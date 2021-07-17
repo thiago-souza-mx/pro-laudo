@@ -97,7 +97,7 @@ const calculo = valor =>{
       action.func = false
       valor = _CKEditor.getData().replace(`ƒ(|${valor}|)`,'')
       _CKEditor.setData(`${valor}`);
-      return result;
+      return `${result}`;
       
       
     }catch(e){
