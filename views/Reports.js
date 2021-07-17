@@ -74,10 +74,11 @@ export default class Reports extends React.Component{
       let files = JSON.parse(localStorage.getItem('Save-files'));
       Object.keys(files).forEach(k => {
         let item = files[k]
-
         let file = document.createElement('div')
+        var date = new Date(item.date); // converte para data
         file.id = item.id
-        file.innerHTML = '<i class="fal fa-file font-20"></i>'+ item.name
+        file.setAttribute('class','file')
+        file.innerHTML = '<i class="fal fa-file font-20"></i>'+'<div class="file-name">'+item.name+'</div><div class="date">'+date.toLocaleString("pt-BR")+'</div>'
         file.onclick = ()=> this.handleOpenFile(item)
         document.getElementById('directorys').appendChild(file)
       })
@@ -94,14 +95,10 @@ export default class Reports extends React.Component{
   render(){ 
     return(
       <div id="__report">
-        <h4>
+        <h4 className="title">
           <Language en="Save Reports" pt="Laudos Salvos" />
-        </h4>
-        
+        </h4>        
         <div id="directorys">
-
-   
-
         </div>
       </div>
     )

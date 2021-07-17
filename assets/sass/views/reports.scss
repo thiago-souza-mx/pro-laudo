@@ -1,0 +1,27 @@
+#__report{
+  .title{
+    padding: 10px 0;
+  }
+  #directorys{
+    padding: 10px;
+    .file{
+      display: flex;
+      cursor: pointer;
+      padding: 10px 5px;
+
+      &:hover{
+        background: var(--ThemeColor);
+      }
+
+      .file-name{
+        min-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      i{
+        padding-right: 10px;
+      }
+    }
+  }
+}

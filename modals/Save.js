@@ -8,11 +8,13 @@ export default class Save extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
+      ...props.state,
       event: '',
       theme: 'dark',
       file_name: _CKEditor.file_name,
       new_group: '',
-      options: [ ]
+      options: [ ],
+      lang: 'pt'
     };
 
     this.handleDestruct = this.handleDestruct.bind(this);
@@ -34,14 +36,19 @@ export default class Save extends React.Component{
     }
     const file = {
       name : this.state.file_name,
+      id : _CKEditor.id,
       date : new Date().getTime(),
       body : _CKEditor.getData()
     }
 
     files[_CKEditor.id]= file;
-
     localStorage.setItem('Save-files', JSON.stringify(files))
-
+    sessionStorage.setItem('Current-laudo',JSON.stringify(file))
+    _CKEditor.file_name = file.name;
+    let aba = document.getElementById(file.id);
+    aba.title = file.name
+    aba.querySelector('span').innerText = file.name
+    this.handleDestruct('close')
   }
 
   handleSavePC(){   
@@ -51,7 +58,7 @@ export default class Save extends React.Component{
     element.download = "myFile.txt";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
-    Close();
+    this.handleDestruct('close')
 
   }
 
