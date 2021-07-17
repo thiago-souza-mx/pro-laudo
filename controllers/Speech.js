@@ -62,6 +62,11 @@ String.prototype.capitalize = function(){
 
 const newtab = ()=>	state.tab = window.open()
 
+const pesquisa = ( busca )=>{
+  console.log(busca)
+  state.tab = window.open(`https://www.google.com/search?q=${busca}`)
+}
+
 const background = (color)=>{
 	document.body.style.background = color ? color : "red";
 	return ;
@@ -173,8 +178,13 @@ const Commands={
 	"disparar alerta": _alert,
 	"emitir alerta": _alert,
 	"abrir nova aba": newtab,
+	"abrir nova guia": newtab,
 	"nova aba": newtab,
+	"nova guia": newtab,
 	"fechar aba": closetab,
+	"fechar guia": closetab,
+	"voltar": closetab,
+	"voltar para o editor": closetab,
 	"sair" : exit,
 	"encerrar" : exit,
 	"espaço" : ()=> "&nbsp;",
@@ -241,6 +251,7 @@ const callbackTranscript = text =>{
           }
 
           if(action.func){
+            console.log(action)
             let res = action.func( state.noteContent );
             if(typeof res == "string")
               state.noteContent = res;
@@ -301,6 +312,14 @@ export function  Speech({Microphone}){
   const [message, setMessage] = useState('')
   const commands = [
     {
+      command: 'buscar *',
+      callback: (exp) =>{ action.command =  pesquisa(exp);   }
+    },
+    {
+      command: 'pesquisar *',
+      callback: (exp) =>{ action.command =  pesquisa(exp);   }
+    },
+    {
       command: '(*) pausar edição',
       callback: (exp) =>{ action.command = 'pausar edição'; state.active = false;}
     },
@@ -318,7 +337,7 @@ export function  Speech({Microphone}){
     },
     {
       command: 'calcular *',
-      callback: (exp) =>{ action.command = eval(tratament(exp));  }
+      callback: (exp) =>{ action.command = eval(tratament(exp));    }
     },
     {
       command: 'título *',
