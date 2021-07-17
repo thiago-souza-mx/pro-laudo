@@ -9,9 +9,7 @@ export default class Reports extends React.Component{
     this.state = {
       event: '',
       theme: 'dark',
-      directorys:[
-        {name: "teste"}
-      ]
+      directorys:null
     };
 
     this.handleDestruct = this.handleDestruct.bind(this);
@@ -57,23 +55,34 @@ export default class Reports extends React.Component{
     this.setState({event: cb});
     Close();
   }
+
+  handleOpenFile = (file)=>{
+    console.log(file)
+    file.open=true;
+    sessionStorage.setItem('Current-laudo', JSON.stringify(file))
+    document.querySelector('#Home a').click();
+  }
   
  
   componentDidMount() {
     let config = JSON.parse(localStorage.getItem('App-config'));
+    let files = JSON.parse(localStorage.getItem('Save-files'));
     if(config.theme.name == "theme-dark")
       this.setState({theme : 'light'})
 
     let dir = '';
-    this.state.directorys.forEach(item => {
-      dir += `
-      <div>
-        <i class="fal fa-folder font-20"></i>
-        ${item.name}
-      </div>`      
+    Object.keys(files).forEach(k => {
+      let item = files[k]
+
+      let file = document.createElement('div')
+      file.id = item.id
+      file.innerHTML = '<i class="fal fa-file font-20"></i>'+ item.name
+      file.onclick = ()=> this.handleOpenFile(item)
+      document.getElementById('directorys').appendChild(file)
     })
 
-    document.getElementById('directorys').innerHTML= dir;
+    
+    //ReactDOM.render( file , document.getElementById( notif.id ) );
     
     setTimeout(()=>{
       this.setState({event:'open'});

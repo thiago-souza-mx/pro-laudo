@@ -1,18 +1,16 @@
 import 'regenerator-runtime/runtime';
+import React,{useState} from 'react';
 import './../assets/sass/global.scss'
-import Template  from "../controllers/Template";
 import Auth  from "../controllers/Auth";
-import StartEvents  from "../helpers/ToggleScreen";
 import Global from "../controllers/Config";
 
 const App =()=>{
+  const [state, handleState] = useState([]);
+
+  state.auth = {};
+  state.config = {};
   return( 
-    <Auth>
-      <StartEvents/>
-      <Template menu="home" view="home">
-        
-      </Template>      
-    </Auth>
+    <Auth state={state} />   
   );
 }
 

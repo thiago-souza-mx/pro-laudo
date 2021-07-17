@@ -10,7 +10,7 @@ export default class Save extends React.Component{
     this.state = {
       event: '',
       theme: 'dark',
-      file_name: '',
+      file_name: _CKEditor.file_name,
       new_group: '',
       options: [ ]
     };
@@ -28,6 +28,19 @@ export default class Save extends React.Component{
   }
 
   handleSubmit() {
+    let files={}
+    if(localStorage.getItem('Save-files')){
+      files = JSON.parse(localStorage.getItem('Save-files'))
+    }
+    const file = {
+      name : this.state.file_name,
+      date : new Date().getTime(),
+      body : _CKEditor.getData()
+    }
+
+    files[_CKEditor.id]= file;
+
+    localStorage.setItem('Save-files', JSON.stringify(files))
 
   }
 

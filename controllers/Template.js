@@ -4,7 +4,7 @@ import menuSchema  from "../model/menu.model";
 import React, { useEffect } from 'react';
 import {LoadContent}  from "./Content";
 
-const Template = props=>{
+const Template = ({state, view, menu, children})=>{
   useEffect(() => { 
 
     let AppConfig = JSON.parse(localStorage.getItem('App-config'));
@@ -12,6 +12,9 @@ const Template = props=>{
       document.querySelector('html').classList.add('comprime-menu');
     }
     document.querySelector('html').classList.add(AppConfig.theme.name);
+    document.querySelector('html').classList.remove('lang-pt');
+    document.querySelector('html').classList.remove('lang-en');
+    document.querySelector('html').classList.add('lang-'+AppConfig.language);
 
     LoadContent({href:window.location.pathname});
 
@@ -27,11 +30,10 @@ const Template = props=>{
 
     <div id="template" className="hide">     
 
-      <Menu id={props.menu} schema={menuSchema}>       
-      </Menu>
+      <Menu id={menu} schema={menuSchema} state={state}/>       
 
-      <View page={props.view}>
-        {props.children}
+      <View page={view} state={state}>
+        {children}
       </View>
     </div>
 

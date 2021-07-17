@@ -26,11 +26,9 @@ const handleClick = (e)=> {
   });
 }
 
-const Menu = props =>{
+const Menu = ({id, schema, children}) =>{
 
-  let menu_id = "menu-"+props.id;
-  let schema = props.schema;
-
+  let menu_id = "menu-"+id;  
   let rows = []
   schema.forEach((item, index) => {
     rows.push(
@@ -52,7 +50,7 @@ const Menu = props =>{
       <ul className="menu-sidebar">
         {rows}
       </ul>
-      {props.children}
+      {children}
       <div className="recolhe-menu" onClick={RecolheMenu}> <i className="far fa-arrow-circle-left"></i></div>
     </menu>
   );

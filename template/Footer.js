@@ -34,9 +34,9 @@ export default class Footer extends React.Component{
     return (
       <footer>
         <span className="label-view">Footer</span>
-        <div className="language">
+        {/*<div className="language">
           <Select menuPlacement="top" placeholder={Language({en:"Language", pt:"Idioma"})} options={this.state.options} className="select" classNamePrefix="react-select" onChange={this.handleChange} />  
-        </div>   .
+    </div>*/}   
         <div id="loadPages"></div>
       </footer>
     );

@@ -5,16 +5,16 @@ import ReactDOM from 'react-dom';
 
 const Modals = {
   Save : require("../modals/Save")['default'],
-  Perfil : require("../modals/Perfil")['default'],
+  Profile : require("../modals/Profile")['default'],
 }
 
-function Modal(props) {
-// Correto! O tipo JSX pode ser uma variável começando com letra maiúscula.
-const StoryModals = Modals[props.render];
-return <StoryModals />;
+
+function Modal({render, state}) {
+  const StoryModals = Modals[render];
+  return <StoryModals state={state} />;
 }
 
-export const Open = name =>{
+export const Open = ({name, state}) =>{
   const main = document.getElementById("__app");
 
   main.classList.add('modal-open')
@@ -29,7 +29,7 @@ export const Open = name =>{
   modals.addEventListener("click", (e)=> e.stopPropagation())
 
   ReactDOM.render(
-    <Modal render={name}/>
+    <Modal render={name} state={state}/>
     , modals
   );
 }
@@ -37,4 +37,18 @@ export const Open = name =>{
 export const Close = () =>{
   document.getElementById("__app").classList.remove('modal-open');
   setTimeout(()=> document.getElementById("modals").remove(),300)
+}
+
+
+const ModalPages = {
+  Profile : require("../modals/Profile/Profile")['default'],
+  Preferences : require("../modals/Profile/Preferences")['default'],
+}
+export const ModalPage = ({render, state, handles}) =>{
+  if (render){
+  const StoryModals = ModalPages[render];
+  return <StoryModals state={state} handles={handles} />;
+  }else{
+    return '';
+  }
 }

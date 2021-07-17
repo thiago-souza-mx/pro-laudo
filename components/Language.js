@@ -18,7 +18,7 @@ export const Language = props=>{
   return props[lang];
 }
 
-const setLanguage = lang =>{
+export const setLanguage = lang =>{
   let AppConfig;
   if(localStorage.getItem('App-config')){
     AppConfig = JSON.parse(localStorage.getItem('App-config'));    
@@ -34,7 +34,7 @@ const setLanguage = lang =>{
 
 export const PT = ()=>{
   return(
-    <svg onClick={()=> setLanguage('pt')} xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512.001 512.001"  space="preserve" >
+    <svg  xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512.001 512.001"  space="preserve" >
       <path style={{fill:"#73AF00"}} d="M503.172,423.725H8.828c-4.875,0-8.828-3.953-8.828-8.828V97.104c0-4.875,3.953-8.828,8.828-8.828  h494.345c4.875,0,8.828,3.953,8.828,8.828v317.793C512,419.773,508.047,423.725,503.172,423.725z"/>
       <path style={{fill:"#FFE15A"}} d="M251.41,135.209L65.354,248.46c-5.651,3.439-5.651,11.641,0,15.081L251.41,376.793  c2.819,1.716,6.36,1.716,9.18,0l186.057-113.251c5.651-3.439,5.651-11.641,0-15.081L260.59,135.209  C257.771,133.493,254.229,133.493,251.41,135.209z"/>
       <circle style={{fill:"#41479B"}} cx="256" cy="256.001" r="70.62"/>
@@ -58,7 +58,7 @@ export const PT = ()=>{
 
 export const EN = ()=>{
   return (
-    <svg onClick={()=> setLanguage('en')} xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512.001 512.001" space="preserve">
+    <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512.001 512.001" space="preserve">
       <path style={{fill:"#F5F5F5"}} d="M503.172,423.725H8.828c-4.875,0-8.828-3.953-8.828-8.828V97.104c0-4.875,3.953-8.828,8.828-8.828  h494.345c4.875,0,8.828,3.953,8.828,8.828v317.793C512,419.773,508.047,423.725,503.172,423.725z"/>
       <g>
         <path style={{fill:"#FF4B55"}} d="M512,114.081H0V97.104c0-4.875,3.953-8.828,8.828-8.828h494.345c4.875,0,8.828,3.953,8.828,8.828   L512,114.081L512,114.081z"/>

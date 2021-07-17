@@ -34,6 +34,66 @@
       cursor: pointer;
     }
 
+    .title-separator{
+      font-size: 14px;
+      position: relative;
+      overflow: hidden;
+      margin-left: -20px;
+      padding-left: 20px;
+      width: calc(100% - 20px);
+      font-style: italic;
+
+      &::before, &::after{
+        content:"";
+        border-bottom:1px solid;
+        position: absolute;
+        left: 0px;
+        width: 15px;
+        bottom: 6px;
+        opacity: 0.4;
+      }
+      
+      &::after{
+        width: calc(100% - 20px);
+        left: initial;
+        margin-left: 5px;
+      }
+    }
+
+    .settings{
+      .lang{
+        button{
+          justify-content: center;
+          align-items: center;
+          padding:0 3px;
+          width: 26px;
+
+          &.active{
+            border:2px solid;
+            width: 30px;
+            border-color: var(--FontColor);
+          }
+        }
+      }
+    }
+
+    .modal-menu{
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+
+      button{
+        border: none;
+        border-bottom: 1px solid rgba(white,0.2);
+        border-radius: 0;
+        flex:1;
+
+        &.btn-outline-dark{
+          border-color: rgba(black,0.2);
+        }
+      }
+    }
+
     .aside-modal{
       background: var(--ThemeColor) ;
     }  

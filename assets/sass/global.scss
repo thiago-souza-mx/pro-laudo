@@ -129,6 +129,10 @@ html,body{
   }
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
 .preload{
   padding: 15px 0;
   max-width: 300px;
@@ -162,7 +166,7 @@ html,body{
 @import "componentes/qrcode";
 @import "componentes/button";
 @import "componentes/modal";
-@import "modais/perfil";
+@import "modais/profile";
 @import "componentes/select";
 
 

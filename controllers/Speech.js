@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
-import { Insert } from '../components/Editor';
+import { InsertText, setNotification } from '../components/Editor';
 import { Language } from '../components/Language';
-import { Voice } from '../helpers/ToggleMicrophone';
 
 export const state = {
   active : true,
@@ -10,7 +9,11 @@ export const state = {
   start: false,
   stop: false,
   tab: false,
-  lang: false
+  lang: false,
+  Microphone:{},
+  voice:false,
+  text:null,
+  capitalize:false
 }
  
 
@@ -52,6 +55,11 @@ const estado = {
 
 };
 
+String.prototype.capitalize = function(){
+  state.capitalize=false;
+	return this.charAt(0).toUpperCase() + this.substr(1);
+}
+
 const newtab = ()=>	state.tab = window.open()
 
 const background = (color)=>{
@@ -82,7 +90,6 @@ function download(filename, text) {
 }
 
 const calculo = valor =>{
-  console.log(valor);
   if(valor.trim() != 'ƒ()'){
     try{
       let result = eval(tratament(valor))
@@ -90,12 +97,34 @@ const calculo = valor =>{
       action.func = false
       valor = _CKEditor.getData().replace(`ƒ(|${valor}|)`,'')
       _CKEditor.setData(`${valor}`);
-      return `${result}`;
+      return result;
       
       
     }catch(e){
       return false
     }
+  }
+  return valor
+}
+
+const titulo = valor =>{
+  if(valor.trim() != 't()'){
+    action.func = false
+    let text = _CKEditor.getData().replace(`t(|${valor}|)`,'')
+    _CKEditor.setData(`${text}`);       
+    valor = `<h1>${valor.capitalize()}</h1>`; 
+    state.capitalize= 'next';          
+  }
+  return valor
+}
+
+const subtitulo = valor =>{
+  if(valor.trim() != 't()'){
+    action.func = false
+    let text = _CKEditor.getData().replace(`t(|${valor}|)`,'')
+    _CKEditor.setData(`${text}`);       
+    valor = `<h4>${valor.capitalize()}</h4>`; 
+    state.capitalize= 'next';          
   }
   return valor
 }
@@ -126,11 +155,16 @@ const limpar = (n) =>{
 }
 
 const limparTudo = () => _CKEditor.setData("");
-
-
-const tipoCalculo = ()=>{
-	return "ƒ()";
+const tipoCalculo = ()=> {
+  state.capitalize = false;
+  return "ƒ()";
 }
+
+const tipoTitulo = ()=> {
+  state.capitalize = false;
+  return "t()";
+}
+
 const Commands={
 	"título": ()=>{},
 	"fundo branco": ()=> background('white'),
@@ -144,15 +178,17 @@ const Commands={
 	"sair" : exit,
 	"encerrar" : exit,
 	"espaço" : ()=> "&nbsp;",
-	"quebrar linha" : ()=> "</br>",
-	"parágrafo" : ()=> "</br>",
+	"quebrar linha" : ()=> {return "</br>";state.capitalize = true},
+	"parágrafo" : ()=> {return "</br>"; state.capitalize = true },
 	"parágrafo parágrafo" : ()=> "</br></br>", "dois parágrafos" : ()=> "</br></br>", 	"2 parágrafos" : ()=> "</br></br>",
 	"salvar" : ()=> setTimeout(()=> download("laudo",  _CKEditor.getData()),600),
-	"copiar" : ()=> setTimeout(()=>{ navigator.clipboard.writeText( _CKEditor.getData().replace('||','') ); Voice("Texto copiado para a área de transferência") },600),
+	"copiar" : ()=> setTimeout(()=>{ navigator.clipboard.writeText( _CKEditor.getData().replace('||','') ); _CKEditor.setNotification("Texto copiado para a área de transferência", "info"); Voice("Texto copiado para a área de transferência") },600),
 	"cálculo" : ()=> {action.func = calculo; return tipoCalculo(); },
 	"calculo" : ()=> {action.func = calculo; return tipoCalculo(); },
 	"calcule" : ()=> {action.func = calculo; return tipoCalculo(); },
 	"calcular" : ()=> {action.func = calculo; return tipoCalculo(); },
+	"título" : ()=> {action.func = titulo; return tipoTitulo(); },
+	"subtítulo" : ()=> {action.func = subtitulo; return tipoTitulo(); },
 	"limpar um" :()=>limpar(3), "limpar 1" :()=>limpar(3),
 	"limpar 2" : ()=>limpar(4),	"limpar dois" : ()=>limpar(4),
 	"limpar 3" : ()=>limpar(5),	"limpar três" : ()=>limpar(5),
@@ -175,8 +211,9 @@ export const InsertApp = msg =>{
 }
 
 const callbackTranscript = text =>{
+  console.log(state);
   if( text.transcript != '' || text.app ){
-
+    state.text = text;
     if(!document.getElementById('view').classList.contains('view-home')){
       text.resetTranscript();
       return 
@@ -187,8 +224,8 @@ const callbackTranscript = text =>{
 
     if(state.start){   
       
-      if(state.active)
-        Insert(`|${state.noteContent}|`);
+      if(state.active && !state.voice)
+        InsertText(`|${state.noteContent}|`);
 
       if( text.finalTranscript != '' || text.app ){
         if(!text.app) text.resetTranscript();
@@ -215,31 +252,33 @@ const callbackTranscript = text =>{
           if(action.command){
             let command = action.command;
 
-            if(command == 'pausar laudo'){
+            if(command == 'pausar edição'){
               Voice('Pausei a edição do laudo')
               action.command = false;
-              Insert(`${state.noteContent.replace(command,'')} |⏸️|`)
+              InsertText(`${state.noteContent.replace(command,'')} |⏸️|`)
               return;
             }
 
-            if(command == 'retomar laudo'){  
+            if(command == 'retomar edição'){  
               Voice('Edição do laudo retomada')            
               text.resetTranscript();              
               action.command = false;
-              Insert(`${state.noteContent.replace(command,'')} ||`)
+              InsertText(`${state.noteContent.replace(command,'')} ||`)
               return;
             }
 
             action.old = action.command = false;
 
-            if(state.active)
-              return Insert(`${command} ||`);
+            if(state.active && !state.voice)
+              return InsertText(`${command} ||`);
           }
           action.old = state.noteContent;
 
-          if(state.active)
-            Insert(`${state.noteContent} ||`);
-
+          if(state.active && !state.voice)
+            InsertText(`${state.capitalize === true ? state.noteContent.capitalize(): state.noteContent } ||`);
+          if(state.capitalize == 'next'){
+            state.capitalize= true
+          }
         },50);
       }
     }
@@ -258,16 +297,16 @@ const tratament = exp =>{
   return res
 }
 
-export function  Speech(){
+export function  Speech({Microphone}){
   const [message, setMessage] = useState('')
   const commands = [
     {
-      command: '(*) pausar laudo',
-      callback: (exp) =>{ action.command = 'pausar laudo'; state.active = false;}
+      command: '(*) pausar edição',
+      callback: (exp) =>{ action.command = 'pausar edição'; state.active = false;}
     },
     {
-      command: 'retomar laudo (*)',
-      callback: (exp) => { action.command = 'retomar laudo'; state.active = true; }
+      command: 'retomar edição (*)',
+      callback: (exp) => { action.command = 'retomar edição'; state.active = true; }
     },
     {
       command: 'cálculo *',
@@ -286,8 +325,12 @@ export function  Speech(){
       callback: (title) =>{ action.command = `<h1>${title}</h1>` }
     },
     {
+      command: 'subtítulo *',
+      callback: (title) =>{ action.command = `<h4>${title}</h4>` }
+    },
+    {
       command: '(*) parágrafo (*)',
-      callback: (text1, text2) =>{ action.command = `${text1 ? text1 : ''}<br> ${text2 ? text2 : ''}` }
+      callback: (text1, text2) =>{state.capitalize = true; action.command = `${text1 ? text1 : ''}<br> ${text2 ? text2 : ''}` }
     },
     {
       command: '(*) vírgula (*)',
@@ -295,15 +338,15 @@ export function  Speech(){
     },
     {
       command: '(*) ponto final (*)',
-      callback: (text1, text2) =>{ action.command = `${text1 ? text1 : ''}. ${text2 ? text2 : ''}` }
+      callback: (text1, text2) =>{state.capitalize = true; action.command = `${text1 ? text1 : ''}. ${text2 ? text2 : ''}` }
     },
     {
       command: '(*) reticências (*)',
-      callback: (text1, text2) =>{ action.command = `${text1 ? text1 : ''}... ${text2 ? text2 : ''}` }
+      callback: (text1, text2) =>{state.capitalize = true; action.command = `${text1 ? text1 : ''}... ${text2 ? text2 : ''}` }
     },
-    {
-      command: 'The weather is :condition today',
-      callback: (condition) => setMessage(`Today, the weather is ${condition}`)
+    /*{
+      command: 'hoje é :dia',
+      callback: (condition) => action.command =`Today, the weather is ${condition}`
     },
     {
       command: 'My top sports are * and *',
@@ -324,7 +367,7 @@ export function  Speech(){
       // If the spokenPhrase is "Benji", the message would be "Beijing and Benji are 40% similar"
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2
-    },
+    }*/,
     {
       command: 'limpar',
       callback: ({ resetTranscript }) => resetTranscript()
@@ -340,6 +383,20 @@ export function  Speech(){
   
   state.start = ()=>{ SpeechRecognition.startListening({ continuous: true , language: Language({en:'en-US', pt:'pt-br'})}) };
   state.stop = SpeechRecognition.stopListening;
+  state.Microphone = Microphone;
 
 }
 
+export const Voice = (audio)=>{  
+  state.voice = true;
+  let midia = new Audio(`/voices/${encodeURI(audio).toLowerCase()}.mp3`)  
+  state.Microphone.phrase = audio;
+  midia.play();
+
+  midia.onended = ()=>{
+    state.text.resetTranscript();
+    state.voice = false ;
+  }  
+  
+  
+}

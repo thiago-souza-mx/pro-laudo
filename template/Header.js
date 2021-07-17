@@ -1,5 +1,7 @@
-import { Speech , state } from "../controllers/Speech";
+import { Speech, state } from "../controllers/Speech";
 import { Language } from "../components/Language";
+
+const StateSpeech = state;
 
 const Action = {
   Logout            : require('../controllers/Auth')['Logout'],
@@ -11,17 +13,18 @@ const Action = {
   Modal             : require('../helpers/Modal')['Open']
 }
 const Button = { 
-  Logout : ()=>{
+  Logout : ({state})=>{
+    
     return(
-      <a className="action btn btn-sm ln-1 font-28 px-3" onClick={Action.Logout}>
+      <a className="action btn btn-sm ln-1 font-28 px-3" onClick={()=> state.auth.logado = false}>
         <i className="fal fa-sign-out-alt"></i>     
       </a>
     );
   },
 
-  Account: ()=>{
+  Account: ({state})=>{
     return(
-      <a className="action btn btn-sm ln-2 font-24 px-3" onClick={()=> Action.Modal('Perfil')}>
+      <a className="action btn btn-sm ln-2 font-24 px-3" onClick={()=>Action.Modal({name:'Profile',state:state})}>
         <i className="fal fa-user"></i>    
       </a>
     );
@@ -67,18 +70,20 @@ const Button = {
     );
   },
 
-  Microphone: ()=>{
+  Microphone: ({state})=>{
     
-    Speech();
+    
+    state.Speech = StateSpeech;
+    Speech({Microphone:state.Microphone});
     return(
       <div data-microphone="button" className="radius border border-1 border-dark">
         <button className="btn btn-primary rounded-circle mic" onClick={(e)=>{
-          Action.ToggleMicrophone(e, state );
+          Action.ToggleMicrophone(e, state);
         }}>
           <i className="fas fa-microphone-alt"></i>
         </button>
         <span className="mx-4" data-microphone="message">          
-          <Language en="Click on the microphone on the side to start dictating!" pt="Clique no microfone ao lado para começar a ditar!"/>
+          {state.Microphone.phrase}
         </span>
       </div>
     );
@@ -98,23 +103,32 @@ const Button = {
 
 }
 
-const Header = ()=>{
+const Header = ({state})=>{
 
+  state.Microphone={
+    _phrase : <Language en="Click on the microphone on the side to start dictating!" pt="Clique no microfone ao lado para começar a ditar!"/>,
+    get phrase(){
+      return this._phrase;
+    },
+    set phrase(v){
+      this._phrase = v;
+    }
+  }
   return (
     <header className="d-flex"> 
       <span className="label-view">Header</span>
       <div id="header_search">
 
-        <Button.Microphone/>
+        <Button.Microphone state={state}/>
 
       </div>
       <div id="header_actions" className="d-flex justify-content-end">
         <Button.PaletteTheme/>
         <Button.ModeDesktop/>
         <Button.Notify/>
-        <Button.Account/>
+        <Button.Account state={state} />
         <Button.QRcode/>
-        <Button.Logout/>
+        <Button.Logout state={state} />
       </div>
     </header>
   );

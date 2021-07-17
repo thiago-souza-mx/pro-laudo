@@ -1,5 +1,5 @@
 import LogoSVG from "../components/LogoSVG"
-import {PT,Language, EN} from "../components/Language"
+import {PT,Language, EN, setLanguage} from "../components/Language"
 import React from "react"
 import { fetchApi } from "../controllers/Auth";
 import Particles from 'react-particles-js';
@@ -9,6 +9,7 @@ export default class PanelLogin extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
+      ...props.state,
       email:'',
       pass:'',
       event:'',
@@ -16,7 +17,7 @@ export default class PanelLogin extends React.Component{
         msg:'',
         role:'danger',
         display:'none'
-      }
+      }      
     };
     
     this.particlesModel = require("../model/particles.model");
@@ -33,15 +34,18 @@ export default class PanelLogin extends React.Component{
   handleSubmit(event) {
     event.preventDefault();
     this.setState({event:'load'});
-    let data = {...this.state}
-    delete data.alert;
-    delete data.event;
-    fetchApi("/login",data)
+    const { email, pass } = this.state;
+    fetchApi("/login",{email, pass})
     .then(res =>{
       this.setState({event:''});
       if(res.error)
         this.handleMessage(res.error,"danger")
+      else{
+        this.state.auth.user = res.success;
+        this.state.auth.logado = true;
+      }
     });    
+    
   }
 
   handleMessage(message, role) {
@@ -118,11 +122,11 @@ export default class PanelLogin extends React.Component{
 
         <div id="languages" className="d-flex justify-content-center align-items-center text-white">
           <Language en="Languages" pt="Idiomas"/>
-          <div className="lang-btn">
+          <div className="lang-btn" onClick={()=> setLanguage('pt')}>
             <PT/>
           </div>
 
-          <div className="lang-btn">
+          <div className="lang-btn" onClick={()=> setLanguage('en')}>
             <EN/>
           </div>
         </div>

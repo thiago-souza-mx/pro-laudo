@@ -1,7 +1,12 @@
-import Editor_ from "../components/Editor";
+import { AreaEditor } from "../components/Editor";
+import { Language } from "../components/Language";
 const Modal  = require('../helpers/Modal');
 
-const Home =()=>{
+const Home = (props)=>{ 
+
+  const state = {
+    ...props.state    
+  }
 
   function ToggleSave(e){
     e.stopPropagation();
@@ -14,7 +19,7 @@ const Home =()=>{
   }
 
   function SaveCloud(){
-    Modal.Open('Save')
+    Modal.Open({name:'Save',state})
   }
 
   const DownloadTxtFile = () => {
@@ -27,15 +32,15 @@ const Home =()=>{
   }
 
   const CopyTxt = ()=>{
-    navigator.clipboard.writeText(document.querySelector('.ck-editor__editable').ckeditorInstance.getData());
+    navigator.clipboard.writeText(_CKEditor.getData());
   }
 
   return (
     <div id="__home">
-
+      
       <div id="editor" className="d-flex flex-row h-100">
-        <div className="col-9 d-flex flex-column h-100 editor">
-          <Editor_/>
+          <div className="col-9 d-flex flex-column h-100 editor">            
+            <AreaEditor/>
           <div className="editor-actions">
             <div className="action save">
               <button className="btn btn-primary radius" onClick={(e)=>ToggleSave(e)}>
@@ -44,16 +49,16 @@ const Home =()=>{
               <ul>
                 <li onClick={SaveCloud}>
                   <i className="fas fa-cloud"></i>
-                  Salvar
+                  <Language en="Save" pt="Salvar"/>
                 </li>
                 <li onClick={DownloadTxtFile}>
                   <i className="fas fa-save"></i>
-                  Salvar no PC
+                  <Language en="Save in PC" pt="Salvar no PC"/>
                 </li>
 
                 <li onClick={CopyTxt}>
                   <i className="fas fa-copy"></i>                  
-                  Copiar
+                  <Language en="Copy" pt="Copiar"/>
                 </li>
               </ul>
             </div>

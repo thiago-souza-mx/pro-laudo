@@ -6,16 +6,145 @@
 
   & .editor{
     position: relative;
+    filter: drop-shadow(0px -3px 2px rgba(0,0,0,0.12));
+    overflow: hidden;
+
+    .aba-editor{      
+      ul{
+        display: flex;
+        padding: 0;
+        margin: 0;
+
+        li{
+          cursor: default;
+          padding: 5px 30px 5px 15px;        
+          background: #FFF!important;
+          position: relative;
+          max-width: 210px;
+          width: 100%;
+          border-radius: 8px 8px 0 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          &>i{
+            position: absolute;
+            top:8px;
+            right: 5px;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            &:hover{
+              background:var(--ThemeColor);
+            }
+          }
+          .theme-dark &{
+            background: #222428!important;
+          }            
+          &:not(.active){
+            background: #dde2e8!important;
+            .theme-dark &{
+              background: #09090a!important;
+              color: #666;
+            } 
+          }
+        }
+      }      
+    }
+
+    .new-document{
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      margin: 3px 5px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #area-editor{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      
+      #list-editor{
+        flex: 1;
+        position: relative;
+        flex-direction: column;
+        
+        .list-editor-item{
+          position: absolute;
+          flex-direction: column;
+          width: 100%;
+          height: calc( 100% );
+          z-index: -1;
+          &.active{
+            z-index: 99;
+          }
+        }
+      }
+    }
+
+    .editor-footer{
+      padding: 2px 15px;
+      font-style: italic;
+      font-size: 12px;
+      background: var(--DestaqColor);
+      color: #FFF;
+    }
+
+    .notification-editor{
+      position: absolute;
+      background: rgb(190, 190, 190);
+      bottom: -240px;
+      left: 80px;
+      z-index: 999;
+      width: calc(100% - 176px);
+      padding: 20px; 
+      transition: 0.6s all;
+      display: flex;
+      justify-content: space-between;
+
+      i{
+        cursor: pointer;
+      }
+
+      &.on{
+        bottom: 40px;
+      }
+
+      &.danger{
+        background: rgba(red,0.5);
+      } 
+      
+      &.success{
+        background: rgba(green,0.5);
+      } 
+      
+      &.warning{
+        background: rgba(orange,0.5);
+      }
+
+      &.info{
+        background: rgba(rgb(0, 181, 253),0.5);
+      }
+    }
+
     .editor-actions{
       position: absolute;
-      bottom:30px;
-      right: 30px;
+      bottom:45px;
+      right: 25px;
+      z-index: 9999;
 
       .action{
         
         &.open{
-          ul{
-            
+          ul{            
             @include open();
           }
 
@@ -33,7 +162,6 @@
           border-radius: 10px;
           box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
           @include close();
-
 
           li{
             padding: 10px;
@@ -57,7 +185,15 @@
           }
         }
         &.save{
-          
+          button{
+            width: 50px;
+            height: 50px;
+            box-shadow: 0 0 0 0.25rem rgba(49, 132, 253,0.5);
+            i{
+              font-size: 26px;
+              color:#FFF;
+            }
+          }
         }
       }
     }
