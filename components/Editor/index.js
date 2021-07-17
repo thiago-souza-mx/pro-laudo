@@ -283,6 +283,7 @@ class StatusFooter extends React.Component{
     let laudo = sessionStorage.getItem('Current-laudo') ? JSON.parse(sessionStorage.getItem('Current-laudo')) : {}
     laudo.body = _CKEditor.getData(),
     laudo.id= _CKEditor.id
+    laudo.name= _CKEditor.file_name
 
     sessionStorage.setItem('Current-laudo', JSON.stringify(laudo) );
     let st = this.state;
