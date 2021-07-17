@@ -66,20 +66,22 @@ export default class Reports extends React.Component{
  
   componentDidMount() {
     let config = JSON.parse(localStorage.getItem('App-config'));
-    let files = JSON.parse(localStorage.getItem('Save-files'));
+    
     if(config.theme.name == "theme-dark")
       this.setState({theme : 'light'})
 
-    let dir = '';
-    Object.keys(files).forEach(k => {
-      let item = files[k]
+    if(localStorage.getItem('Save-files')){
+      let files = JSON.parse(localStorage.getItem('Save-files'));
+      Object.keys(files).forEach(k => {
+        let item = files[k]
 
-      let file = document.createElement('div')
-      file.id = item.id
-      file.innerHTML = '<i class="fal fa-file font-20"></i>'+ item.name
-      file.onclick = ()=> this.handleOpenFile(item)
-      document.getElementById('directorys').appendChild(file)
-    })
+        let file = document.createElement('div')
+        file.id = item.id
+        file.innerHTML = '<i class="fal fa-file font-20"></i>'+ item.name
+        file.onclick = ()=> this.handleOpenFile(item)
+        document.getElementById('directorys').appendChild(file)
+      })
+    }
 
     
     //ReactDOM.render( file , document.getElementById( notif.id ) );
