@@ -132,14 +132,6 @@ export class AreaEditor extends React.Component{
   handleRemoveEditor = ( aba_id ,editor_id, e ) => {
     e.stopPropagation();
 
-    let st = this.state;
-    let list = [];
-    st.editor.list.forEach((o,i)=>{
-      if(o.id != aba_id)
-      list.push(o)
-    })
-    st.editor.list = list;
-    this.setState(st);
     User.CloseFile(aba_id);
 
     let count_abas = document.getElementById('navigation-area').childNodes;
