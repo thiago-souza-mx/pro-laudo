@@ -12,17 +12,27 @@ const User = {}
  -------------------------------------------------*/
 
 User.saveFile = ({id, name, body, open}) => {
-  const data = {}
-  data[id] = 
-  { 
+  const data = {
     id, 
     name, 
     body,
     open,
-    date  : new Date().getTime(),
+    save_date  : new Date().getTime(),
     save: true
   } 
-  setObjectStorage( 'SaveFiles', data );
+
+  let files = User.getFiles();
+  if(files)
+    if(files[id])
+      Object.assign(files[id], data);
+    else{
+      files[id] = data;
+    }
+  else{
+    files = {};
+    files[id] = data;
+  }
+  setObjectStorage( 'SaveFiles', files );
 }
 
 /**-------------------------------------------------
@@ -51,10 +61,13 @@ User.automaticSaveFile = ({id, name, body, open}) => {
   if(files)
     if(files[id])
       Object.assign(files[id], data);
-    else
+    else{
+      data.created_at = new Date().getTime();
       files[id] = data;
+    }
   else{
     files = {};
+    data.created_at = new Date().getTime();
     files[id] = data;
   }
   setObjectStorage( 'SaveFiles', files );  
@@ -82,6 +95,9 @@ User.CloseFile = ( id ) => {
   }
 }
 
+
+
+
 User.setOpenFile = ( id ) => {  
   let files = User.getOpenFiles();
   let list = [];
@@ -99,6 +115,9 @@ User.setOpenFile = ( id ) => {
   setArrayStorage( 'OpenFiles', files, false ); 
 }
 
+
+
+
 User.setOpenFiles = ( files ) => {  
   setArrayStorage( 'OpenFiles', files , false); 
 }
@@ -114,16 +133,20 @@ User.setOpenFiles = ( files ) => {
 User.getFiles = ( save ) => {
   const appAccount = sessionStorage.getItem('App-account') ? JSON.parse( sessionStorage.getItem('App-account')) : false ;
   let files = appAccount.SaveFiles ? appAccount.SaveFiles : false 
-  if( save === true || save === false || save === "open"){
+  if( save === true || save === false || save === "open" || save === "deleted"){
     if(files){
       let arr = []
       Object.keys(files).forEach(idx => {
-        if(save === true && files[idx].save)
-          arr[idx] = files[idx]
-        if(save === false && !files[idx].save)
-          arr[idx] = files[idx]
+        if( !files[idx].deleted ){
+          if(save === true && files[idx].save )
+            arr[idx] = files[idx]
+          if(save === false && !files[idx].save)
+            arr[idx] = files[idx]
 
-        if(save === "open" && files[idx].open)
+          if(save === "open" && files[idx].open)
+            arr.push(files[idx])
+        }
+        if(save === "deleted" && files[idx].deleted)
           arr.push(files[idx])
       })
 
@@ -133,12 +156,37 @@ User.getFiles = ( save ) => {
   return files;
 }
 
+
+
 User.getOpenFiles = () => {
   const appAccount = sessionStorage.getItem('App-account') ? JSON.parse( sessionStorage.getItem('App-account')) : false ;
   let files = appAccount.OpenFiles ? appAccount.OpenFiles : false 
 
   return files;
 }
+
+
+User.DeleteFile = id => {
+  let files = User.getFiles();
+  if(files){
+    if(files[id]){
+      files[id].open = false;
+      files[id].deleted = true;
+      setObjectStorage( 'SaveFiles', files ); 
+    }
+  }
+
+  files = User.getOpenFiles();
+  let list = [];
+  if(files){
+    files.forEach((o,i)=>{
+      if(o != id)
+      list.push(o)
+    })
+    User.setOpenFiles(list);
+  }
+}
+
 
 const setObjectStorage = ( indice , data ) => {
   const appAccount = sessionStorage.getItem('App-account') ? JSON.parse( sessionStorage.getItem('App-account')) : {} ;  
@@ -160,5 +208,7 @@ const setArrayStorage = ( indice , data , merge ) => {
       appAccount[indice]= data;
   sessionStorage.setItem('App-account',JSON.stringify(appAccount));  
 }
+
+
 
 export default User;

@@ -9,15 +9,18 @@
     filter: drop-shadow(0px -3px 2px rgba(0,0,0,0.12));
     overflow: hidden;
 
-    .aba-editor{      
+    .aba-editor{ 
+      display: flex;
+      max-width: calc(100% - 30px);
       ul{
         display: flex;
+        max-width: 100%;
         padding: 0;
         margin: 0;
 
         li{
           cursor: default;
-          padding: 5px 30px 5px 15px;        
+          padding: 5px 30px 5px 10px;        
           background: #FFF!important;
           position: relative;
           max-width: 210px;
@@ -26,8 +29,11 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          & span{
+            padding: 0 5px;
+          }
 
-          &>i{
+          &>i.icon{
             position: absolute;
             top:8px;
             right: 5px;
@@ -43,12 +49,20 @@
           }
           .theme-dark &{
             background: #222428!important;
+            
           }            
           &:not(.active){
             background: #dde2e8!important;
+            &:hover{
+              background:var(--ThemeColor)!important;
+            }
             .theme-dark &{
               background: #09090a!important;
               color: #666;
+
+              &:hover{
+                background:var(--ThemeColor)!important;
+              }
             } 
           }
         }

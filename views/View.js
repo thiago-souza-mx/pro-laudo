@@ -34,8 +34,10 @@ export const ContentView = ({page, state, children})=>{
 
 export const Views = {
   Home : require("./Home")['default'],
-  Reports : require("./Reports")['default'],
-  Settings: require("./Settings")['default']
+  Reports : require("./Reports")['default'], 
+  LastReports: require("./Reports/Last")['default'],
+  TrashReports: require("./Reports/Trash")['default'],
+  Settings: require("./Settings")['default'],
 }
 
 export default View;

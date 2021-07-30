@@ -1,14 +1,24 @@
+import React from "react";
 import { AreaEditor } from "../components/Editor";
 import { Language } from "../components/Language";
 const Modal  = require('../helpers/Modal');
 
-const Home = (props)=>{ 
+export default class Home extends React.Component{
 
-  const state = {
-    ...props.state    
+  constructor(props){
+    super(props)
+    this.state = {
+      ...props.state,
+    }
+
+    this.handleToggleSave = this.handleToggleSave.bind(this);
+    this.handleSaveCloud = this.handleSaveCloud.bind(this);
+    this.handleDownloadTxtFile = this.handleDownloadTxtFile.bind(this);
+    this.handleCopyTxt = this.handleCopyTxt.bind(this);
+    this.handleNewReport = this.handleNewReport.bind(this)
   }
 
-  function ToggleSave(e){
+  handleToggleSave = (e) => {
     e.stopPropagation();
     let save = e.target.closest('.action');
 
@@ -18,11 +28,12 @@ const Home = (props)=>{
       save.classList.add('open');
   }
 
-  function SaveCloud(){
-    Modal.Open({name:'Save',state})
+  handleSaveCloud = () => {
+    let st = this.state;
+    Modal.Open({name:'Save', st})
   }
 
-  const DownloadTxtFile = () => {
+  handleDownloadTxtFile = () => {
     const element = document.createElement("a");
     const file = new Blob([document.querySelector('.ck-editor__editable').ckeditorInstance.getData()], {type: 'text/plain'});
     element.href = URL.createObjectURL(file);
@@ -31,106 +42,95 @@ const Home = (props)=>{
     element.click();
   }
 
-  const CopyTxt = ()=>{
+  handleCopyTxt = ()=>{
     navigator.clipboard.writeText(_CKEditor.getData());
   }
 
-  return (
-    <div id="__home">
-      
-      <div id="editor" className="d-flex flex-row h-100">
-          <div className="col-9 d-flex flex-column h-100 editor">            
-            <AreaEditor state={props.state} />
-          <div className="editor-actions">
-            <div className="action save">
-              <button className="btn btn-primary radius" onClick={(e)=>ToggleSave(e)}>
-                <i className="fas fa-save"></i>
-              </button>
-              <ul>
-                <li onClick={SaveCloud}>
-                  <i className="fas fa-cloud"></i>
-                  <Language en="Save" pt="Salvar"/>
-                </li>
-                <li onClick={DownloadTxtFile}>
-                  <i className="fas fa-save"></i>
-                  <Language en="Save in PC" pt="Salvar no PC"/>
-                </li>
+  handleNewReport = () => {
+    document.querySelector('.new-document').click();
+  }
 
-                <li onClick={CopyTxt}>
-                  <i className="fas fa-copy"></i>                  
-                  <Language en="Copy" pt="Copiar"/>
-                </li>
-              </ul>
+  render(){
+    return (
+      <div id="__home">
+        
+        <div id="editor" className="d-flex flex-row h-100">
+            <div className="col-9 d-flex flex-column h-100 editor">            
+              <AreaEditor state={this.state} />
+            <div className="editor-actions">
+              <div className="action save">
+                <button className="btn btn-primary radius" onClick={(e)=>this.handleToggleSave(e)}>
+                  <i className="fas fa-save"></i>
+                </button>
+                <ul>
+                  <li onClick={this.handleSaveCloud}>
+                    <i className="fas fa-cloud"></i>
+                    <Language en="Save" pt="Salvar"/>
+                  </li>
+                  <li onClick={this.handleDownloadTxtFile}>
+                    <i className="fas fa-save"></i>
+                    <Language en="Save in PC" pt="Salvar no PC"/>
+                  </li>
+
+                  <li onClick={this.handleCopyTxt}>
+                    <i className="fas fa-copy"></i>                  
+                    <Language en="Copy" pt="Copiar"/>
+                  </li>
+                </ul>
+              </div>
+
             </div>
+          </div>
+
+          <div id="__list_actions" className="col-3">
+            <ul className="scrolling">
+              <li>
+                <i className="fas fa-text"></i> 
+                <div className="text">
+                  <span className="nameaction">
+                    <Language en="AutoTexts" pt="AutoTextos"/>
+                  </span>              
+                  <small>texto descritivo</small>
+                </div>
+              </li>
+
+              <li onClick={this.handleSaveCloud}>
+                <i className="fas fa-save"></i> 
+                <div className="text">
+                  <span className="nameaction">
+                    <Language en="Save Report" pt="Salvar Laudo"/>  
+                  </span>              
+                  <small>texto descritivo</small>
+                </div>
+              </li>
+
+              <li onClick={this.handleNewReport}>
+                <i className="fas fa-notes-medical"></i> 
+                <div className="text">
+                  <span className="nameaction">
+                    <Language en="New Report" pt="Novo Laudo"/>  
+                  </span>              
+                  <small>texto descritivo</small>
+                </div>
+              </li>
+
+              <li>
+                <i className="fas fa-gamepad-alt"></i> 
+                <div className="text">
+                  <span className="nameaction">
+                    <Language en="Commands" pt="Comandos"/>  
+                  </span>              
+                  <small>texto descritivo</small>
+                </div>
+              </li>
+              
+            </ul>
 
           </div>
+          
         </div>
-
-        <div id="__list_actions" className="col-3">
-          <ul className="scrolling">
-            <li>
-              <i className="fas fa-pen-alt"></i> 
-              <div className="text">
-                <span className="nameaction">AÇÃO 1</span>              
-                <small>texto descritivo</small>
-              </div>
-            </li>
-
-            <li>
-              <i className="fas fa-text"></i> 
-              <div className="text">
-                <span className="nameaction">AÇÃO 2</span>              
-                <small>texto descritivo</small>
-              </div>
-            </li>
-
-            <li>
-              <i className="fas fa-file-search"></i> 
-              <div className="text">
-                <span className="nameaction">AÇÃO 3</span>              
-                <small>texto descritivo</small>
-              </div>
-            </li>
-
-            <li>
-              <i className="fas fa-save"></i> 
-              <div className="text">
-                <span className="nameaction">AÇÃO 4</span>              
-                <small>texto descritivo</small>
-              </div>
-            </li>
-
-            <li>
-              <i className="fas fa-notes-medical"></i> 
-              <div className="text">
-                <span className="nameaction">AÇÃO 5</span>              
-                <small>texto descritivo</small>
-              </div>
-            </li>
-
-            <li>
-              <i className="fas fa-cog"></i> 
-              <div className="text">
-                <span className="nameaction">AÇÃO 6</span>              
-                <small>texto descritivo</small>
-              </div>
-            </li>
-
-            <li>
-              <i className="fas fa-sliders-h-square"></i> 
-              <div className="text">
-                <span className="nameaction">AÇÃO 7</span>              
-                <small>texto descritivo</small>
-              </div>
-            </li>
-        
-          </ul>
-
-        </div>
-        
       </div>
-    </div>
-  );
+    )
+  }
 }
 
-export default Home;

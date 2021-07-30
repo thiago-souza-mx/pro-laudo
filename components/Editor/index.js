@@ -49,13 +49,13 @@ export class AreaEditor extends React.Component{
     aba.setAttribute('class','aba-editor-item active') 
     aba.setAttribute('title',item.file_name) 
     aba.onclick = ()=> this.handleSelectEditor(aba);
-    aba.innerHTML = `<span></span><i></i>`
+    aba.innerHTML = `<i class="fas fa-notes-medical"></i><span></span><i class="icon"></i>`
     document.querySelector("#area-editor .aba-editor ul").appendChild(aba)
     ReactDOM.render( item.file_name , document.getElementById(aba.id).querySelector('span') );
 
     ReactDOM.render( 
       <i className="far fa-times" onClick={(e)=> this.handleRemoveEditor( item.id, item.id_aba, e )}></i>,
-      document.getElementById(aba.id).querySelector('i') 
+      document.getElementById(aba.id).querySelector('.icon') 
     );
 
     console.log(this.state)

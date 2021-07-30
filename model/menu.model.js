@@ -15,7 +15,19 @@ const menuModel = [
   {
     name:<Language pt='Laudos Salvos'  en='Saved Reports'/>,
     link:'Reports',
-    icon:'file-medical',
+    icon:'files-medical',
+    class: ''
+  },
+  {
+    name:<Language pt='Últimos Laudos'  en='Last Reports'/>,
+    link:'LastReports',
+    icon:'clock',
+    class: ''
+  },
+  {
+    name:<Language pt='Laudos Excluídos'  en='Excluded Reports'/>,
+    link:'TrashReports',
+    icon:'trash-undo-alt',
     class: ''
   }
 ];
