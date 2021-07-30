@@ -1,5 +1,6 @@
 import { Speech, state } from "../controllers/Speech";
 import { Language } from "../components/Language";
+import StartEvents from "../helpers/ToggleScreen";
 
 const StateSpeech = state;
 
@@ -39,6 +40,7 @@ const Button = {
   },
 
   ModeDesktop: ()=>{
+    StartEvents()
     return(
       <a className="action desktop btn btn-sm ln-2 font-24 px-3" onClick={Action.Expand} > 
         <i className="fal fa-desktop-alt"></i>
@@ -76,11 +78,11 @@ const Button = {
     state.Speech = StateSpeech;
     Speech({Microphone:state.Microphone});
     return(
-      <div data-microphone="button" className="radius border border-1 border-dark">
-        <button className="btn btn-primary rounded-circle mic" onClick={(e)=>{
+      <div data-microphone="button" className={`radius border border-1 border-dark ${state.Microphone.status}`}>
+        <button className={`btn btn-primary rounded-circle mic `} onClick={(e)=>{
           Action.ToggleMicrophone(e, state);
         }}>
-          <i className="fas fa-microphone-alt"></i>
+          {state.Microphone.icon}
         </button>
         <span className="mx-4" data-microphone="message">          
           {state.Microphone.phrase}
@@ -105,15 +107,7 @@ const Button = {
 
 const Header = ({state})=>{
 
-  state.Microphone={
-    _phrase : <Language en="Click on the microphone on the side to start dictating!" pt="Clique no microfone ao lado para começar a ditar!"/>,
-    get phrase(){
-      return this._phrase;
-    },
-    set phrase(v){
-      this._phrase = v;
-    }
-  }
+ 
   return (
     <header className="d-flex"> 
       <span className="label-view">Header</span>
@@ -123,7 +117,7 @@ const Header = ({state})=>{
 
       </div>
       <div id="header_actions" className="d-flex justify-content-end">
-        <Button.PaletteTheme/>
+        {/*<Button.PaletteTheme/>*/}
         <Button.ModeDesktop/>
         <Button.Notify/>
         <Button.Account state={state} />

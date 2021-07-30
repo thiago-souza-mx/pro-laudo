@@ -17,5 +17,8 @@
   &.called{
     right: -100%;
     transition: 0.1s all;
+    #contentView{
+      opacity: 0;
+    }
   }
 }

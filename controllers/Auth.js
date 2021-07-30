@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import ReactDOM, { render } from 'react-dom';
+import React from "react";
+import ReactDOM from 'react-dom';
 import AppConfigModel from '../model/appConfig.model';
 import PanelLogin from '../views/Login';
 import _404 from "../views/404";
@@ -7,7 +7,7 @@ import Register from "../views/Register";
 import Recover from "../views/Recover";
 import menuModel from "../model/menu.model";
 import Template from "./Template";
-import StartEvents from "../helpers/ToggleScreen";
+import { Language } from "../components/Language";
 
 
 const packageJson = require('../package.json');
@@ -23,17 +23,31 @@ export default class Auth extends React.Component{
     this.state = {
       ...props.state,
       auth: this.handleLogin,
-      config: this.handleConfig
+      config: this.handleConfig,
+      Microphone:{
+        status: '',
+        icon: <i className="fas fa-microphone-alt"></i>,
+        _phrase : <Language en="Click on the microphone on the side to start dictating!" pt="Clique no microfone ao lado para começar a ditar!"/>,
+        get phrase(){
+          return this._phrase;
+        },
+        set phrase(v){
+          this._phrase = v;
+        }
+      },
+      editor:{ },
+      id_editor:0
     }
 
     this.handleRender = this.handleRender.bind(this);
     this.handleSetLogin = this.handleSetLogin.bind(this);
     this.handleSetLogout = this.handleSetLogout.bind(this);
+    this.handleLoadStyles = this.handleLoadStyles.bind(this);
   }
 
   handleLogin ={
     _logado : false,
-    _user: {},
+    _user:{},
     _handleSetLogin:()=> this.handleSetLogin(this),
     _handleSetLogout:()=> this.handleSetLogout(this),
     get logado(){
@@ -49,8 +63,9 @@ export default class Auth extends React.Component{
     get user(){
       return this._user;
     },
-    set user(v){
-      this._user = v;
+    set user(props){    
+      Object.assign(this._user , props);
+      return this._user;
     }
   } 
 
@@ -58,7 +73,7 @@ export default class Auth extends React.Component{
     _language:'pt',
     _handleRefactor: ()=>{
       const main = document.getElementById("__app");
-        ReactDOM.render( this.handleRender() , main );
+      ReactDOM.render( this.handleRender() , main );
     },
     get language(){
       return this._language;
@@ -71,10 +86,13 @@ export default class Auth extends React.Component{
 
   handleSetLogin({state}){
 
-   console.log(state);
     if(typeof state.auth.user === "object"){
-      sessionStorage.setItem('User-account', JSON.stringify(state.auth.user));
-      sessionStorage.setItem('App-account','logado')
+      let appAccount = {
+        UserAccount : this.state.auth.user,
+        isLoggedIn: true
+      }
+
+      sessionStorage.setItem('App-account',JSON.stringify(appAccount));      
       document.querySelector('.panel-login').classList.add('slide-down');
   
       setTimeout(()=>{  
@@ -95,7 +113,6 @@ export default class Auth extends React.Component{
     let appAccount = sessionStorage.getItem('App-account');
     if(appAccount)
       sessionStorage.removeItem('App-account');
-      sessionStorage.removeItem('User-account');
       document.getElementById('template').classList.add('hide');
       setTimeout(()=>{
         const main = document.getElementById("__app");
@@ -103,15 +120,34 @@ export default class Auth extends React.Component{
       }, 500 );
   }
 
+
+  handleLoadStyles(arr){
+    let styles ="";
+  
+    arr.forEach(item => {    
+      Object.keys(item).forEach(attr => {
+        let atributes = "";
+        Object.keys(item[attr]).forEach(val => {
+          atributes += `${val}="${item[attr][val]}"`;
+        })
+        styles+= `<link id="${attr}" ${atributes} />`;
+      });
+      
+    });
+  
+    return styles;
+  }
+
+
   handleRender(){
 
     let Render = <_404/>;
-
-    if(sessionStorage.getItem('App-account')){ 
-      Render = 
-      <Template menu="home" state={this.state} view="home">
-        <StartEvents/>
-      </Template> 
+    let AppAccount = JSON.parse( sessionStorage.getItem('App-account') );
+    if( AppAccount && AppAccount.isLoggedIn ){ 
+      if( !this.state.auth.user.id )
+        this.state.auth.user = JSON.parse( sessionStorage.getItem('App-account') ).UserAccount;      
+      Render =  <Template menu="home" state={this.state} view="home"/>
+        
     }else if(location.pathname == "/register"){
       Render = <Register state={this.state} />;
     }else if(location.pathname == "/recover"){
@@ -130,7 +166,7 @@ export default class Auth extends React.Component{
 
   componentDidMount(){
     document.head.insertAdjacentHTML('beforeend',`<title>${aplication.name}</title>`);
-    document.head.insertAdjacentHTML('beforeend',loadStyles(aplication.header.link));
+    document.head.insertAdjacentHTML('beforeend', this.handleLoadStyles(aplication.header.link));
     
     let AppConfig;
     if(!localStorage.getItem("App-config")){ 
@@ -141,6 +177,12 @@ export default class Auth extends React.Component{
         localStorage.setItem("App-config",JSON.stringify(AppConfigModel));
       } 
     }
+
+    let st = this.state;
+    st.config.menu = AppConfig.menu
+    st.config.theme = AppConfig.theme
+
+    this.setState(st);
 
     const main = document.getElementById("__app");
     ReactDOM.render( this.handleRender() , main );
@@ -154,32 +196,11 @@ export default class Auth extends React.Component{
 }
 
 
-
-// LOADSTYLES ////////////////////////////////////////////////
-
-const loadStyles = arr =>{
-  let styles ="";
-
-  arr.forEach(item => {    
-    Object.keys(item).forEach(attr => {
-      let atributes = "";
-      Object.keys(item[attr]).forEach(val => {
-        atributes += `${val}="${item[attr][val]}"`;
-      })
-      styles+= `<link id="${attr}" ${atributes} />`;
-    });
-    
-  });
-
-  return styles;
-}
-
-
  // FETCH API //////////////////////////////////////////////////
 
- export const fetchApi = async (rota, data) =>{
+ export const fetchApi = async (route, data) =>{
   data.lang = JSON.parse(localStorage.getItem('App-config')).language;
-  return fetch(Base.api + rota,{
+  return fetch(Base.api + route,{
     method: "POST",
     body:JSON.stringify(data)
   })

@@ -1,5 +1,6 @@
 import React from "react"
 import { Language } from "../../components/Language";
+import { state } from "../../controllers/Speech";
 import { Close, ModalPage } from "../../helpers/Modal";
 
 export default class ModalProfile extends React.Component{
@@ -33,7 +34,8 @@ export default class ModalProfile extends React.Component{
   handleSubmit({first_name, last_name}) {
     this.setState({full_name : first_name+" "+last_name})
     this.handleFlip();
-    let user = JSON.parse(sessionStorage.getItem('User-account'));
+    //let user = JSON.parse(sessionStorage.getItem('User-account'));
+    let user = this.state.auth.user;
     sessionStorage.setItem( 'User-account', JSON.stringify({ ...user, first_name , last_name }) )
   }
 
@@ -58,7 +60,7 @@ export default class ModalProfile extends React.Component{
       this.setState({theme : 'light'})
     
     setTimeout(()=>{
-      let { first_name, last_name, email } = JSON.parse(sessionStorage.getItem('User-account'));
+      let { first_name, last_name, email } = this.state.auth.user;
       this.setState({first_name :first_name})
       this.setState({last_name : last_name})
       this.setState({full_name : first_name+" "+last_name})
@@ -92,11 +94,11 @@ export default class ModalProfile extends React.Component{
 
               <div id="profile_menu" className="modal-menu">
 
-                <button className={`btn btn-outline-${this.state.theme}`} onClick={()=>this.handleEdit('Profile')}>
+                <button className={`btn btn-outline-${this.state.config.theme.name == 'theme-dark' ? 'light' : 'dark' }`} onClick={()=>this.handleEdit('Profile')}>
                   <Language en="Edit Profile" pt="Editar Perfil" />
                 </button>
 
-                <button className={`btn btn-outline-${this.state.theme}`} onClick={()=>this.handleEdit('Preferences')}>
+                <button className={`btn btn-outline-${this.state.config.theme.name == 'theme-dark' ? 'light' : 'dark' }`} onClick={()=>this.handleEdit('Preferences')}>
                   <Language en="Preferences" pt="Preferências" />
                 </button>
 

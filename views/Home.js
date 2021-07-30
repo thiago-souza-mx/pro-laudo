@@ -40,7 +40,7 @@ const Home = (props)=>{
       
       <div id="editor" className="d-flex flex-row h-100">
           <div className="col-9 d-flex flex-column h-100 editor">            
-            <AreaEditor/>
+            <AreaEditor state={props.state} />
           <div className="editor-actions">
             <div className="action save">
               <button className="btn btn-primary radius" onClick={(e)=>ToggleSave(e)}>

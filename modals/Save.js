@@ -2,6 +2,7 @@ import React from "react"
 import Select from 'react-select'
 import { Language } from "../components/Language";
 import { Close } from "../helpers/Modal";
+import User from "../controllers/User";
 
 export default class Save extends React.Component{
 
@@ -35,15 +36,14 @@ export default class Save extends React.Component{
       files = JSON.parse(localStorage.getItem('Save-files'))
     }
     const file = {
-      name : this.state.file_name,
-      id : _CKEditor.id,
-      date : new Date().getTime(),
-      body : _CKEditor.getData()
+      name  : this.state.file_name,
+      id    : _CKEditor.id,
+      body  : _CKEditor.getData(),
+      open  : true
     }
 
-    files[_CKEditor.id]= file;
-    localStorage.setItem('Save-files', JSON.stringify(files))
-    sessionStorage.setItem('Current-laudo',JSON.stringify(file))
+    files[_CKEditor.id] = file;
+    User.saveFile( file );
     _CKEditor.file_name = file.name;
     let aba = document.getElementById(file.id);
     aba.title = file.name

@@ -1,12 +1,14 @@
 import React from "react"
 import { Language } from "../components/Language";
 import { Close } from "../helpers/Modal";
+import User from "../controllers/User";
 
 export default class Reports extends React.Component{
 
   constructor(props) {
     super(props);
     this.state = {
+      ...props.state,
       event: '',
       theme: 'dark',
       directorys:null
@@ -57,21 +59,29 @@ export default class Reports extends React.Component{
   }
 
   handleOpenFile = (file)=>{
-    console.log(file)
-    file.open=true;
-    sessionStorage.setItem('Current-laudo', JSON.stringify(file))
+    /*let st =  this.state;
+    let list = [];
+    st.editor.list.forEach((o,i)=>{
+      if(o.id != file.id)
+      list.push(o)
+    })
+
+    st.editor.list= list;
+    
+    st.editor.list.push(file);
+    this.setState(st)*/
+    file.open = true;
+    User.saveFile(file)
+    User.setOpenFile(file.id)
+    
     document.querySelector('#Home a').click();
   }
   
  
   componentDidMount() {
-    let config = JSON.parse(localStorage.getItem('App-config'));
-    
-    if(config.theme.name == "theme-dark")
-      this.setState({theme : 'light'})
+    let files = User.getFiles( true )
+    if(files){
 
-    if(localStorage.getItem('Save-files')){
-      let files = JSON.parse(localStorage.getItem('Save-files'));
       Object.keys(files).forEach(k => {
         let item = files[k]
         let file = document.createElement('div')

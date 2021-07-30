@@ -19,7 +19,6 @@ export const SelectTheme = e=>{
     return ;
   let data = e.target.getAttribute('data-theme');
   let themeName = false;
-  let destaqName = false;
 
   let AppConfig = JSON.parse(localStorage.getItem('App-config'));
 
@@ -27,13 +26,13 @@ export const SelectTheme = e=>{
     themeName = data;
     AppConfig.theme.name = themeName;
   }
-  if(data.indexOf('destaq-')> -1){
-    destaqName = data;
-    AppConfig.theme.destaq = destaqName;
-  }
-  
-  localStorage.setItem("App-config",JSON.stringify(AppConfig))
 
+  SetTheme(themeName);
+  if( e.target.closest('a'))
+    e.target.closest('a').classList.remove('open');
+}
+
+export const SetTheme = themeName =>{
   let currentTheme = document.querySelector('html').classList;
   currentTheme.forEach(item=>{
     if( themeName ){
@@ -43,13 +42,8 @@ export const SelectTheme = e=>{
       document.querySelector('html').classList.add(themeName);
     }
 
-    if( destaqName ){
-      if(item.indexOf('destaq-') > -1 )
-        document.querySelector('html').classList.remove(item);  
-      
-      document.querySelector('html').classList.add(destaqName);
-    }
-  })     
-  
-  e.target.closest('a').classList.remove('open');
+  }) 
+  let AppConfig = JSON.parse(localStorage.getItem('App-config'));
+  AppConfig.theme.name = themeName;
+  localStorage.setItem("App-config",JSON.stringify(AppConfig))
 }

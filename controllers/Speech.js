@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
-import { InsertText, setNotification } from '../components/Editor';
+import { InsertText } from '../components/Editor/InsertText';
 import { Language } from '../components/Language';
 
 export const state = {
@@ -224,7 +224,7 @@ const callbackTranscript = text =>{
   console.log(state);
   if( text.transcript != '' || text.app ){
     state.text = text;
-    if(!document.getElementById('view').classList.contains('view-home')){
+    if(!document.getElementById('view').classList.contains('view-Home')){
       text.resetTranscript();
       return 
     }
@@ -407,6 +407,7 @@ export function  Speech({Microphone}){
 }
 
 export const Voice = (audio)=>{  
+  console.log(state)
   state.voice = true;
   let midia = new Audio(`/voices/${encodeURI(audio).toLowerCase()}.mp3`)  
   state.Microphone.phrase = audio;
