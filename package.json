@@ -47,7 +47,7 @@
     "@tinymce/tinymce-react": "^3.12.6",
     "babel-loader": "^8.2.2",
     "ckeditor5-custom-build": "git+https://github.com/thiago-souza-mx/ckeditor5.git",
-    "next": "^10.2.3",
+    "next": "^11.1.0",
     "postcss": "^8.3.5",
     "qrcode": "^1.4.4",
     "react": "^17.0.2",
