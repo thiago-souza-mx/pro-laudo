@@ -10,7 +10,7 @@ export default class Preferences extends React.Component{
     this.state = {
       ...props.state,
       lang : 'pt',
-      themeName:''
+      themeName : '',
     }
 
     this.handleFlip = props.handles.handleFlip;
@@ -55,6 +55,7 @@ export default class Preferences extends React.Component{
     let st = this.state;
     st.config.language = this.state.lang
     st.config.theme.name = this.state.themeName;
+    st.update.app = true;
     SetTheme( this.state.themeName );
     this.setState(st);
   }

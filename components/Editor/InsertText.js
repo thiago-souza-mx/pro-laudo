@@ -1,5 +1,5 @@
 import { Language } from "../Language";
-import { ScrollEditor } from "./CreateEditor";
+import { ScrollEditor , CursorEditor } from "./CreateEditor";
 
 /**-------------------------------------------------------------------------
  * 
@@ -9,19 +9,21 @@ import { ScrollEditor } from "./CreateEditor";
  
  export const InsertText = ( msg , setData )=>{
 
-  let _state = document.querySelector('.list-editor-item.active .ck-editor__editable').innerText;
+  NemmoEditor.save()
+  let _state = NemmoEditor.getData();
+
+  msg = msg+' '
 
   if( msg === false ){
-    _CKEditor.setData(setData);
+    NemmoEditor.setData(setData);
     return ScrollEditor();
   }
   if( _state.trim() == Language({pt:'Comece a escrever seu laudo', en:'Start writing your report' }) ){
-    _CKEditor.setData("");
+    NemmoEditor.setData("");
     return ScrollEditor();
   }
 
-  let data = _CKEditor.getData()
-  console.log(data)
+  let data =  NemmoEditor.getData();
 
   if(data.indexOf('ƒ(') > -1){
     let str1 = data.split('ƒ(');
@@ -29,7 +31,8 @@ import { ScrollEditor } from "./CreateEditor";
     let str = str2[0];
 
     msg = data.replace(`ƒ(${str})`,`ƒ(${msg})`);
-    _CKEditor.setData(msg);
+    NemmoEditor.setData(msg);
+    //CursorEditor('end');
     return ScrollEditor();
   }
 
@@ -39,23 +42,23 @@ import { ScrollEditor } from "./CreateEditor";
     let str = str2[0];
 
     msg = data.replace(`t(${str})`,`t(${msg})`);
-    _CKEditor.setData(msg);
+    NemmoEditor.setData(msg);
+    //CursorEditor('end');
     return ScrollEditor();
   }
 
-  if(data.indexOf('|') > -1){
-    let str1 = data.split('|');
-    let str2 = str1[1].split('|');
+  if(data.indexOf('<mark>') > -1){
+    let str1 = data.split('<mark>');
+    let str2 = str1[1].split('</mark>');
     let str = str2[0];
 
-    msg = data.replace(`|${str}|`,msg);
-    _CKEditor.setData(msg);
+    msg = data.replace(`<mark>${str}</mark>`,msg);
+    NemmoEditor.setData(msg);
+    CursorEditor('end');
     return ScrollEditor();
   }
 
-  _CKEditor.model.change( writer => {
-    writer.insertText( msg, _CKEditor.model.document.selection.getLastPosition(), 'end');    
-  });
-  return ScrollEditor();
+  NemmoEditor.setData(_state+msg);
+  CursorEditor('end');
 
 }

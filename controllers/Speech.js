@@ -2,6 +2,7 @@ import { useState } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import { InsertText } from '../components/Editor/InsertText';
 import { Language } from '../components/Language';
+import { Open } from '../helpers/Modal';
 
 export const state = {
   active : true,
@@ -22,7 +23,8 @@ const action = {
 	neww : false,
 	old: false,
 	func: false,
-  command: false
+  command: false,
+  insert : true
 }
 
 
@@ -64,7 +66,12 @@ const newtab = ()=>	state.tab = window.open()
 
 const pesquisa = ( busca )=>{
   console.log(busca)
-  state.tab = window.open(`https://www.google.com/search?q=${busca}`)
+  if(document.querySelector('#modals.WebSearch')){
+    document.querySelector('#modals.WebSearch .close').click()
+    setTimeout(()=> Open({name:'WebSearch', state:{search:busca} }), 300);
+  }else{  
+    Open({name:'WebSearch', state:{search:busca} });
+  }
 }
 
 const background = (color)=>{
@@ -72,7 +79,12 @@ const background = (color)=>{
 	return ;
 }
 
-const closetab = ()=> { state.tab.close(); return ;}
+const closetab = ()=> { 
+  if(document.querySelector('#modals.WebSearch')){
+    document.querySelector('#modals.WebSearch .close').click();    
+  }
+  return ;
+}
 
 const exit = ()=> {window.close(); return ;}
 
@@ -100,8 +112,8 @@ const calculo = valor =>{
       let result = eval(tratament(valor))
       result = result % 1 ? result.toFixed(2) : result;
       action.func = false
-      valor = _CKEditor.getData().replace(`ƒ(|${valor}|)`,'')
-      _CKEditor.setData(`${valor}`);
+      valor = NemmoEditor.getData().replace(`ƒ(|${valor}|)`,'')
+      NemmoEditor.setData(`${valor}`);
       return `${result}`;
       
       
@@ -115,8 +127,9 @@ const calculo = valor =>{
 const titulo = valor =>{
   if(valor.trim() != 't()'){
     action.func = false
-    let text = _CKEditor.getData().replace(`t(|${valor}|)`,'')
-    _CKEditor.setData(`${text}`);       
+    console.log(NemmoEditor.getData());
+    let text = NemmoEditor.getData().replace(`t(<mark>${valor}</mark> )`,'')
+    NemmoEditor.setData(`${text}`);       
     valor = `<h1>${valor.capitalize()}</h1>`; 
     state.capitalize= 'next';          
   }
@@ -126,8 +139,8 @@ const titulo = valor =>{
 const subtitulo = valor =>{
   if(valor.trim() != 't()'){
     action.func = false
-    let text = _CKEditor.getData().replace(`t(|${valor}|)`,'')
-    _CKEditor.setData(`${text}`);       
+    let text = NemmoEditor.getData().replace(`t(<mark>${valor}</mark> )`,'')
+    NemmoEditor.setData(`${text}`);       
     valor = `<h4>${valor.capitalize()}</h4>`; 
     state.capitalize= 'next';          
   }
@@ -138,28 +151,28 @@ const limpar = (n) =>{
   if( n ){
     n = n ? n : 1;
     
-    let text = _CKEditor.getData();
+    let text = NemmoEditor.getData();
     if(text != ''){	
 
         let words = text.trim().split(/\s/);
         console.log(words);
         words = (words.splice( 0, (words.length - n))).join(' ') 
-        _CKEditor.setData(`${words} ||`);
+        NemmoEditor.setData(`${words} ||`);
 
     }else{
-      _CKEditor.setData("");
+      NemmoEditor.setData("<div id='edtiting'></div>");
     }
   }else{
-    let text = _CKEditor.getData();
+    let text = NemmoEditor.getData();
     if(text != ''){	
 
         text = text.replace(action.old,'')
-        _CKEditor.setData(`${text}`);
+        NemmoEditor.setData(`${text}`);
     }
   }
 }
 
-const limparTudo = () => _CKEditor.setData("");
+const limparTudo = () => NemmoEditor.setData("");
 const tipoCalculo = ()=> {
   state.capitalize = false;
   return "ƒ()";
@@ -191,8 +204,8 @@ const Commands={
 	"quebrar linha" : ()=> {return "</br>";state.capitalize = true},
 	"parágrafo" : ()=> {return "</br>"; state.capitalize = true },
 	"parágrafo parágrafo" : ()=> "</br></br>", "dois parágrafos" : ()=> "</br></br>", 	"2 parágrafos" : ()=> "</br></br>",
-	"salvar" : ()=> setTimeout(()=> download("laudo",  _CKEditor.getData()),600),
-	"copiar" : ()=> setTimeout(()=>{ navigator.clipboard.writeText( _CKEditor.getData().replace('||','') ); _CKEditor.setNotification("Texto copiado para a área de transferência", "info"); Voice("Texto copiado para a área de transferência") },600),
+	"salvar" : ()=> setTimeout(()=> download("laudo",  NemmoEditor.getData()),600),
+	"copiar" : ()=> setTimeout(()=>{ navigator.clipboard.writeText( NemmoEditor.getData().replace('||','') ); NemmoEditor.setNotification("Texto copiado para a área de transferência", "info"); Voice("Texto copiado para a área de transferência") },600),
 	"cálculo" : ()=> {action.func = calculo; return tipoCalculo(); },
 	"calculo" : ()=> {action.func = calculo; return tipoCalculo(); },
 	"calcule" : ()=> {action.func = calculo; return tipoCalculo(); },
@@ -203,7 +216,7 @@ const Commands={
 	"limpar 2" : ()=>limpar(4),	"limpar dois" : ()=>limpar(4),
 	"limpar 3" : ()=>limpar(5),	"limpar três" : ()=>limpar(5),
 	"limpar 4" : ()=>limpar(6),	"limpar quatro" : ()=>limpar(6),
-	"limpar tudo" : limparTudo, "limpar" : limpar,
+	"limpar tudo" : limparTudo, "apagar tudo" : limparTudo, "limpar" : limpar,
 	"traço" : ()=> "-",
 }
 
@@ -234,8 +247,8 @@ const callbackTranscript = text =>{
 
     if(state.start){   
       
-      if(state.active && !state.voice)
-        InsertText(`|${state.noteContent}|`);
+      if(state.active && !state.voice && action.insert)
+        InsertText(`<mark>${state.noteContent}</mark>`);
 
       if( text.finalTranscript != '' || text.app ){
         if(!text.app) text.resetTranscript();
@@ -263,32 +276,36 @@ const callbackTranscript = text =>{
           if(action.command){
             let command = action.command;
 
-            if(command == 'pausar edição'){
+            if(command == 'pausar' || command == 'pausar edição'){
               Voice('Pausei a edição do laudo')
               action.command = false;
-              InsertText(`${state.noteContent.replace(command,'')} |⏸️|`)
+              InsertText(`${state.noteContent.replace(command,'')} <mark>⏸️</mark>`)
               return;
             }
 
-            if(command == 'retomar edição'){  
+            if(command == 'retomar' || command == 'retomar edição'){  
               Voice('Edição do laudo retomada')            
               text.resetTranscript();              
               action.command = false;
-              InsertText(`${state.noteContent.replace(command,'')} ||`)
+              InsertText(`${state.noteContent.replace(command,'')}`)
               return;
             }
 
             action.old = action.command = false;
 
             if(state.active && !state.voice)
-              return InsertText(`${command} ||`);
+              return InsertText(`${command}`);
           }
           action.old = state.noteContent;
 
-          if(state.active && !state.voice)
-            InsertText(`${state.capitalize === true ? state.noteContent.capitalize(): state.noteContent } ||`);
+          if(state.active && !state.voice && action.insert)
+            InsertText(`${state.capitalize === true ? state.noteContent.capitalize(): state.noteContent }`);
           if(state.capitalize == 'next'){
             state.capitalize= true
+          }
+
+          if(!action.insert){
+            action.insert = true;
           }
         },50);
       }
@@ -313,19 +330,23 @@ export function  Speech({Microphone}){
   const commands = [
     {
       command: 'buscar *',
-      callback: (exp) =>{ action.command =  pesquisa(exp);   }
+      callback: (exp) =>{ action.command =  pesquisa(exp); action.insert = false  }
     },
     {
       command: 'pesquisar *',
-      callback: (exp) =>{ action.command =  pesquisa(exp);   }
+      callback: (exp) =>{ action.command =  pesquisa(exp); action.insert = false  }
     },
     {
       command: '(*) pausar edição',
       callback: (exp) =>{ action.command = 'pausar edição'; state.active = false;}
     },
     {
-      command: 'retomar edição (*)',
-      callback: (exp) => { action.command = 'retomar edição'; state.active = true; }
+      command: '(*) pausar',
+      callback: (exp) =>{ action.command = 'pausar'; state.active = false;}
+    },
+    {
+      command: 'retomar (*)',
+      callback: (exp) => { action.command = 'retomar'; state.active = true; }
     },
     {
       command: 'cálculo *',
@@ -349,7 +370,7 @@ export function  Speech({Microphone}){
     },
     {
       command: '(*) parágrafo (*)',
-      callback: (text1, text2) =>{state.capitalize = true; action.command = `${text1 ? text1 : ''}<br> ${text2 ? text2 : ''}` }
+      callback: (text1, text2) =>{state.capitalize = true; action.command = `${text1 ? text1 : ''}<br/>${text2 ? text2 : ''} <mark><b class="hide_p">|</b></mark>` }
     },
     {
       command: '(*) vírgula (*)',
@@ -358,6 +379,11 @@ export function  Speech({Microphone}){
     {
       command: '(*) ponto final (*)',
       callback: (text1, text2) =>{state.capitalize = true; action.command = `${text1 ? text1 : ''}. ${text2 ? text2 : ''}` }
+    },
+
+    {
+      command: '* ponto',
+      callback: (text1, text2) =>{state.capitalize = true; action.command = `${text1}. ` }
     },
     {
       command: '(*) reticências (*)',

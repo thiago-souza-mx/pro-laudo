@@ -14,7 +14,6 @@
           "fontawesome": {
             "href": "https://pro.fontawesome.com/releases/v5.15.3/css/all.css",
             "rel": "stylesheet"
-
           },
           "iconlogo": {
             "rel": "shortcut icon",
@@ -47,7 +46,7 @@
     "@tinymce/tinymce-react": "^3.12.6",
     "babel-loader": "^8.2.2",
     "ckeditor5-custom-build": "git+https://github.com/thiago-souza-mx/ckeditor5.git",
-    "next": "^10.2.3",
+    "next": "^11.1.1",
     "postcss": "^8.3.5",
     "qrcode": "^1.4.4",
     "react": "^17.0.2",
@@ -56,7 +55,8 @@
     "react-select": "^4.3.1",
     "react-speech-recognition": "^3.8.2",
     "sass": "^1.35.1",
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.3.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "dotenv": "^10.0.0",

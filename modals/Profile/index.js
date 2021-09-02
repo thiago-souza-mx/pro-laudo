@@ -16,7 +16,7 @@ export default class ModalProfile extends React.Component{
       last_name: <span className="preload"></span>,
       email: <span className="preload"></span>,
       pass: '',
-      render: ''
+      render: '',
     };
 
     this.handleDestruct = this.handleDestruct.bind(this);
@@ -44,7 +44,10 @@ export default class ModalProfile extends React.Component{
   }
   handleDestruct(cb) {
     this.setState({event: cb});
+    console.log(this.state);
     Close();
+    if(this.state.update)
+      location.reload();
   }
   
   handleEdit(render) { 

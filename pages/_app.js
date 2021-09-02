@@ -10,15 +10,25 @@ export default class App extends React.Component{
     super(props)
     this.state = {
       reload : 'false',
+      update :{ 
+        _app: false,
+        set app(v){
+          this._app = v;
+        },
+        get app(){
+          return this._app;
+        }
+      },
       auth : {},
       config : {}, 
+      Nemmo : {},
       schema: menuSchema     
     }
   }
-    
+  
   render(){
     return( 
-      <div state={this.state.reload} style={{display:"contents"}}>
+      <div id="__app__" state={this.state.reload} style={{display:"contents"}}>
         <Auth state={this.state} />  
       </div>      
     )

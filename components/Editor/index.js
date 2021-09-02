@@ -4,8 +4,7 @@ import { Language } from './../Language'
 import User from '../../controllers/User';
 import { CreateEditor } from './CreateEditor';
 
-
-global._CKEditor = false;
+global.NemmoEditor = false;
 
 export class AreaEditor extends React.Component{
   constructor(props){
@@ -21,6 +20,9 @@ export class AreaEditor extends React.Component{
       },
       tiping: false,
       handleSetNavigate  : (v)=> this.handleSetNavigate(v),
+      Nemmo : {
+        Editor : []
+      }
       
     }
 
@@ -43,6 +45,7 @@ export class AreaEditor extends React.Component{
   handleSetNavigate = (item)=>{
 
 
+    console.log(item);
     let aba = document.createElement('li')
     aba.id = item.id;
     aba.setAttribute('data-editor', item.id_aba);
@@ -70,7 +73,6 @@ export class AreaEditor extends React.Component{
    -------------------------------------------------------------------------*/  
 
   handleSetEditor = ( _editor )=>{
-
     document.querySelectorAll('.aba-editor-item').forEach(item=>{
       item.classList.remove('active');
     })
@@ -81,7 +83,7 @@ export class AreaEditor extends React.Component{
     
     let editor = document.createElement('div')
     editor.id = 'editor_'+this.state.id_editor;
-    editor.setAttribute('class','list-editor-item active')
+    editor.setAttribute('class','list-editor-item d-flex active')
     document.querySelector("#list-editor").appendChild(editor)
     ReactDOM.render( <CreateEditor _state={this.state} id={editor.id} _new={this.state.editor.new} _editor={_editor} /> , document.getElementById(editor.id) );
     this.setState({id_editor: this.state.id_editor +1})
@@ -160,7 +162,7 @@ export class AreaEditor extends React.Component{
     let editor_id = e.getAttribute('data-editor');
     let editor = document.getElementById(editor_id);
 
-    global._CKEditor = editor.querySelector('.ck-editor__editable').ckeditorInstance
+    global.NemmoEditor = this.state.Nemmo.Editor[editor_id]
     document.querySelectorAll('.aba-editor-item').forEach(item=>{
       item.classList.remove('active');
     })
@@ -183,8 +185,8 @@ export class AreaEditor extends React.Component{
 
   handleSaveData = ()=>{
 
-    if(_CKEditor){
-      if(document.querySelector('.list-editor-item.active .ck-editor__editable').innerText != <Language pt='Comece a escrever seu laudo' en='Start writing your report'/>){
+    if(NemmoEditor){
+      if(NemmoEditor.getData() != <Language pt='Comece a escrever seu laudo' en='Start writing your report'/>){
         let st = this.state;
         st.save.status = <Language en="Editing" pt="Editando"/>;
         this.setState(st);
@@ -196,9 +198,9 @@ export class AreaEditor extends React.Component{
           tiping:setTimeout(()=>{
           
             let laudo   = {}
-            laudo.body  = _CKEditor.getData(),
-            laudo.id    = _CKEditor.id
-            laudo.name  = _CKEditor.file_name
+            laudo.body  = NemmoEditor.getData(),
+            laudo.id    = NemmoEditor.id
+            laudo.name  = NemmoEditor.file_name
             laudo.open  = true;
 
             User.automaticSaveFile(laudo);    
@@ -214,9 +216,9 @@ export class AreaEditor extends React.Component{
   componentDidMount(){
     let st = this.state;
     st.editor.new = false;
-    this.setState(st)
-     
+    this.setState(st)    
     setTimeout(()=> this.handleStartEditor(), 300 ) 
+    
   }
 
 

@@ -1,11 +1,9 @@
-import { createElement } from 'react';
 import ReactDOM from 'react-dom';
-
-
 
 const Modals = {
   Save : require("../modals/Save")['default'],
   Profile : require("../modals/Profile")['default'],
+  WebSearch : require("../modals/WebSearch")['default'],
 }
 
 

@@ -198,7 +198,7 @@ export default class Auth extends React.Component{
 
  // FETCH API //////////////////////////////////////////////////
 
- export const fetchApi = async (route, data) =>{
+export const fetchApi = async (route, data) =>{
   data.lang = JSON.parse(localStorage.getItem('App-config')).language;
   return fetch(Base.api + route,{
     method: "POST",
@@ -209,7 +209,7 @@ export default class Auth extends React.Component{
       return res;
     })
   )  
- }
+}
 
 
 

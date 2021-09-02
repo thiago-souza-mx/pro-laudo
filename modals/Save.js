@@ -12,7 +12,7 @@ export default class Save extends React.Component{
       ...props.state,
       event: '',
       theme: 'dark',
-      file_name: _CKEditor.file_name,
+      file_name: NemmoEditor.file_name,
       new_group: '',
       options: [ ],
       lang: 'pt'
@@ -37,14 +37,14 @@ export default class Save extends React.Component{
     }
     const file = {
       name  : this.state.file_name,
-      id    : _CKEditor.id,
-      body  : _CKEditor.getData(),
+      id    : NemmoEditor.id,
+      body  : NemmoEditor.getData(),
       open  : true
     }
 
-    files[_CKEditor.id] = file;
+    files[NemmoEditor.id] = file;
     User.saveFile( file );
-    _CKEditor.file_name = file.name;
+    NemmoEditor.file_name = file.name;
     let aba = document.getElementById(file.id);
     aba.title = file.name
     aba.querySelector('span').innerText = file.name
