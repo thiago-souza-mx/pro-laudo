@@ -43,7 +43,7 @@ export default class Home extends React.Component{
   }
 
   handleCopyTxt = ()=>{
-    navigator.clipboard.writeText(_CKEditor.getData());
+    navigator.clipboard.writeText(NemmoEditor.getData());
   }
 
   handleNewReport = () => {

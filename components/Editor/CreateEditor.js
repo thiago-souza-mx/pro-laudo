@@ -29,7 +29,8 @@ import User from '../../controllers/User';
   useEffect(() => {
     editorRef.current = {
       CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, // v3+
-      ClassicEditor: require('ckeditor5-custom-build')
+      ClassicEditor: require('../../libs/ckeditor/build/ckeditor'),
+     
     }
     setEditorLoaded(true)
   }, [])
@@ -40,6 +41,25 @@ import User from '../../controllers/User';
       data={_state.data} 
       language= 'pt'
       config={{
+        
+        highlight: {
+          options: [
+              {
+                  model: 'greenMarker',
+                  class: 'marker-green',
+                  title: 'Green marker',
+                  color: 'var(--ck-highlight-marker-green)',
+                  type: 'marker'
+              },
+              {
+                  model: 'redPen',
+                  class: 'pen-red',
+                  title: 'Red pen',
+                  color: 'var(--ck-highlight-pen-red)',
+                  type: 'pen'
+              }
+          ]
+        },
         toolbar:[
           'heading',
           '|',
@@ -60,12 +80,14 @@ import User from '../../controllers/User';
           'alignment',
           '|',
           'imageUpload',
+          
           //'imageInsert',
           //'blockQuote',
           'insertTable',
           //'mediaEmbed',
           'undo',
-          'redo'
+          'redo',
+          'highlight'
         ]
       }}
       onChange={(event, editor) => {
@@ -90,7 +112,7 @@ import User from '../../controllers/User';
         User.setOpenFile(editor.id);
         _state.handleSetNavigate(editor);
         editor.setNotification = SetNotification
-        global._CKEditor = editor;
+        global.NemmoEditor = editor;
         _state.editor.new = true; 
 
       }}

@@ -5,7 +5,7 @@ import User from '../../controllers/User';
 import { CreateEditor } from './CreateEditor';
 
 
-global._CKEditor = false;
+global.NemmoEditor = false;
 
 export class AreaEditor extends React.Component{
   constructor(props){
@@ -160,7 +160,7 @@ export class AreaEditor extends React.Component{
     let editor_id = e.getAttribute('data-editor');
     let editor = document.getElementById(editor_id);
 
-    global._CKEditor = editor.querySelector('.ck-editor__editable').ckeditorInstance
+    global.NemmoEditor = editor.querySelector('.ck-editor__editable').ckeditorInstance
     document.querySelectorAll('.aba-editor-item').forEach(item=>{
       item.classList.remove('active');
     })
@@ -183,7 +183,7 @@ export class AreaEditor extends React.Component{
 
   handleSaveData = ()=>{
 
-    if(_CKEditor){
+    if(NemmoEditor){
       if(document.querySelector('.list-editor-item.active .ck-editor__editable').innerText != <Language pt='Comece a escrever seu laudo' en='Start writing your report'/>){
         let st = this.state;
         st.save.status = <Language en="Editing" pt="Editando"/>;
@@ -196,9 +196,9 @@ export class AreaEditor extends React.Component{
           tiping:setTimeout(()=>{
           
             let laudo   = {}
-            laudo.body  = _CKEditor.getData(),
-            laudo.id    = _CKEditor.id
-            laudo.name  = _CKEditor.file_name
+            laudo.body  = NemmoEditor.getData(),
+            laudo.id    = NemmoEditor.id
+            laudo.name  = NemmoEditor.file_name
             laudo.open  = true;
 
             User.automaticSaveFile(laudo);    
