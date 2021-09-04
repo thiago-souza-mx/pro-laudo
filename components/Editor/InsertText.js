@@ -1,32 +1,40 @@
 import { Language } from "../Language";
-import { ScrollEditor } from "./CreateEditor";
+import { CursorEditor, GetMarkSelection, GetTextNode, MarkReplace, ScrollEditor } from "./CreateEditor";
 
+export const Marker = {
+  green : text =>{
+    return {
+      mark: `<mark class="marker-green">${text}&nbsp;</mark>`,
+      text : text+"&nbsp;"
+    }
+  }
+}
 /**-------------------------------------------------------------------------
  * 
  * @InsertText Function que insere dados de texto ao @Editor ativo no @AreaEditor
  * 
  -------------------------------------------------------------------------*/ 
- const insertHTML = (html) => {
+ const insertHTML = (html , pos ) => {
   
   const viewFragment =  NemmoEditor.data.processor.toView( html );
   const modelFragment =  NemmoEditor.data.toModel( viewFragment );
-  NemmoEditor.model.insertContent(modelFragment);
+  NemmoEditor.model.insertContent(modelFragment, NemmoEditor.model.document.selection.getLastPosition());
+  //CursorEditor( pos ? pos : 'end');
 }  
 
- export const InsertText = ( msg , setData )=>{
+ export const InsertText = ( msg , setText )=>{
 
-  let _state = document.querySelector('.list-editor-item.active .ck-editor__editable').innerHTML;
+  /*let _state = document.querySelector('.list-editor-item.active .ck-editor__editable').innerHTML;
+  if( msg !== false )
+    msg = ' '+msg;*/
 
-  console.log(_state)
-  if( msg === false ){
-    NemmoEditor.setData(setData);
-    return ScrollEditor();
-  }
-  if( _state.trim() == Language({pt:'Comece a escrever seu laudo', en:'Start writing your report' }) ){
+ 
+  if( NemmoEditor.getData().trim() == Language({pt:'Comece a escrever seu laudo', en:'Start writing your report' }) ){
     NemmoEditor.setData("");
+    CursorEditor('end');
     return ScrollEditor();
   }
-
+/*
   let data = _state;
   
 
@@ -48,22 +56,29 @@ import { ScrollEditor } from "./CreateEditor";
     msg = data.replace(`t(${str})`,`t(${msg})`);
     NemmoEditor.setData(msg);
     return ScrollEditor();
+  }*/
+
+  if(!setText){ 
+  
+    MarkReplace()  
+    setTimeout(()=>{
+       insertHTML( msg.mark , 'end')
+       
+    } )
+    
+  }else{
+    setTimeout(()=> {
+      MarkReplace()
+      setTimeout(()=>{ 
+        
+        insertHTML( msg.text , 'end')
+        CursorEditor('end');
+
+      },100 )
+    },50)
+    
   }
 
-  if(data.indexOf('<mark') > -1){
-    console.log(data);
-    let str1 = data.split('<mark class="marker-green">');
-    let str2 = str1[1].split('</mark>');
-    let str = str2[0];
-
-    msg = data.replace(`<mark class="marker-green">${str}</mark>`,msg);
-    NemmoEditor.setData(msg);
-    return ScrollEditor();
-  }
-
-
-
-  insertHTML(`<mark class="marker-green">${msg}</mark>`);
   return ScrollEditor();
 
 }

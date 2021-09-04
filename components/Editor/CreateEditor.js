@@ -9,7 +9,7 @@ import User from '../../controllers/User';
  * 
  -------------------------------------------------------------------------*/ 
 
- export const CreateEditor = ({_state, id, _new, _editor})=>{
+export const CreateEditor = ({_state, id, _new, _editor})=>{
 
   if(_editor){
     _state.data = _editor.body;
@@ -90,11 +90,7 @@ import User from '../../controllers/User';
           'highlight'
         ]
       }}
-      onChange={(event, editor) => {
-        const data = editor.getData()
-        console.log({ event, editor, data }) 
-        _state.save.handleSaveData();
-      }}
+      onChange={ _state.save.handleSaveData }
       onReady={(editor) => {
 
         if( _editor ){
@@ -132,8 +128,108 @@ import User from '../../controllers/User';
  -------------------------------------------------------------------------*/ 
 
 export const ScrollEditor = ()=>{
-  let editor = document.querySelector('.active .ck-editor__editable');
+  let editor = $('.active .ck-editor__editable');
   editor.scrollTop = editor.scrollHeight;
 }
 
+
+
+export const CursorEditor = (pos, mark)=>{
+
+  let editor = $('#area-editor .active .ck-editor__editable');    
+  if(pos == 'start'){ 
+
+  }else if(pos == 'end'){
+    setCursor(editor, 
+        (
+          editor.querySelector('mark') ?
+          ( editor.querySelector('mark') )
+        :
+          ( editor.lastChild || editor )
+        )
+    )
+
+ /* }else if(pos == 'final'){
+    setCursor(editor,  editor.querySelector('mark') || (editor.lastElementChild || editor ))*/
+
+  }
+}
+
+export const GetTextNode = text =>{
+  let editor = $('.active .ck-editor__editable');
+  let NodeDad = editor.childNodes;  
+  NodeDad.forEach((node , i)=>{
+      if(node.innerText && node.innerText.indexOf(text)>-1){        
+          SelectText({
+              node:node.childNodes[i], 
+              start:node.innerText.indexOf(text),
+              end:node.innerText.indexOf(text) + text.length
+          });
+      }
+  });
+}
+
+export const GetMarkSelection = ({text, mark} , callback) =>{
+  let editor = $('.active .ck-editor__editable');
+  let marker = editor.querySelector('mark.marker-green');  
+
+  if(marker && marker.innerText){     
+
+    /*const range =  new Range();
+    range.setStart( marker , 0 );  
+    range.setEnd( marker , marker.childElementCount ? marker.childElementCount : 1 );
+    range.deleteContents()*/
+
+    callback(mark);
+      SelectText({
+          node:marker, 
+          start:0,
+          end: marker.childElementCount ? marker.childElementCount : 1
+      });
+
+  }else{
+    callback(mark);
+  }
+}
+
+
+export const MarkReplace = (text, callback) =>{
+  let editor = $('.active .ck-editor__editable');
+  let mark = editor.querySelector('mark.marker-green');  
+
+  if(mark && mark.innerText){        
+      const range =  new Range();
+      range.setStart( mark , 0 );  
+      range.setEnd( mark , mark.childElementCount ? mark.childElementCount : 1 );
+      range.deleteContents()
+    console.log('apagou')
+  }
+}
+
+
+function setCursor(node, cursorElement) {
+  
+  const  range = new Range();
+  range.setStart(cursorElement , 1 );
+  range.collapse(true);
+  if (window.getSelection) {
+      var sel = window.getSelection();      
+      sel.removeAllRanges();
+      sel.addRange(range);
+      node.focus();
+  } else if (document.selection && range.select) {
+      range.select();
+  }  
+}
+
+const SelectText = selection =>{    
+  const range =  new Range();
+  range.setStart(selection.node, selection.start);  
+  range.setEnd(selection.node, selection.end);
+  let select = window.getSelection();
+  if(select.rangeCount > 0) {
+      select.removeAllRanges();
+  }  
+  select.addRange(range);
+}
 

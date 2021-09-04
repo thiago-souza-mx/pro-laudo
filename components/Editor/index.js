@@ -196,7 +196,7 @@ export class AreaEditor extends React.Component{
           tiping:setTimeout(()=>{
           
             let laudo   = {}
-            laudo.body  = NemmoEditor.getData(),
+            laudo.body  = document.getElementById('area-editor').querySelector('.active .ck-editor__editable').innerHTML,
             laudo.id    = NemmoEditor.id
             laudo.name  = NemmoEditor.file_name
             laudo.open  = true;
