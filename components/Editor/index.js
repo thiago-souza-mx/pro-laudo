@@ -83,7 +83,7 @@ export class AreaEditor extends React.Component{
     editor.id = 'editor_'+this.state.id_editor;
     editor.setAttribute('class','list-editor-item active')
     document.querySelector("#list-editor").appendChild(editor)
-    ReactDOM.render( <CreateEditor _state={this.state} id={editor.id} _new={this.state.editor.new} _editor={_editor} /> , document.getElementById(editor.id) );
+    ReactDOM.render( <CreateEditor tinymceScriptSrc={'https://cdn.tiny.cloud/1/no-api-key/tinymce/5.9.2-118/tinymce.min.js'} _state={this.state} id={editor.id} _new={this.state.editor.new} _editor={_editor} /> , document.getElementById(editor.id) );
     this.setState({id_editor: this.state.id_editor +1})
 
   }

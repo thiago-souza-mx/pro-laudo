@@ -41,6 +41,7 @@
   "homepage": "https://github.com/thiago-souza-mx/pro-laudo#readme",
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^3.0.2",
+    "@tinymce/tinymce-react": "^3.12.6",
     "@zeit/next-css": "^1.0.1",
     "babel-loader": "^8.2.2",
     "ckeditor5-custom-build": "git+https://github.com/thiago-souza-mx/ckeditor5.git",

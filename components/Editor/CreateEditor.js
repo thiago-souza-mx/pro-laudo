@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SetNotification } from './NotificationEditor/SetNotification';
 import { Language } from './../Language';
 import User from '../../controllers/User';
+import { Editor } from '@tinymce/tinymce-react';
+import { Tiny } from './styles';
+
+
 
 /**-------------------------------------------------------------------------
  * 
@@ -11,112 +15,34 @@ import User from '../../controllers/User';
 
 export const CreateEditor = ({_state, id, _new, _editor})=>{
 
-  if(_editor){
-    _state.data = _editor.body;
-    _state.name = _editor.name;
-  }else{
-    _state.data  = Language({pt:'Comece a escrever seu laudo', en:'Start writing your report' });
-    _state.name = Language({en:"New Document" ,pt:"Novo Documento"});
-  }
-
-
-  _state.event = null;
-
-  const editorRef = useRef()
-  const [editorLoaded, setEditorLoaded] = useState(false)
-  const { CKEditor, ClassicEditor } = editorRef.current || {}
-
-  useEffect(() => {
-    editorRef.current = {
-      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, // v3+
-      ClassicEditor: require('../../libs/ckeditor/build/ckeditor'),
-     
+  const editorRef = useRef(null);
+  const log = () => {
+    if (editorRef.current) {
+      console.log(editorRef.current.getContent());
     }
-    setEditorLoaded(true)
-  }, [])
-
-  return editorLoaded ? (
-    <CKEditor
-      editor={ClassicEditor}
-      data={_state.data} 
-      language= 'pt'
-      config={{
-        
-        highlight: {
-          options: [
-              {
-                  model: 'greenMarker',
-                  class: 'marker-green',
-                  title: 'Green marker',
-                  color: 'var(--ck-highlight-marker-green)',
-                  type: 'marker'
-              },
-              {
-                  model: 'redPen',
-                  class: 'pen-red',
-                  title: 'Red pen',
-                  color: 'var(--ck-highlight-pen-red)',
-                  type: 'pen'
-              }
-          ]
-        },
-        toolbar:[
-          'heading',
-          '|',
-          'bold',
-          'italic',
-          'link',
-          '|',
-          //'fontBackgroundColor',
-          'fontColor',
-          'fontSize',
-          'fontFamily',
-          '|',
-          'bulletedList',
-          'numberedList',
-          '|',
-          //'outdent',
-          //'indent',
-          'alignment',
-          '|',
-          'imageUpload',
-          
-          //'imageInsert',
-          //'blockQuote',
-          'insertTable',
-          //'mediaEmbed',
-          'undo',
-          'redo',
-          'highlight'
-        ]
-      }}
-      onChange={ _state.save.handleSaveData }
-      onReady={(editor) => {
-
-        if( _editor ){
-          let current = _editor
-          editor.id = current.id
-          editor.file_name = current.name;
-        }
-
-        editor.id_aba = id
-        editor.name = editor.file_name = editor.file_name ? editor.file_name : `${_state.name.replace(' ','_')}_${editor.id}`
-        editor.body = editor.getData()
-        editor.open = true;
-       // _state.editor.list.push(editor);
-        User.automaticSaveFile(editor);
-        User.setOpenFile(editor.id);
-        _state.handleSetNavigate(editor);
-        editor.setNotification = SetNotification
-        global.NemmoEditor = editor;
-        _state.editor.new = true; 
-
-      }}
-      onFocus={(event,editor) =>{ }}
-      onBlur={(event,editor) =>{ }}
-    />      
-  ) : (
-    <div>Editor loading</div>
+  };
+  return (
+    <>
+       <Editor
+         onInit={(evt, editor) => editorRef.current = editor}
+         initialValue="<p>This is the initial content of the editor.</p>"
+         init={{
+           height: 500,           
+           menubar: false,
+           plugins: [
+             'advlist autolink lists link image charmap print preview anchor',
+             'searchreplace visualblocks code fullscreen',
+             'insertdatetime media table paste code help wordcount'
+           ],
+           toolbar: 'undo redo | formatselect | ' +
+           'bold italic backcolor | alignleft aligncenter ' +
+           'alignright alignjustify | bullist numlist outdent indent | ' +
+           'removeformat | help',
+           content_style: Tiny
+         }}
+       />
+       
+     </>
   )
 }
 
@@ -153,20 +79,6 @@ export const CursorEditor = (pos, mark)=>{
     setCursor(editor,  editor.querySelector('mark') || (editor.lastElementChild || editor ))*/
 
   }
-}
-
-export const GetTextNode = text =>{
-  let editor = $('.active .ck-editor__editable');
-  let NodeDad = editor.childNodes;  
-  NodeDad.forEach((node , i)=>{
-      if(node.innerText && node.innerText.indexOf(text)>-1){        
-          SelectText({
-              node:node.childNodes[i], 
-              start:node.innerText.indexOf(text),
-              end:node.innerText.indexOf(text) + text.length
-          });
-      }
-  });
 }
 
 export const GetMarkSelection = ({text, mark} , callback) =>{
@@ -222,14 +134,52 @@ function setCursor(node, cursorElement) {
   }  
 }
 
-const SelectText = selection =>{    
-  const range =  new Range();
-  range.setStart(selection.node, selection.start);  
-  range.setEnd(selection.node, selection.end);
-  let select = window.getSelection();
-  if(select.rangeCount > 0) {
-      select.removeAllRanges();
-  }  
-  select.addRange(range);
+const GetTextNode = text =>{
+  let editor = tinyMCE.activeEditor.dom.doc.body;
+  let NodeDad = editor.getElementsByTagName("*");  
+  NodeDad = [...NodeDad].reverse();
+  for(let i = 0;i < NodeDad.length; i++){
+    let node = NodeDad[i];
+    if(node.innerText && node.innerText.indexOf(text)>-1){        
+        SelectText({
+            node:node, 
+            start:node.innerText.indexOf(text),
+            end:node.innerText.indexOf(text) + text.length
+        });
+        return;
+    }
+  }
 }
 
+const SelectText = selection =>{     
+  const range =  tinymce.activeEditor.dom.createRng();
+  range.setStart(selection.node.firstChild, selection.start);  
+  range.setEnd(selection.node.firstChild, selection.end);
+  tinymce.activeEditor.selection.setRng(range)
+
+}
+
+const insert = (text, end) =>{
+
+  let mark =  tinyMCE.activeEditor.dom.doc.querySelector('mark', end);
+  if(mark)    
+    tinyMCE.activeEditor.execCommand('mceSelectNode', false, mark);
+
+  if(end)
+    tinyMCE.activeEditor.execCommand('mceInsertContent', false, text );
+  else
+    tinyMCE.activeEditor.execCommand('mceReplaceContent', false, `<mark>${text}</mark>`);
+}
+/*
+// SELECT NODE
+  tinyMCE.activeEditor.execCommand('mceSelectNode', false, tinyMCE.activeEditor.dom.doc.querySelector('mark'));
+
+// REPLACE NODE
+  tinyMCE.activeEditor.execCommand('mceReplaceContent', false, "<mark>some text</mark>");
+
+// INSERT CONTENT IN CURSOR POSITION
+  tinyMCE.activeEditor.execCommand('mceInsertContent', false, "<mark>some text</mark>");
+  
+// INSERT CALC
+  tinyMCE.activeEditor.execCommand('mceReplaceContent', false, `<mark class="calc">oi</mark>`);
+  */
