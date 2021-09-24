@@ -4,7 +4,7 @@
   "description": "Aplicação de gerenciamento e criação de laudos médicos",
   "main": "_app.js",
   "scripts": {
-    "start": "next dev"
+    "start": "next dev -p 3005"
   },
   "aplication": {
     "name": "Nemmo Health",

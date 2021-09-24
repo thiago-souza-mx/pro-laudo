@@ -4,8 +4,8 @@ import { CursorEditor, GetMarkSelection, GetTextNode, MarkReplace, ScrollEditor 
 export const Marker = {
   green : text =>{
     return {
-      mark: `<mark class="marker-green">${text}&nbsp;</mark>`,
-      text : text+"&nbsp;"
+      mark: `<mark class="marker-green">${text}</mark>`,
+      text : text
     }
   }
 }
@@ -24,6 +24,7 @@ export const Marker = {
 
  export const InsertText = ( msg , setText )=>{
 
+  console.log(msg)
   /*let _state = document.querySelector('.list-editor-item.active .ck-editor__editable').innerHTML;
   if( msg !== false )
     msg = ' '+msg;*/
@@ -63,7 +64,7 @@ export const Marker = {
     MarkReplace()  
     setTimeout(()=>{
        insertHTML( msg.mark , 'end')
-       
+       CursorEditor('end');
     } )
     
   }else{
@@ -71,7 +72,7 @@ export const Marker = {
       MarkReplace()
       setTimeout(()=>{ 
         
-        insertHTML( msg.text , 'end')
+        insertHTML( `<p>&nbsp;${msg.text}</p>` , 'end')
         CursorEditor('end');
 
       },100 )

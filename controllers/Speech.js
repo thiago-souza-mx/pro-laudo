@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import { MarkReplace } from '../components/Editor/CreateEditor';
 import { InsertText , Marker } from '../components/Editor/InsertText';
 import { Language } from '../components/Language';
 import { Open } from '../helpers/Modal';
@@ -125,23 +126,23 @@ const calculo = valor =>{
 }
 
 const titulo = valor =>{
-  if(valor.trim() != 't()'){
+  if(valor.trim() != Marker.green('t()').mark){
     action.func = false
-    console.log(NemmoEditor.getData());
-    let text = NemmoEditor.getData().replace(/t\(([^)]+)\)/g,'')
-    NemmoEditor.setData(`${text}`);       
-    valor = `<h2>${valor.capitalize()}</h2>`; 
+    //console.log(NemmoEditor.getData());
+   // let text = NemmoEditor.getData().replace(/t\(([^)]+)\)/g,'')
+    //NemmoEditor.setData(`${text}`);       
+    valor = `<h2>${valor.capitalize()}</h2>`+Marker.green(' ').mark; 
     state.capitalize= 'next';          
   }
   return valor
 }
 
 const subtitulo = valor =>{
-  if(valor.trim() != 't()'){
+  if(valor.trim() != Marker.green('t()').mark){
     action.func = false
-    let text = NemmoEditor.getData().replace(/t\(([^)]+)\)/g,'')
-    NemmoEditor.setData(`${text}`);       
-    valor = `<h4>${valor.capitalize()}</h4>`; 
+    //let text = NemmoEditor.getData().replace(/t\(([^)]+)\)/g,'')
+    //NemmoEditor.setData(`${text}`);       
+    valor = `<h4>${valor.capitalize()}</h4>`+Marker.green(' ').mark; 
     state.capitalize= 'next';          
   }
   return valor
@@ -180,7 +181,7 @@ const tipoCalculo = ()=> {
 
 const tipoTitulo = ()=> {
   state.capitalize = false;
-  return "t()";
+  return Marker.green('t()').mark;
 }
 
 const Commands={
@@ -287,14 +288,14 @@ const callbackTranscript = text =>{
               Voice('Edição do laudo retomada')            
               text.resetTranscript();              
               action.command = false;
-              InsertText(`${state.noteContent.replace(command,'')}`)
+              InsertText(Marker.green(state.noteContent.replace(command,'')))
               return;
             }
 
             action.old = action.command = false;
 
             if(state.active && !state.voice)
-              return InsertText(`${command}`);
+              return InsertText(Marker.green(command));
           }
           action.old = state.noteContent;
 
@@ -382,7 +383,7 @@ export function  Speech({Microphone}){
     },
     {
       command: '(*) parágrafo (*)',
-      callback: (text1, text2) =>{state.capitalize = true; action.command =  `${text1 ? text1 : ''}<p>${text2 ? text2 : ''}` }
+      callback: (text1, text2) =>{state.capitalize = true; action.command =  `${text1 ? text1 : ' '}<br/><h2>${text2 ? text2 : ' '}</h2>` }
     },
     {
       command: '(*) vírgula (*)',
